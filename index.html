@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#000000">
-
 <title>soxsuva</title>
 
 <style>
@@ -142,7 +141,8 @@ body {
 
     opacity: 1;
 
-    transition: opacity 300ms ease;
+    transition:
+        opacity 300ms ease;
 }
 
 #enterBanner {
@@ -155,8 +155,6 @@ body {
     object-fit: cover;
 
     filter: brightness(.58);
-
-    transform: none;
 }
 
 .enter-dark {
@@ -282,7 +280,8 @@ body {
         left,
         top,
         width,
-        height;
+        height,
+        transform;
 
     transition:
         left 900ms cubic-bezier(.16,1,.3,1),
@@ -413,6 +412,17 @@ body {
 
     box-shadow:
         0 12px 35px rgba(0,0,0,.7);
+
+    /*
+       IMPORTANT:
+       The real PFP can be hidden during
+       the enter animation without affecting
+       its layout.
+    */
+    opacity: 1;
+
+    transition:
+        opacity 120ms ease;
 }
 
 /* =========================================================
@@ -1186,26 +1196,24 @@ audio {
 
 <body>
 
-<!-- =======================================================
+<!-- =========================================================
      BACKGROUND
-======================================================= -->
+========================================================= -->
 
 <div class="background"></div>
 
-
-<!-- =======================================================
+<!-- =========================================================
      CHERRY BLOSSOMS
-======================================================= -->
+========================================================= -->
 
 <div
     class="blossoms"
     id="blossoms"
 ></div>
 
-
-<!-- =======================================================
+<!-- =========================================================
      CLICK TO ENTER
-======================================================= -->
+========================================================= -->
 
 <div id="enterScreen">
 
@@ -1239,16 +1247,15 @@ audio {
 
 </div>
 
-
-<!-- =======================================================
+<!-- =========================================================
      MAIN SITE
-======================================================= -->
+========================================================= -->
 
 <main class="page">
 
 <section class="card">
 
-    <!-- MAIN BANNER -->
+    <!-- BANNER -->
 
     <div class="banner">
 
@@ -1261,7 +1268,6 @@ audio {
         <div class="banner-shade"></div>
 
     </div>
-
 
     <!-- PROFILE -->
 
@@ -1285,14 +1291,12 @@ audio {
 
             </div>
 
-
             <div
                 class="name"
                 id="displayName"
             >
                 soxsuva
             </div>
-
 
             <div
                 class="username"
@@ -1301,7 +1305,6 @@ audio {
                 @soxsuva
             </div>
 
-
             <div
                 class="bio"
                 id="bio"
@@ -1309,8 +1312,7 @@ audio {
                 welcome to my profile
             </div>
 
-
-            <!-- BADGES -->
+            <!-- DISCORD BADGES -->
 
             <div class="badges">
 
@@ -1342,8 +1344,7 @@ audio {
 
                 </div>
 
-
-                <!-- Booster -->
+                <!-- Server Booster -->
 
                 <div
                     class="badge"
@@ -1363,7 +1364,6 @@ audio {
                     </svg>
 
                 </div>
-
 
                 <!-- Quest -->
 
@@ -1393,7 +1393,6 @@ audio {
                     </svg>
 
                 </div>
-
 
                 <!-- Orbs -->
 
@@ -1437,7 +1436,6 @@ audio {
 
         </div>
 
-
         <!-- =================================================
              TIKTOK
         ================================================= -->
@@ -1467,7 +1465,6 @@ audio {
 
                 </div>
 
-
                 <div class="tiktok-info">
 
                     <div class="tiktok-title">
@@ -1480,13 +1477,11 @@ audio {
 
                 </div>
 
-
                 <div class="tiktok-arrow">
                     →
                 </div>
 
             </div>
-
 
             <div class="tiktok-stats">
 
@@ -1505,7 +1500,6 @@ audio {
 
                 </div>
 
-
                 <div class="stat">
 
                     <div
@@ -1520,7 +1514,6 @@ audio {
                     </div>
 
                 </div>
-
 
                 <div class="stat">
 
@@ -1541,7 +1534,6 @@ audio {
 
         </a>
 
-
         <!-- =================================================
              ACTIVITY
         ================================================= -->
@@ -1550,14 +1542,12 @@ audio {
             Activity
         </div>
 
-
         <div
             id="activity"
             class="activity activity-empty"
         >
             Checking activity...
         </div>
-
 
         <!-- =================================================
              MUSIC
@@ -1566,7 +1556,6 @@ audio {
         <div class="section-title">
             Music
         </div>
-
 
         <div class="music">
 
@@ -1577,7 +1566,6 @@ audio {
                     src="pfp.jpeg"
                     alt=""
                 >
-
 
                 <div class="music-info">
 
@@ -1591,7 +1579,6 @@ audio {
 
                 </div>
 
-
                 <div
                     class="music-status"
                     id="musicStatus"
@@ -1600,7 +1587,6 @@ audio {
                 </div>
 
             </div>
-
 
             <div class="music-player">
 
@@ -1611,7 +1597,6 @@ audio {
                 >
                     ▶
                 </button>
-
 
                 <div class="progress-area">
 
@@ -1626,7 +1611,6 @@ audio {
                         ></div>
 
                     </div>
-
 
                     <div class="time">
 
@@ -1644,7 +1628,6 @@ audio {
 
             </div>
 
-
             <audio
                 id="audio"
                 src="needy.mp3"
@@ -1654,7 +1637,6 @@ audio {
 
         </div>
 
-
         <!-- =================================================
              SOCIALS
         ================================================= -->
@@ -1663,10 +1645,7 @@ audio {
             Socials
         </div>
 
-
         <div class="socials">
-
-            <!-- ROBLOX -->
 
             <a
                 class="social"
@@ -1685,9 +1664,6 @@ audio {
 
             </a>
 
-
-            <!-- SPOTIFY -->
-
             <a
                 class="social"
                 href="https://open.spotify.com/user/soxsuva"
@@ -1704,9 +1680,6 @@ audio {
                 </div>
 
             </a>
-
-
-            <!-- XBOX -->
 
             <a
                 class="social"
@@ -1726,7 +1699,6 @@ audio {
 
         </div>
 
-
         <!-- =================================================
              COUNTERS
         ================================================= -->
@@ -1744,7 +1716,6 @@ audio {
                 views
 
             </div>
-
 
             <button
                 class="counter like-button"
@@ -2240,7 +2211,7 @@ progress.addEventListener(
 
 
 /* =========================================================
-   PFP FLIGHT ANIMATION
+   CLICK TO ENTER + PFP FLIGHT ANIMATION
 ========================================================= */
 
 const enterScreen =
@@ -2262,6 +2233,15 @@ let hasEntered =
     false;
 
 
+/*
+   THE REAL MAIN PFP STARTS HIDDEN.
+
+   This prevents the destination PFP from
+   appearing behind the flying PFP.
+*/
+mainPfp.style.opacity = "0";
+
+
 enterScreen.addEventListener(
     "click",
     () => {
@@ -2274,8 +2254,8 @@ enterScreen.addEventListener(
 
 
         /*
-          Start music because the click
-          gives the browser permission.
+           The click allows the browser to
+           start the music.
         */
 
         audio.play().catch(
@@ -2284,7 +2264,7 @@ enterScreen.addEventListener(
 
 
         /*
-          Exact starting PFP position.
+           Get exact starting PFP position.
         */
 
         const start =
@@ -2292,7 +2272,7 @@ enterScreen.addEventListener(
 
 
         /*
-          Exact destination PFP position.
+           Get exact destination position.
         */
 
         const destination =
@@ -2300,11 +2280,8 @@ enterScreen.addEventListener(
 
 
         /*
-          Create a flying copy.
-
-          IMPORTANT:
-          The real PFP underneath is never
-          removed or hidden.
+           Make a flying copy of the
+           enter-screen PFP.
         */
 
         const flyer =
@@ -2317,6 +2294,10 @@ enterScreen.addEventListener(
         flyer.className =
             "pfp-flyer";
 
+
+        /*
+           Starting position.
+        */
 
         flyer.style.left =
             start.left + "px";
@@ -2350,76 +2331,89 @@ enterScreen.addEventListener(
 
 
         /*
-          Fade the text away.
+           Hide ONLY the text.
+           
+           The flying PFP stays completely
+           visible.
         */
 
-        enterScreen.querySelector(
-            ".enter-name"
-        ).style.opacity = "0";
+        const enterName =
+            enterScreen.querySelector(
+                ".enter-name"
+            );
 
-        enterScreen.querySelector(
-            ".enter-name"
-        ).style.transform =
+        const enterText =
+            enterScreen.querySelector(
+                ".enter-text"
+            );
+
+        enterName.style.opacity =
+            "0";
+
+        enterName.style.transform =
             "translateY(-12px)";
 
-        enterScreen.querySelector(
-            ".enter-text"
-        ).style.opacity = "0";
+        enterText.style.opacity =
+            "0";
 
-        enterScreen.querySelector(
-            ".enter-text"
-        ).style.transform =
+        enterText.style.transform =
             "translateY(-8px)";
 
 
         /*
-          Force browser to register
-          the starting position.
+           Force layout so the browser
+           registers the starting position.
         */
 
         flyer.getBoundingClientRect();
 
 
         /*
-          Fly directly into the main
-          profile PFP.
+           Fly the PFP into the EXACT
+           main profile circle.
         */
 
-        requestAnimationFrame(() => {
+        requestAnimationFrame(
+            () => {
 
-            flyer.style.left =
-                destination.left + "px";
+                flyer.style.left =
+                    destination.left +
+                    "px";
 
-            flyer.style.top =
-                destination.top + "px";
+                flyer.style.top =
+                    destination.top +
+                    "px";
 
-            flyer.style.width =
-                destination.width + "px";
+                flyer.style.width =
+                    destination.width +
+                    "px";
 
-            flyer.style.height =
-                destination.height + "px";
+                flyer.style.height =
+                    destination.height +
+                    "px";
 
-            flyer.style.borderRadius =
-                getComputedStyle(
-                    mainPfp
-                ).borderRadius;
+                flyer.style.borderRadius =
+                    getComputedStyle(
+                        mainPfp
+                    ).borderRadius;
 
-            flyer.style.borderWidth =
-                getComputedStyle(
-                    mainPfp
-                ).borderWidth;
+                flyer.style.borderWidth =
+                    getComputedStyle(
+                        mainPfp
+                    ).borderWidth;
 
-            flyer.style.boxShadow =
-                getComputedStyle(
-                    mainPfp
-                ).boxShadow;
+                flyer.style.boxShadow =
+                    getComputedStyle(
+                        mainPfp
+                    ).boxShadow;
 
-        });
+            }
+        );
 
 
         /*
-          Slowly fade the click screen
-          after the PFP has started moving.
+           Fade the entire enter screen
+           after the PFP has begun moving.
         */
 
         setTimeout(
@@ -2434,20 +2428,41 @@ enterScreen.addEventListener(
 
 
         /*
-          Remove the click screen only
-          after the animation finishes.
+           IMPORTANT:
+           The real PFP stays hidden until
+           the flying PFP has reached it.
         */
 
         setTimeout(
             () => {
 
+                /*
+                   Reveal the real PFP
+                   underneath the exact
+                   same position.
+                */
+
+                mainPfp.style.opacity =
+                    "1";
+
+
+                /*
+                   Remove the enter screen.
+                */
+
                 enterScreen.style.display =
                     "none";
+
+
+                /*
+                   Remove the flying copy
+                   after the real PFP is visible.
+                */
 
                 flyer.remove();
 
             },
-            950
+            930
         );
 
     }
@@ -2455,7 +2470,7 @@ enterScreen.addEventListener(
 
 
 /* =========================================================
-   VIEWS
+   VIEW COUNTER
 ========================================================= */
 
 const viewKey =
@@ -2468,6 +2483,10 @@ let views =
         )
     ) || 0;
 
+
+/*
+   Each browser gets one view.
+*/
 
 if (
     !localStorage.getItem(
@@ -2496,7 +2515,7 @@ document.getElementById(
 
 
 /* =========================================================
-   LIKES
+   LIKE COUNTER
 ========================================================= */
 
 const likeKey =
@@ -2522,6 +2541,11 @@ const likeButton =
     );
 
 
+/*
+   If this browser has already liked,
+   permanently disable the button.
+*/
+
 if (
     localStorage.getItem(
         likeKey
@@ -2540,6 +2564,11 @@ if (
 likeButton.addEventListener(
     "click",
     () => {
+
+        /*
+           Prevent multiple likes
+           from the same browser.
+        */
 
         if (
             localStorage.getItem(
