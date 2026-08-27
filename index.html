@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>soxsuva</title>
 
@@ -14,106 +14,170 @@
 }
 
 :root{
-    --accent:#ffffff;
+    --white:#fff;
     --muted:rgba(255,255,255,.55);
-    --border:rgba(255,255,255,.12);
-    --glass:rgba(8,8,10,.72);
+    --line:rgba(255,255,255,.11);
+    --glass:rgba(8,8,10,.67);
 }
 
-html,body{
-    min-height:100%;
+html{
     background:#000;
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
+    min-height:100vh;
+    background:#000;
+    color:#fff;
+    font-family:Inter,Arial,Helvetica,sans-serif;
     overflow-x:hidden;
 }
 
-/* =========================
+/* ================================
    BACKGROUND
-========================= */
+================================ */
 
-.site-bg{
+.background{
     position:fixed;
-    inset:-40px;
-    z-index:-5;
+    inset:-35px;
+    z-index:-10;
 
     background:
         linear-gradient(
-            rgba(0,0,0,.48),
-            rgba(0,0,0,.88)
+            rgba(0,0,0,.38),
+            rgba(0,0,0,.9)
         ),
         url("banner.gif")
         center/cover no-repeat;
 
-    filter:blur(8px);
+    filter:blur(13px);
+    transform:scale(1.05);
 }
 
-.site-bg::after{
+.background::after{
     content:"";
     position:absolute;
     inset:0;
 
     background:
         radial-gradient(
-            circle at center,
-            rgba(255,255,255,.04),
-            rgba(0,0,0,.7)
+            circle at 50% 35%,
+            rgba(255,255,255,.06),
+            transparent 40%
         );
 }
 
-/* =========================
+/* ================================
+   CHERRY BLOSSOMS
+================================ */
+
+.blossoms{
+    position:fixed;
+    inset:0;
+
+    pointer-events:none;
+
+    overflow:hidden;
+
+    z-index:99990;
+}
+
+.blossom{
+    position:absolute;
+
+    top:-30px;
+
+    width:9px;
+    height:7px;
+
+    background:#fff;
+
+    border-radius:
+        80% 20% 80% 20%;
+
+    opacity:.8;
+
+    filter:
+        drop-shadow(0 0 4px rgba(255,255,255,.5));
+
+    animation:
+        fall linear infinite,
+        sway ease-in-out infinite;
+}
+
+@keyframes fall{
+    from{
+        transform:
+            translate3d(0,-30px,0)
+            rotate(0deg);
+    }
+
+    to{
+        transform:
+            translate3d(var(--drift),110vh,0)
+            rotate(420deg);
+    }
+}
+
+@keyframes sway{
+    0%,100%{
+        margin-left:-10px;
+    }
+
+    50%{
+        margin-left:10px;
+    }
+}
+
+/* ================================
    ENTER SCREEN
-========================= */
+================================ */
 
 #enterScreen{
     position:fixed;
     inset:0;
-    z-index:99999;
+
+    z-index:100000;
 
     display:flex;
     align-items:center;
     justify-content:center;
 
-    overflow:hidden;
-    cursor:pointer;
-
     background:#000;
 
+    cursor:pointer;
+
+    overflow:hidden;
+
     transition:
-        opacity .9s ease,
-        visibility .9s ease;
+        opacity .8s ease,
+        visibility .8s ease;
 }
 
 #enterBanner{
     position:absolute;
-    inset:-5%;
+    inset:0;
 
-    width:110%;
-    height:110%;
+    width:100%;
+    height:100%;
 
     object-fit:cover;
 
-    filter:brightness(.55);
+    transform:scale(1.01);
 
-    transform:scale(1);
+    filter:brightness(.58);
 
     will-change:transform;
 }
 
-.enter-dark{
+.enter-overlay{
     position:absolute;
     inset:0;
 
     background:
         linear-gradient(
             rgba(0,0,0,.12),
-            rgba(0,0,0,.7)
+            rgba(0,0,0,.68)
         );
-
-    z-index:2;
 }
 
 .enter-vignette{
@@ -122,17 +186,16 @@ body{
 
     background:
         radial-gradient(
-            circle,
-            transparent 0%,
-            rgba(0,0,0,.65) 100%
+            circle at center,
+            transparent 20%,
+            rgba(0,0,0,.7) 100%
         );
-
-    z-index:3;
 }
 
 .enter-content{
     position:relative;
-    z-index:10;
+
+    z-index:5;
 
     display:flex;
     flex-direction:column;
@@ -140,21 +203,23 @@ body{
 
     text-align:center;
 
-    transition:opacity .35s ease;
+    transition:
+        opacity .35s ease;
 }
 
 #enterPfp{
     width:145px;
     height:145px;
 
-    border-radius:50%;
     object-fit:cover;
 
-    border:3px solid rgba(255,255,255,.9);
+    border-radius:50%;
+
+    border:3px solid rgba(255,255,255,.92);
 
     box-shadow:
-        0 0 35px rgba(255,255,255,.18),
-        0 0 100px rgba(255,255,255,.08);
+        0 0 35px rgba(255,255,255,.2),
+        0 0 100px rgba(255,255,255,.1);
 
     will-change:transform;
 }
@@ -162,29 +227,33 @@ body{
 .enter-name{
     margin-top:20px;
 
-    font-size:clamp(52px,10vw,88px);
+    font-size:
+        clamp(48px,9vw,82px);
 
     font-weight:900;
+
     letter-spacing:-4px;
 
     text-shadow:
-        0 0 25px rgba(255,255,255,.18);
+        0 0 30px rgba(255,255,255,.2);
 }
 
-.enter-click{
-    margin-top:12px;
+.enter-text{
+    margin-top:13px;
 
-    color:rgba(255,255,255,.65);
+    color:rgba(255,255,255,.62);
 
-    font-size:12px;
-    letter-spacing:2px;
+    font-size:11px;
 
-    animation:pulse 2s ease-in-out infinite;
+    letter-spacing:2.5px;
+
+    animation:
+        enterPulse 2s ease-in-out infinite;
 }
 
-@keyframes pulse{
+@keyframes enterPulse{
     0%,100%{
-        opacity:.45;
+        opacity:.4;
     }
 
     50%{
@@ -192,9 +261,9 @@ body{
     }
 }
 
-/* =========================
-   MAIN
-========================= */
+/* ================================
+   PAGE
+================================ */
 
 .page{
     min-height:100vh;
@@ -207,49 +276,38 @@ body{
 }
 
 .card{
-    width:min(560px,100%);
+    width:min(570px,100%);
 
     overflow:hidden;
 
-    border:1px solid var(--border);
-    border-radius:26px;
+    border:
+        1px solid var(--line);
+
+    border-radius:28px;
 
     background:var(--glass);
 
-    backdrop-filter:blur(22px);
-    -webkit-backdrop-filter:blur(22px);
+    backdrop-filter:
+        blur(25px);
+
+    -webkit-backdrop-filter:
+        blur(25px);
 
     box-shadow:
-        0 30px 100px rgba(0,0,0,.65),
+        0 35px 120px rgba(0,0,0,.75),
         inset 0 1px rgba(255,255,255,.05);
-
-    animation:cardIn .8s ease;
 }
 
-@keyframes cardIn{
-    from{
-        opacity:0;
-        transform:translateY(18px) scale(.985);
-    }
-
-    to{
-        opacity:1;
-        transform:none;
-    }
-}
-
-/* =========================
+/* ================================
    BANNER
-========================= */
+================================ */
 
-.main-banner{
+.banner{
+    height:200px;
+
     position:relative;
 
-    height:195px;
-
     overflow:hidden;
-
-    background:#111;
 }
 
 #mainBanner{
@@ -261,66 +319,154 @@ body{
     object-fit:cover;
 }
 
-.banner-gradient{
+.banner-shade{
     position:absolute;
     inset:0;
 
     background:
         linear-gradient(
             to bottom,
-            transparent 30%,
+            transparent 35%,
             rgba(0,0,0,.5)
         );
 }
 
-/* =========================
+/* ================================
    PROFILE
-========================= */
+================================ */
 
 .profile-area{
-    position:relative;
-
     padding:
         72px
-        28px
+        27px
         28px;
+
+    position:relative;
 }
 
 .profile{
     text-align:center;
 }
 
-#profilePfp{
+.pfp-wrap{
     position:absolute;
 
-    top:-61px;
+    top:-62px;
     left:50%;
 
-    width:122px;
-    height:122px;
+    width:124px;
+    height:124px;
 
     transform:translateX(-50%);
+
+    z-index:20;
+}
+
+#profilePfp{
+    width:100%;
+    height:100%;
 
     object-fit:cover;
 
     border-radius:50%;
 
-    border:4px solid #111;
+    border:
+        4px solid #111;
 
     background:#111;
 
     box-shadow:
-        0 12px 35px rgba(0,0,0,.65);
+        0 12px 35px rgba(0,0,0,.7);
 
-    z-index:10;
+    display:block;
+}
 
-    opacity:1;
+/* ================================
+   DISCORD STATUS ON PFP
+================================ */
+
+.discord-status{
+    position:absolute;
+
+    right:3px;
+    bottom:3px;
+
+    width:31px;
+    height:31px;
+
+    border-radius:50%;
+
+    background:#111;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:
+        0 0 0 3px #111;
+}
+
+.discord-status::after{
+    content:"";
+
+    width:17px;
+    height:17px;
+
+    border-radius:50%;
+
+    background:#747f8d;
+
+    box-shadow:
+        0 0 8px currentColor;
+}
+
+.discord-status.online::after{
+    background:#23a55a;
+    color:#23a55a;
+}
+
+.discord-status.idle::after{
+    background:#f0b232;
+    color:#f0b232;
+}
+
+.discord-status.dnd::after{
+    width:17px;
+    height:17px;
+
+    background:#ed4245;
+
+    color:#ed4245;
+
+    border-radius:50%;
+}
+
+.discord-status.dnd::before{
+    content:"";
+
+    position:absolute;
+
+    width:9px;
+    height:3px;
+
+    border-radius:2px;
+
+    background:#111;
+
+    z-index:2;
+}
+
+.discord-status.offline::after{
+    background:#747f8d;
+    color:#747f8d;
 }
 
 .name{
     font-size:32px;
+
     font-weight:900;
-    letter-spacing:-1.3px;
+
+    letter-spacing:-1.4px;
 }
 
 .username{
@@ -332,111 +478,107 @@ body{
 }
 
 .bio{
-    margin:15px auto 0;
+    max-width:410px;
 
-    max-width:400px;
+    margin:
+        14px auto 0;
 
-    color:#ccc;
+    color:#d0d0d0;
+
+    font-size:14px;
 
     line-height:1.55;
-    font-size:14px;
 }
 
-/* =========================
+/* ================================
    BADGES
-========================= */
+================================ */
 
 .badges{
     display:flex;
+
     justify-content:center;
-    gap:8px;
+
+    gap:7px;
 
     margin-top:15px;
 }
 
 .badge{
-    width:28px;
-    height:28px;
+    width:30px;
+    height:30px;
 
     display:flex;
     align-items:center;
     justify-content:center;
+
+    border:
+        1px solid rgba(255,255,255,.12);
 
     border-radius:8px;
 
-    border:1px solid rgba(255,255,255,.13);
+    background:
+        rgba(255,255,255,.045);
 
-    background:rgba(255,255,255,.055);
+    transition:
+        transform .2s ease,
+        background .2s ease;
+}
 
-    color:white;
+.badge:hover{
+    transform:
+        translateY(-2px);
 
-    box-shadow:
-        inset 0 1px rgba(255,255,255,.08);
+    background:
+        rgba(255,255,255,.09);
 }
 
 .badge svg{
-    width:17px;
-    height:17px;
+    width:18px;
+    height:18px;
 }
 
-/* =========================
-   STATUS
-========================= */
-
-.status-line{
-    display:flex;
-
-    align-items:center;
-    justify-content:center;
-
-    gap:7px;
-
-    margin-top:13px;
-
-    color:var(--muted);
-
-    font-size:12px;
-}
-
-.status-dot{
-    width:10px;
-    height:10px;
-
-    border-radius:50%;
-
-    box-shadow:0 0 9px currentColor;
-}
-
-.status-online{
-    color:#3ba55c;
-}
-
-.status-idle{
-    color:#faa61a;
-}
-
-.status-dnd{
-    color:#ed4245;
-}
-
-.status-offline{
-    color:#747f8d;
-}
-
-/* =========================
+/* ================================
    TIKTOK
-========================= */
+================================ */
 
-.tiktok-box{
-    margin-top:25px;
+.tiktok{
+    display:block;
+
+    margin-top:24px;
 
     padding:15px;
 
-    border:1px solid var(--border);
+    color:#fff;
 
-    border-radius:16px;
+    text-decoration:none;
 
-    background:rgba(255,255,255,.035);
+    border:
+        1px solid var(--line);
+
+    border-radius:17px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+.tiktok:hover{
+    transform:translateY(-3px);
+
+    border-color:
+        rgba(255,255,255,.35);
+
+    background:
+        rgba(255,255,255,.065);
+
+    box-shadow:
+        0 0 25px rgba(255,255,255,.08);
 }
 
 .tiktok-top{
@@ -448,8 +590,8 @@ body{
 }
 
 .tiktok-logo{
-    width:43px;
-    height:43px;
+    width:44px;
+    height:44px;
 
     display:flex;
     align-items:center;
@@ -457,22 +599,23 @@ body{
 
     border-radius:12px;
 
-    background:#000;
+    background:#050505;
 
-    border:1px solid rgba(255,255,255,.12);
+    border:
+        1px solid rgba(255,255,255,.12);
 }
 
 .tiktok-logo svg{
-    width:22px;
-    height:22px;
+    width:23px;
+    height:23px;
 }
 
-.tiktok-user{
+.tiktok-info{
     flex:1;
 }
 
 .tiktok-title{
-    font-weight:800;
+    font-weight:900;
     font-size:14px;
 }
 
@@ -484,124 +627,81 @@ body{
     font-size:11px;
 }
 
-.tiktok-stats{
-    display:grid;
+.tiktok-arrow{
+    color:#777;
 
-    grid-template-columns:repeat(3,1fr);
-
-    margin-top:15px;
-
-    border-top:1px solid var(--border);
-
-    padding-top:15px;
-}
-
-.tiktok-stat{
-    text-align:center;
-}
-
-.tiktok-number{
-    font-weight:900;
-    font-size:16px;
-}
-
-.tiktok-label{
-    margin-top:4px;
-
-    color:var(--muted);
-
-    font-size:10px;
-
-    text-transform:uppercase;
-    letter-spacing:1px;
-}
-
-/* =========================
-   CONNECTIONS
-========================= */
-
-.section-title{
-    margin:25px 0 10px;
-
-    color:#8d8d8d;
-
-    font-size:10px;
-    font-weight:700;
-
-    letter-spacing:1.7px;
-    text-transform:uppercase;
-}
-
-.connections{
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:9px;
-}
-
-.connection{
-    display:flex;
-
-    align-items:center;
-
-    gap:11px;
-
-    padding:12px;
-
-    color:white;
-    text-decoration:none;
-
-    border:1px solid var(--border);
-    border-radius:14px;
-
-    background:rgba(255,255,255,.035);
+    font-size:18px;
 
     transition:
         transform .2s ease,
-        background .2s ease;
+        color .2s ease;
 }
 
-.connection:hover{
-    transform:translateY(-2px);
+.tiktok:hover .tiktok-arrow{
+    color:#fff;
 
-    background:rgba(255,255,255,.075);
+    transform:
+        translateX(3px);
 }
 
-.connection-logo{
-    width:34px;
-    height:34px;
+.tiktok-stats{
+    display:grid;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    grid-template-columns:
+        repeat(3,1fr);
 
-    border-radius:10px;
+    margin-top:14px;
 
-    background:#090909;
+    padding-top:14px;
+
+    border-top:
+        1px solid var(--line);
 }
 
-.connection-logo svg{
-    width:18px;
-    height:18px;
+.stat{
+    text-align:center;
 }
 
-.connection-name{
-    font-size:12px;
-    font-weight:800;
+.stat-number{
+    font-size:16px;
+
+    font-weight:900;
 }
 
-.connection-user{
-    margin-top:3px;
+.stat-label{
+    margin-top:4px;
 
-    color:var(--muted);
+    color:#777;
+
+    font-size:9px;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+}
+
+/* ================================
+   SECTION TITLE
+================================ */
+
+.section-title{
+    margin:
+        25px 0 10px;
+
+    color:#777;
 
     font-size:10px;
+
+    font-weight:800;
+
+    letter-spacing:1.7px;
+
+    text-transform:uppercase;
 }
 
-/* =========================
+/* ================================
    ACTIVITY
-========================= */
+================================ */
 
 .activity{
     display:flex;
@@ -610,27 +710,42 @@ body{
 
     gap:12px;
 
-    min-height:70px;
+    min-height:72px;
 
     padding:12px;
 
-    border:1px solid var(--border);
-    border-radius:15px;
+    border:
+        1px solid var(--line);
 
-    background:rgba(255,255,255,.035);
+    border-radius:16px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+.activity:hover{
+    border-color:
+        rgba(255,255,255,.25);
+
+    box-shadow:
+        0 0 25px rgba(255,255,255,.055);
 }
 
 .activity-art{
-    width:48px;
-    height:48px;
+    width:49px;
+    height:49px;
 
-    border-radius:10px;
+    flex-shrink:0;
+
+    border-radius:11px;
 
     object-fit:cover;
 
     background:#111;
-
-    flex-shrink:0;
 }
 
 .activity-info{
@@ -639,7 +754,7 @@ body{
 }
 
 .activity-type{
-    color:var(--muted);
+    color:#777;
 
     font-size:10px;
 
@@ -648,10 +763,13 @@ body{
 
 .activity-title{
     font-size:14px;
+
     font-weight:800;
 
     white-space:nowrap;
+
     overflow:hidden;
+
     text-overflow:ellipsis;
 }
 
@@ -663,31 +781,39 @@ body{
     font-size:11px;
 
     white-space:nowrap;
+
     overflow:hidden;
+
     text-overflow:ellipsis;
 }
 
 .activity-empty{
     justify-content:center;
 
-    color:var(--muted);
+    color:#777;
 
     font-size:12px;
 }
 
-/* =========================
-   MUSIC
-========================= */
+/* ================================
+   MUSIC PLAYER
+================================ */
 
 .music{
-    margin-top:25px;
+    margin-top:11px;
 
-    padding:15px;
+    padding:16px;
 
-    border:1px solid var(--border);
-    border-radius:15px;
+    border:
+        1px solid var(--line);
 
-    background:rgba(255,255,255,.035);
+    border-radius:18px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    box-shadow:
+        inset 0 1px rgba(255,255,255,.03);
 }
 
 .music-top{
@@ -695,18 +821,19 @@ body{
 
     align-items:center;
 
-    gap:12px;
+    gap:13px;
 }
 
 .album{
-    width:48px;
-    height:48px;
-
-    border-radius:10px;
+    width:55px;
+    height:55px;
 
     object-fit:cover;
 
-    background:#111;
+    border-radius:12px;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.5);
 }
 
 .music-info{
@@ -715,102 +842,307 @@ body{
 }
 
 .music-title{
-    font-size:13px;
-    font-weight:800;
+    font-size:14px;
+
+    font-weight:900;
 }
 
 .music-artist{
     margin-top:4px;
 
-    color:var(--muted);
+    color:#999;
 
     font-size:11px;
 }
 
 .music-status{
-    color:var(--muted);
+    color:#777;
 
     font-size:10px;
 }
 
-audio{
-    width:100%;
-    height:35px;
+.music-player{
+    margin-top:14px;
 
-    margin-top:12px;
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
 }
 
-/* =========================
+.play-button{
+    width:38px;
+    height:38px;
+
+    flex-shrink:0;
+
+    border:0;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    color:#000;
+
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:13px;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.play-button:hover{
+    transform:scale(1.06);
+
+    box-shadow:
+        0 0 20px rgba(255,255,255,.22);
+}
+
+.progress-area{
+    flex:1;
+}
+
+.progress{
+    width:100%;
+
+    height:5px;
+
+    border-radius:20px;
+
+    background:
+        rgba(255,255,255,.13);
+
+    overflow:hidden;
+
+    cursor:pointer;
+}
+
+.progress-fill{
+    width:0%;
+
+    height:100%;
+
+    border-radius:20px;
+
+    background:#fff;
+}
+
+.time{
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:6px;
+
+    color:#666;
+
+    font-size:9px;
+}
+
+/* ================================
+   SOCIALS
+================================ */
+
+.socials{
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:9px;
+}
+
+.social{
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    min-height:88px;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    border:
+        1px solid var(--line);
+
+    border-radius:16px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+}
+
+.social:hover{
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(255,255,255,.4);
+
+    background:
+        rgba(255,255,255,.07);
+
+    box-shadow:
+        0 0 28px rgba(255,255,255,.12);
+}
+
+.social-logo{
+    width:25px;
+    height:25px;
+
+    margin-bottom:8px;
+}
+
+.social-name{
+    font-size:11px;
+
+    font-weight:800;
+}
+
+.social-user{
+    margin-top:3px;
+
+    color:#777;
+
+    font-size:9px;
+}
+
+/* ================================
    COUNTERS
-========================= */
+================================ */
 
 .counters{
     display:flex;
 
     justify-content:center;
 
-    gap:9px;
+    gap:8px;
 
     margin-top:20px;
 }
 
 .counter{
-    padding:8px 12px;
+    padding:
+        9px 13px;
 
-    border:1px solid var(--border);
-    border-radius:10px;
+    border:
+        1px solid var(--line);
 
-    color:#999;
+    border-radius:11px;
 
-    background:rgba(255,255,255,.035);
+    background:
+        rgba(255,255,255,.035);
+
+    color:#888;
+
+    font-size:10px;
+}
+
+.counter strong{
+    color:#fff;
 
     font-size:11px;
 }
 
-.counter strong{
-    color:white;
+.like-button{
+    cursor:pointer;
+
+    transition:
+        background .2s ease,
+        border-color .2s ease;
 }
 
-/* =========================
+.like-button:hover{
+    background:
+        rgba(255,255,255,.07);
+
+    border-color:
+        rgba(255,255,255,.25);
+}
+
+.like-button.liked{
+    color:#fff;
+
+    border-color:
+        rgba(255,255,255,.3);
+
+    background:
+        rgba(255,255,255,.09);
+}
+
+.like-button:disabled{
+    cursor:default;
+}
+
+/* ================================
    ADMIN
-========================= */
+================================ */
 
 .admin-button{
     display:block;
 
-    margin:25px auto 5px;
+    margin:
+        25px auto 4px;
 
-    padding:8px 13px;
+    padding:
+        8px 13px;
 
-    color:#777;
+    color:#666;
 
-    border:1px solid var(--border);
+    border:
+        1px solid var(--line);
+
     border-radius:9px;
 
     background:transparent;
 
     cursor:pointer;
 
-    font-size:10px;
+    font-size:9px;
 
-    transition:.2s;
+    letter-spacing:1px;
+
+    transition:
+        color .2s ease,
+        border-color .2s ease;
 }
 
 .admin-button:hover{
-    color:white;
-    border-color:rgba(255,255,255,.3);
+    color:#fff;
+
+    border-color:
+        rgba(255,255,255,.3);
 }
 
 #adminPanel{
     display:none;
 
-    margin:18px 0 0;
+    margin:
+        18px -27px -28px;
 
-    padding:18px;
+    padding:20px 27px;
 
-    border-top:1px solid var(--border);
+    border-top:
+        1px solid var(--line);
 
-    background:rgba(0,0,0,.35);
+    background:
+        rgba(0,0,0,.35);
 }
 
 #adminPanel.show{
@@ -819,24 +1151,18 @@ audio{
 
 .admin-title{
     font-size:14px;
+
     font-weight:900;
 }
 
 .admin-note{
     margin-top:5px;
 
-    color:#888;
+    color:#777;
 
     font-size:10px;
+
     line-height:1.5;
-}
-
-.admin-grid{
-    display:grid;
-
-    gap:9px;
-
-    margin-top:15px;
 }
 
 .admin-input,
@@ -845,21 +1171,33 @@ audio{
 
     padding:10px;
 
-    color:white;
-
-    border:1px solid var(--border);
-    border-radius:9px;
-
     outline:none;
 
-    background:rgba(255,255,255,.045);
+    color:#fff;
+
+    border:
+        1px solid var(--line);
+
+    border-radius:9px;
+
+    background:
+        rgba(255,255,255,.045);
 
     font-family:inherit;
 }
 
 .admin-textarea{
-    min-height:75px;
+    min-height:70px;
+
     resize:vertical;
+}
+
+.admin-grid{
+    display:grid;
+
+    gap:8px;
+
+    margin-top:14px;
 }
 
 .admin-row{
@@ -875,7 +1213,7 @@ audio{
 
     gap:8px;
 
-    margin-top:10px;
+    margin-top:9px;
 }
 
 .admin-action{
@@ -883,81 +1221,133 @@ audio{
 
     padding:10px;
 
-    border:1px solid var(--border);
+    color:#fff;
+
+    border:
+        1px solid var(--line);
+
     border-radius:9px;
 
-    background:rgba(255,255,255,.06);
-
-    color:white;
+    background:
+        rgba(255,255,255,.06);
 
     cursor:pointer;
 }
 
-.admin-action:hover{
-    background:rgba(255,255,255,.11);
-}
-
-/* =========================
+/* ================================
    MOBILE
-========================= */
+================================ */
 
-@media(max-width:520px){
+@media(max-width:560px){
 
     .page{
-        padding:12px;
+        padding:
+            10px;
     }
 
-    .main-banner{
-        height:155px;
+    .card{
+        border-radius:23px;
+    }
+
+    .banner{
+        height:165px;
     }
 
     .profile-area{
         padding:
-            65px
-            16px
-            22px;
+            68px 16px 22px;
     }
 
-    #profilePfp{
-        width:108px;
-        height:108px;
+    .pfp-wrap{
+        width:110px;
+        height:110px;
 
-        top:-54px;
+        top:-55px;
+    }
+
+    .discord-status{
+        width:28px;
+        height:28px;
+    }
+
+    .discord-status::after{
+        width:15px;
+        height:15px;
     }
 
     .name{
         font-size:28px;
     }
 
-    .connections{
+    .socials{
         grid-template-columns:1fr;
     }
 
-    .tiktok-stats{
-        gap:2px;
+    .social{
+        min-height:66px;
+
+        flex-direction:row;
+
+        justify-content:flex-start;
+
+        padding:13px;
     }
 
-    #enterPfp{
-        width:125px;
-        height:125px;
+    .social-logo{
+        margin:
+            0 12px 0 0;
     }
 
-    .enter-name{
-        letter-spacing:-2px;
+    .social-user{
+        margin-top:2px;
+    }
+
+    #adminPanel{
+        margin:
+            18px -16px -22px;
+
+        padding:
+            18px 16px;
     }
 
     .admin-row{
         grid-template-columns:1fr;
     }
 }
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms !important;
+        transition-duration:.01ms !important;
+    }
+
+}
 </style>
 </head>
 
 <body>
 
-<!-- =========================
+<!-- ================================
+     BACKGROUND
+================================ -->
+
+<div class="background"></div>
+
+<!-- ================================
+     CHERRY BLOSSOMS
+================================ -->
+
+<div
+    class="blossoms"
+    id="blossoms"
+></div>
+
+<!-- ================================
      ENTER SCREEN
-========================= -->
+================================ -->
 
 <div id="enterScreen">
 
@@ -967,8 +1357,7 @@ audio{
         alt=""
     >
 
-    <div class="enter-dark"></div>
-
+    <div class="enter-overlay"></div>
     <div class="enter-vignette"></div>
 
     <div
@@ -986,7 +1375,7 @@ audio{
             soxsuva
         </div>
 
-        <div class="enter-click">
+        <div class="enter-text">
             CLICK TO ENTER
         </div>
 
@@ -994,614 +1383,604 @@ audio{
 
 </div>
 
-<div class="site-bg"></div>
+<!-- ================================
+     MAIN
+================================ -->
 
 <main class="page">
 
 <section class="card">
 
-<!-- =========================
-     MAIN BANNER
-========================= -->
-
-<div class="main-banner">
-
-    <img
-        id="mainBanner"
-        src="banner.gif"
-        alt="soxsuva banner"
-    >
-
-    <div class="banner-gradient"></div>
-
-</div>
-
-<div class="profile-area">
-
-<!-- =========================
-     PROFILE
-========================= -->
-
-<div class="profile">
-
-    <img
-        id="profilePfp"
-        src="pfp.jpeg"
-        alt="soxsuva"
-    >
-
-    <h1
-        class="name"
-        id="displayName"
-    >
-        soxsuva
-    </h1>
-
-    <div
-        class="username"
-        id="username"
-    >
-        @soxsuva
-    </div>
-
-    <p
-        class="bio"
-        id="bio"
-    >
-        welcome to my profile
-    </p>
-
-    <!-- BADGES -->
-
-    <div class="badges">
-
-        <!-- Nitro -->
-
-        <div
-            class="badge"
-            title="Nitro"
-        >
-            <svg viewBox="0 0 24 24">
-
-                <path
-                    fill="currentColor"
-                    d="M4 5h16v14H4z"
-                />
-
-                <path
-                    fill="#000"
-                    d="M8 8h8v2H8zm0 4h6v2H8z"
-                />
-
-            </svg>
-        </div>
-
-        <!-- Server Booster -->
-
-        <div
-            class="badge"
-            title="Server Booster"
-        >
-            <svg viewBox="0 0 24 24">
-
-                <path
-                    fill="currentColor"
-                    d="M12 2l3 7h7l-5.5 4.2L18.5 21 12 17l-6.5 4 2-7.8L2 9h7z"
-                />
-
-            </svg>
-        </div>
-
-        <!-- Quest -->
-
-        <div
-            class="badge"
-            title="Quest Completed"
-        >
-            <svg viewBox="0 0 24 24">
-
-                <circle
-                    cx="12"
-                    cy="12"
-                    r="9"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                />
-
-                <path
-                    d="M8 12l2.5 2.5L16 9"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                />
-
-            </svg>
-        </div>
-
-        <!-- Orb -->
-
-        <div
-            class="badge"
-            title="Orb"
-        >
-            <svg viewBox="0 0 24 24">
-
-                <circle
-                    cx="12"
-                    cy="12"
-                    r="8"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                />
-
-                <circle
-                    cx="12"
-                    cy="12"
-                    r="3"
-                    fill="currentColor"
-                />
-
-            </svg>
-        </div>
-
-    </div>
-
-    <!-- DISCORD STATUS -->
-
-    <div class="status-line">
-
-        <span
-            id="statusDot"
-            class="status-dot status-offline"
-        ></span>
-
-        <span id="statusText">
-            Checking Discord...
-        </span>
-
-    </div>
-
-</div>
-
-<!-- =========================
-     TIKTOK
-========================= -->
-
-<div class="tiktok-box">
-
-    <div class="tiktok-top">
-
-        <div class="tiktok-logo">
-
-            <svg viewBox="0 0 24 24">
-
-                <path
-                    fill="white"
-                    d="M16 3c.5 2.2 1.7 3.5 4 3.8v3.1c-1.6-.1-3-.6-4.1-1.5v6.8c0 4-2.9 6.2-6.3 6.2C6.3 21.4 4 19.2 4 16c0-3.4 2.7-5.8 6-5.8.3 0 .7 0 1 .1v3.2c-.3-.1-.6-.2-1-.2-1.5 0-2.7 1.1-2.7 2.7 0 1.5 1.1 2.5 2.5 2.5 1.7 0 2.7-1.1 2.7-3V3z"
-                />
-
-            </svg>
-
-        </div>
-
-        <div class="tiktok-user">
-
-            <div class="tiktok-title">
-                TikTok
-            </div>
-
-            <div class="tiktok-handle">
-                @not.p1nk
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="tiktok-stats">
-
-        <div class="tiktok-stat">
-
-            <div
-                class="tiktok-number"
-                id="following"
-            >
-                186
-            </div>
-
-            <div class="tiktok-label">
-                Following
-            </div>
-
-        </div>
-
-        <div class="tiktok-stat">
-
-            <div
-                class="tiktok-number"
-                id="followers"
-            >
-                691
-            </div>
-
-            <div class="tiktok-label">
-                Followers
-            </div>
-
-        </div>
-
-        <div class="tiktok-stat">
-
-            <div
-                class="tiktok-number"
-                id="tiktokLikes"
-            >
-                4,398
-            </div>
-
-            <div class="tiktok-label">
-                Likes
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-<!-- =========================
-     CONNECTIONS
-========================= -->
-
-<div class="section-title">
-    Connections
-</div>
-
-<div class="connections">
-
-    <!-- ROBLOX -->
-
-    <a
-        class="connection"
-        href="https://www.roblox.com/users/2807349866/profile"
-        target="_blank"
-        rel="noopener noreferrer"
-    >
-
-        <div class="connection-logo">
-
-            <svg viewBox="0 0 24 24">
-
-                <path
-                    fill="white"
-                    d="M5 3l16 5-5 16-16-5z"
-                />
-
-                <path
-                    fill="#000"
-                    d="M10 9l5 2-2 5-5-2z"
-                />
-
-            </svg>
-
-        </div>
-
-        <div>
-
-            <div class="connection-name">
-                Roblox
-            </div>
-
-            <div class="connection-user">
-                2807349866
-            </div>
-
-        </div>
-
-    </a>
-
-    <!-- SPOTIFY -->
-
-    <a
-        class="connection"
-        href="https://open.spotify.com/user/soxsuva"
-        target="_blank"
-        rel="noopener noreferrer"
-    >
-
-        <div class="connection-logo">
-
-            <svg viewBox="0 0 24 24">
-
-                <circle
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    fill="white"
-                />
-
-                <path
-                    d="M7 10c3.5-1 7.1-.7 10 .5M7.5 13c2.8-.7 5.8-.5 8.2.4M8.2 16c2.1-.4 4.2-.2 6 .4"
-                    fill="none"
-                    stroke="#000"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                />
-
-            </svg>
-
-        </div>
-
-        <div>
-
-            <div class="connection-name">
-                Spotify
-            </div>
-
-            <div class="connection-user">
-                soxsuva
-            </div>
-
-        </div>
-
-    </a>
-
-    <!-- XBOX -->
-
-    <a
-        class="connection"
-        href="#"
-        onclick="return false;"
-    >
-
-        <div class="connection-logo">
-
-            <svg viewBox="0 0 24 24">
-
-                <circle
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    fill="white"
-                />
-
-                <path
-                    d="M7 8c2-2 4-2 5 0 1-2 3-2 5 0M8 16c1-3 3-5 4-5s3 2 4 5"
-                    fill="none"
-                    stroke="#000"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                />
-
-            </svg>
-
-        </div>
-
-        <div>
-
-            <div class="connection-name">
-                Xbox
-            </div>
-
-            <div class="connection-user">
-                soxsuva
-            </div>
-
-        </div>
-
-    </a>
-
-    <!-- TIKTOK -->
-
-    <a
-        class="connection"
-        href="https://www.tiktok.com/@not.p1nk"
-        target="_blank"
-        rel="noopener noreferrer"
-    >
-
-        <div class="connection-logo">
-
-            <svg viewBox="0 0 24 24">
-
-                <path
-                    fill="white"
-                    d="M16 3c.5 2.2 1.7 3.5 4 3.8v3.1c-1.6-.1-3-.6-4.1-1.5v6.8c0 4-2.9 6.2-6.3 6.2C6.3 21.4 4 19.2 4 16c0-3.4 2.7-5.8 6-5.8.3 0 .7 0 1 .1v3.2c-.3-.1-.6-.2-1-.2-1.5 0-2.7 1.1-2.7 2.7 0 1.5 1.1 2.5 2.5 2.5 1.7 0 2.7-1.1 2.7-3V3z"
-                />
-
-            </svg>
-
-        </div>
-
-        <div>
-
-            <div class="connection-name">
-                TikTok
-            </div>
-
-            <div class="connection-user">
-                @not.p1nk
-            </div>
-
-        </div>
-
-    </a>
-
-</div>
-
-<!-- =========================
-     ACTIVITY
-========================= -->
-
-<div class="section-title">
-    Activity
-</div>
-
-<div
-    class="activity activity-empty"
-    id="activity"
->
-    Checking Discord activity...
-</div>
-
-<!-- =========================
-     MUSIC
-========================= -->
-
-<div class="music">
-
-    <div class="music-top">
+    <div class="banner">
 
         <img
-            class="album"
-            src="pfp.jpeg"
-            alt=""
+            id="mainBanner"
+            src="banner.gif"
+            alt="soxsuva"
         >
 
-        <div class="music-info">
+        <div class="banner-shade"></div>
 
-            <div class="music-title">
-                needy
+    </div>
+
+    <div class="profile-area">
+
+        <!-- PROFILE -->
+
+        <div class="profile">
+
+            <div class="pfp-wrap">
+
+                <img
+                    id="profilePfp"
+                    src="pfp.jpeg"
+                    alt="soxsuva"
+                >
+
+                <div
+                    id="discordStatus"
+                    class="discord-status offline"
+                    title="Offline"
+                ></div>
+
             </div>
 
-            <div class="music-artist">
-                Ariana Grande
+            <div
+                class="name"
+                id="displayName"
+            >
+                soxsuva
             </div>
 
+            <div
+                class="username"
+                id="username"
+            >
+                @soxsuva
+            </div>
+
+            <div
+                class="bio"
+                id="bio"
+            >
+                welcome to my profile
+            </div>
+
+            <!-- DISCORD BADGES -->
+
+            <div class="badges">
+
+                <!-- NITRO -->
+
+                <div
+                    class="badge"
+                    title="Discord Nitro"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+                        <path
+                            d="M5 4.5A2.5 2.5 0 0 1 7.5 2h9A2.5 2.5 0 0 1 19 4.5v15a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 19.5v-15Z"
+                            fill="white"
+                        />
+                        <path
+                            d="M8 7.5h8M8 11.5h8M8 15.5h5"
+                            stroke="#111"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                        />
+                    </svg>
+                </div>
+
+                <!-- BOOST -->
+
+                <div
+                    class="badge"
+                    title="Server Booster"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            fill="white"
+                            d="M12 2.2c.6 0 1.1.3 1.4.8l2.1 3.5 4 .8c1.3.2 1.8 1.8.9 2.7l-2.8 2.8.6 4c.2 1.3-1.2 2.3-2.3 1.7L12 16.6l-3.9 1.9c-1.2.6-2.5-.4-2.3-1.7l.6-4-2.8-2.8c-.9-.9-.4-2.5.9-2.7l4-.8 2.1-3.5c.3-.5.8-.8 1.4-.8Z"
+                        />
+                    </svg>
+                </div>
+
+                <!-- QUEST -->
+
+                <div
+                    class="badge"
+                    title="Discord Quest"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+                        <path
+                            d="M7 4h10a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3h-4l-3.5 3V17H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z"
+                            fill="white"
+                        />
+                        <path
+                            d="m8 11 2.3 2.2L16 7.8"
+                            stroke="#111"
+                            stroke-width="1.8"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </div>
+
+                <!-- ORBS -->
+
+                <div
+                    class="badge"
+                    title="Discord Orbs"
+                >
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="8.5"
+                            stroke="white"
+                            stroke-width="2"
+                        />
+                        <circle
+                            cx="12"
+                            cy="12"
+                            r="3"
+                            fill="white"
+                        />
+                        <circle
+                            cx="17.5"
+                            cy="6.5"
+                            r="1.5"
+                            fill="white"
+                        />
+                    </svg>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- TIKTOK -->
+
+        <a
+            class="tiktok"
+            href="https://www.tiktok.com/@not.p1nk"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+
+            <div class="tiktok-top">
+
+                <div class="tiktok-logo">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            fill="white"
+                            d="M16 3c.5 2.2 1.7 3.5 4 3.8v3.1c-1.6-.1-3-.6-4.1-1.5v6.8c0 4-2.9 6.2-6.3 6.2C6.3 21.4 4 19.2 4 16c0-3.4 2.7-5.8 6-5.8.3 0 .7 0 1 .1v3.2c-.3-.1-.6-.2-1-.2-1.5 0-2.7 1.1-2.7 2.7 0 1.5 1.1 2.5 2.5 2.5 1.7 0 2.7-1.1 2.7-3V3z"
+                        />
+                    </svg>
+
+                </div>
+
+                <div class="tiktok-info">
+
+                    <div class="tiktok-title">
+                        TikTok
+                    </div>
+
+                    <div class="tiktok-handle">
+                        @not.p1nk
+                    </div>
+
+                </div>
+
+                <div class="tiktok-arrow">
+                    →
+                </div>
+
+            </div>
+
+            <div class="tiktok-stats">
+
+                <div class="stat">
+
+                    <div
+                        class="stat-number"
+                        id="following"
+                    >
+                        186
+                    </div>
+
+                    <div class="stat-label">
+                        Following
+                    </div>
+
+                </div>
+
+                <div class="stat">
+
+                    <div
+                        class="stat-number"
+                        id="followers"
+                    >
+                        691
+                    </div>
+
+                    <div class="stat-label">
+                        Followers
+                    </div>
+
+                </div>
+
+                <div class="stat">
+
+                    <div
+                        class="stat-number"
+                        id="tiktokLikes"
+                    >
+                        4,398
+                    </div>
+
+                    <div class="stat-label">
+                        Likes
+                    </div>
+
+                </div>
+
+            </div>
+
+        </a>
+
+        <!-- ACTIVITY -->
+
+        <div class="section-title">
+            Activity
         </div>
 
         <div
-            class="music-status"
-            id="musicStatus"
+            id="activity"
+            class="activity activity-empty"
         >
-            Ready
+            Checking activity...
         </div>
 
-    </div>
+        <!-- MUSIC -->
 
-    <audio
-        id="music"
-        src="needy.mp3"
-        controls
-        loop
-    ></audio>
+        <div class="section-title">
+            Music
+        </div>
 
-</div>
+        <div class="music">
 
-<!-- =========================
-     COUNTERS
-========================= -->
+            <div class="music-top">
 
-<div class="counters">
+                <img
+                    class="album"
+                    src="pfp.jpeg"
+                    alt=""
+                >
 
-    <div class="counter">
-        👁 <strong id="views">1</strong> views
-    </div>
+                <div class="music-info">
 
-    <button
-        class="counter"
-        id="likeButton"
-        style="cursor:pointer"
-    >
-        ♥ <strong id="likes">0</strong> likes
-    </button>
+                    <div class="music-title">
+                        needy
+                    </div>
 
-</div>
+                    <div class="music-artist">
+                        Ariana Grande
+                    </div>
 
-<!-- =========================
-     ADMIN BUTTON
-========================= -->
+                </div>
 
-<button
-    class="admin-button"
-    id="adminButton"
->
-    ADMIN
-</button>
+                <div
+                    class="music-status"
+                    id="musicStatus"
+                >
+                    Paused
+                </div>
 
-<!-- =========================
-     ADMIN PANEL
-========================= -->
+            </div>
 
-<div id="adminPanel">
+            <div class="music-player">
 
-    <div class="admin-title">
-        Site Control
-    </div>
+                <button
+                    class="play-button"
+                    id="playButton"
+                    aria-label="Play music"
+                >
+                    ▶
+                </button>
 
-    <div class="admin-note">
-        Frontend editor. These settings currently
-        save only on this browser. We'll replace
-        this with a secure Vercel backend next.
-    </div>
+                <div class="progress-area">
 
-    <div class="admin-grid">
+                    <div
+                        class="progress"
+                        id="progress"
+                    >
+                        <div
+                            class="progress-fill"
+                            id="progressFill"
+                        ></div>
+                    </div>
 
-        <input
-            class="admin-input"
-            id="adminName"
-            placeholder="Display name"
-        >
+                    <div class="time">
 
-        <input
-            class="admin-input"
-            id="adminUsername"
-            placeholder="Username"
-        >
+                        <span id="currentTime">
+                            0:00
+                        </span>
 
-        <textarea
-            class="admin-textarea"
-            id="adminBio"
-            placeholder="Bio"
-        ></textarea>
+                        <span id="duration">
+                            0:00
+                        </span>
 
-        <div class="admin-row">
+                    </div>
 
-            <input
-                class="admin-input"
-                id="adminFollowers"
-                placeholder="TikTok followers"
-            >
+                </div>
 
-            <input
-                class="admin-input"
-                id="adminFollowing"
-                placeholder="TikTok following"
-            >
+            </div>
+
+            <audio
+                id="audio"
+                src="needy.mp3"
+                preload="metadata"
+                loop
+            ></audio>
 
         </div>
 
-        <input
-            class="admin-input"
-            id="adminLikes"
-            placeholder="TikTok likes"
-        >
+        <!-- SOCIALS -->
 
-    </div>
+        <div class="section-title">
+            Socials
+        </div>
 
-    <div class="admin-actions">
+        <div class="socials">
+
+            <!-- ROBLOX -->
+
+            <a
+                class="social"
+                href="https://www.roblox.com/users/2807349866/profile"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                <svg
+                    class="social-logo"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        fill="white"
+                        d="M4.2 2.7 21.3 7 17 21.3 2.7 17 4.2 2.7Z"
+                    />
+                    <path
+                        fill="#000"
+                        d="m9.4 9.2 5.3 1.3-1.3 5.3-5.3-1.3 1.3-5.3Z"
+                    />
+                </svg>
+
+                <div class="social-name">
+                    Roblox
+                </div>
+
+                <div class="social-user">
+                    serdemsivridagg
+                </div>
+
+            </a>
+
+            <!-- SPOTIFY -->
+
+            <a
+                class="social"
+                href="https://open.spotify.com/user/soxsuva"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                <svg
+                    class="social-logo"
+                    viewBox="0 0 24 24"
+                >
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        fill="white"
+                    />
+
+                    <path
+                        d="M7 9.5c3.7-1 7.6-.7 10.4.5M7.8 12.8c2.9-.7 5.9-.5 8.4.4M8.5 15.8c2.1-.4 4.2-.2 6 .4"
+                        fill="none"
+                        stroke="#000"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                    />
+                </svg>
+
+                <div class="social-name">
+                    Spotify
+                </div>
+
+                <div class="social-user">
+                    soxsuva
+                </div>
+
+            </a>
+
+            <!-- XBOX -->
+
+            <a
+                class="social"
+                href="#"
+                onclick="return false;"
+            >
+
+                <svg
+                    class="social-logo"
+                    viewBox="0 0 24 24"
+                >
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        fill="white"
+                    />
+
+                    <path
+                        d="M7.2 8.1C8.7 6.7 10.5 6 12 7.2c1.5-1.2 3.3-.5 4.8.9M7.2 16.2c1.4-2.7 3.2-4.6 4.8-4.6s3.4 1.9 4.8 4.6"
+                        fill="none"
+                        stroke="#000"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                    />
+
+                    <path
+                        d="M8.4 7.1c1.3-.9 2.5-1.4 3.6-1.4s2.3.5 3.6 1.4"
+                        fill="none"
+                        stroke="#000"
+                        stroke-width="1.2"
+                        stroke-linecap="round"
+                    />
+
+                </svg>
+
+                <div class="social-name">
+                    Xbox
+                </div>
+
+                <div class="social-user">
+                    soxsuva
+                </div>
+
+            </a>
+
+        </div>
+
+        <!-- COUNTERS -->
+
+        <div class="counters">
+
+            <div class="counter">
+                👁
+                <strong id="views">
+                    0
+                </strong>
+                views
+            </div>
+
+            <button
+                class="counter like-button"
+                id="likeButton"
+                type="button"
+            >
+                ♥
+                <strong id="likes">
+                    0
+                </strong>
+                likes
+            </button>
+
+        </div>
+
+        <!-- ADMIN -->
 
         <button
-            class="admin-action"
-            id="saveAdmin"
+            class="admin-button"
+            id="adminButton"
+            type="button"
         >
-            Save Changes
+            ADMIN
         </button>
 
-        <button
-            class="admin-action"
-            id="resetAdmin"
-        >
-            Reset
-        </button>
+        <div id="adminPanel">
+
+            <div class="admin-title">
+                Site Control
+            </div>
+
+            <div class="admin-note">
+                The secure/global version of this panel will be connected to your Vercel backend next. Anything saved with this frontend-only version is browser-specific.
+            </div>
+
+            <div class="admin-grid">
+
+                <input
+                    class="admin-input"
+                    id="adminName"
+                    placeholder="Display name"
+                >
+
+                <input
+                    class="admin-input"
+                    id="adminUsername"
+                    placeholder="Username"
+                >
+
+                <textarea
+                    class="admin-textarea"
+                    id="adminBio"
+                    placeholder="Bio"
+                ></textarea>
+
+                <div class="admin-row">
+
+                    <input
+                        class="admin-input"
+                        id="adminFollowing"
+                        placeholder="Following"
+                    >
+
+                    <input
+                        class="admin-input"
+                        id="adminFollowers"
+                        placeholder="Followers"
+                    >
+
+                </div>
+
+                <input
+                    class="admin-input"
+                    id="adminLikes"
+                    placeholder="Likes"
+                >
+
+            </div>
+
+            <div class="admin-actions">
+
+                <button
+                    class="admin-action"
+                    id="saveAdmin"
+                    type="button"
+                >
+                    Save
+                </button>
+
+                <button
+                    class="admin-action"
+                    id="resetAdmin"
+                    type="button"
+                >
+                    Reset
+                </button>
+
+            </div>
+
+        </div>
 
     </div>
-
-</div>
-
-</div>
 
 </section>
 
@@ -1609,240 +1988,15 @@ audio{
 
 <script>
 
-/* =========================
-   CONFIG
-========================= */
+/* ==========================================
+   DISCORD / LANYARD
+========================================== */
 
 const DISCORD_ID =
     "1491533148914450614";
 
 
-/* =========================
-   ELEMENTS
-========================= */
-
-const enterScreen =
-    document.getElementById("enterScreen");
-
-const enterBanner =
-    document.getElementById("enterBanner");
-
-const enterPfp =
-    document.getElementById("enterPfp");
-
-const enterContent =
-    document.getElementById("enterContent");
-
-const mainBanner =
-    document.getElementById("mainBanner");
-
-const profilePfp =
-    document.getElementById("profilePfp");
-
-const music =
-    document.getElementById("music");
-
-
-/* =========================
-   ENTER ANIMATION
-========================= */
-
-let entered = false;
-
-enterScreen.addEventListener(
-    "click",
-    async () => {
-
-        if(entered) return;
-
-        entered = true;
-
-        /*
-           Try to start music.
-        */
-
-        try{
-
-            await music.play();
-
-            document.getElementById(
-                "musicStatus"
-            ).textContent =
-                "Playing";
-
-        }catch(e){
-
-            document.getElementById(
-                "musicStatus"
-            ).textContent =
-                "Click play";
-
-        }
-
-
-        /*
-           Keep destination PFP visible
-           underneath the animation.
-        */
-
-        profilePfp.style.opacity = "1";
-
-
-        const start =
-            enterPfp.getBoundingClientRect();
-
-        const end =
-            profilePfp.getBoundingClientRect();
-
-
-        const startX =
-            start.left + start.width / 2;
-
-        const startY =
-            start.top + start.height / 2;
-
-        const endX =
-            end.left + end.width / 2;
-
-        const endY =
-            end.top + end.height / 2;
-
-
-        const pfpX =
-            endX - startX;
-
-        const pfpY =
-            endY - startY;
-
-
-        const pfpScale =
-            end.width / start.width;
-
-
-        /*
-           Banner destination.
-        */
-
-        const bStart =
-            enterBanner.getBoundingClientRect();
-
-        const bEnd =
-            mainBanner.getBoundingClientRect();
-
-
-        const bStartX =
-            bStart.left + bStart.width / 2;
-
-        const bStartY =
-            bStart.top + bStart.height / 2;
-
-        const bEndX =
-            bEnd.left + bEnd.width / 2;
-
-        const bEndY =
-            bEnd.top + bEnd.height / 2;
-
-
-        const bannerX =
-            bEndX - bStartX;
-
-        const bannerY =
-            bEndY - bStartY;
-
-
-        const bannerScale =
-            Math.min(
-                bEnd.width / bStart.width,
-                bEnd.height / bStart.height
-            );
-
-
-        /*
-           Fade entrance text.
-        */
-
-        enterContent.style.opacity = "0";
-
-
-        /*
-           Animate banner.
-        */
-
-        enterBanner.style.transition =
-            "transform 1.15s cubic-bezier(.16,1,.3,1)";
-
-        enterBanner.style.transform =
-            `
-            translate(
-                ${bannerX}px,
-                ${bannerY}px
-            )
-            scale(
-                ${bannerScale}
-            )
-            `;
-
-
-        /*
-           Animate PFP.
-        */
-
-        enterPfp.style.transition =
-            "transform 1.05s cubic-bezier(.16,1,.3,1)";
-
-        enterPfp.style.transform =
-            `
-            translate(
-                ${pfpX}px,
-                ${pfpY}px
-            )
-            scale(
-                ${pfpScale}
-            )
-            `;
-
-
-        /*
-           Fade entrance away.
-        */
-
-        setTimeout(
-            () => {
-
-                enterScreen.style.opacity =
-                    "0";
-
-            },
-            700
-        );
-
-
-        /*
-           Remove entrance layer.
-        */
-
-        setTimeout(
-            () => {
-
-                enterScreen.style.visibility =
-                    "hidden";
-
-                enterScreen.style.pointerEvents =
-                    "none";
-
-            },
-            1250
-        );
-
-    }
-);
-
-
-/* =========================
-   DISCORD STATUS
-========================= */
-
-async function loadDiscord(){
+async function updateDiscord(){
 
     try{
 
@@ -1858,13 +2012,10 @@ async function loadDiscord(){
             !json.success ||
             !json.data
         ){
-
             throw new Error(
-                "No Discord data"
+                "Discord data unavailable"
             );
-
         }
-
 
         const data =
             json.data;
@@ -1873,94 +2024,48 @@ async function loadDiscord(){
             data.discord_status ||
             "offline";
 
-
-        const dot =
+        const statusElement =
             document.getElementById(
-                "statusDot"
+                "discordStatus"
             );
 
-        const text =
-            document.getElementById(
-                "statusText"
-            );
+        statusElement.className =
+            "discord-status " +
+            status;
+
+        statusElement.title =
+            status === "dnd"
+                ? "Do Not Disturb"
+                : status.charAt(0).toUpperCase()
+                    + status.slice(1);
 
 
-        dot.className =
-            "status-dot";
-
-
-        if(status === "online"){
-
-            dot.classList.add(
-                "status-online"
-            );
-
-            text.textContent =
-                "Online";
-
-        }
-
-        else if(status === "idle"){
-
-            dot.classList.add(
-                "status-idle"
-            );
-
-            text.textContent =
-                "Idle";
-
-        }
-
-        else if(status === "dnd"){
-
-            dot.classList.add(
-                "status-dnd"
-            );
-
-            text.textContent =
-                "Do Not Disturb";
-
-        }
-
-        else{
-
-            dot.classList.add(
-                "status-offline"
-            );
-
-            text.textContent =
-                "Offline";
-
-        }
-
-
-        loadActivity(data);
+        updateActivity(data);
 
     }catch(error){
 
-        console.error(
-            "Discord error:",
-            error
-        );
+        console.error(error);
 
-        document.getElementById(
-            "statusDot"
-        ).className =
-            "status-dot status-offline";
+        const statusElement =
+            document.getElementById(
+                "discordStatus"
+            );
 
-        document.getElementById(
-            "statusText"
-        ).textContent =
+        statusElement.className =
+            "discord-status offline";
+
+        statusElement.title =
             "Offline";
 
-        document.getElementById(
-            "activity"
-        ).className =
+        const activity =
+            document.getElementById(
+                "activity"
+            );
+
+        activity.className =
             "activity activity-empty";
 
-        document.getElementById(
-            "activity"
-        ).textContent =
+        activity.textContent =
             "No activity right now";
 
     }
@@ -1968,11 +2073,11 @@ async function loadDiscord(){
 }
 
 
-/* =========================
-   DISCORD ACTIVITY
-========================= */
+/* ==========================================
+   ACTIVITY
+========================================== */
 
-function loadActivity(data){
+function updateActivity(data){
 
     const activity =
         document.getElementById(
@@ -1980,29 +2085,25 @@ function loadActivity(data){
         );
 
 
-    /*
-       Spotify
-    */
+    /* Spotify */
 
     if(
         data.listening_to_spotify &&
         data.spotify
     ){
 
-        const s =
+        const spotify =
             data.spotify;
-
 
         activity.className =
             "activity";
-
 
         activity.innerHTML = `
 
             <img
                 class="activity-art"
-                src="${safe(
-                    s.album_art_url
+                src="${escapeHTML(
+                    spotify.album_art_url
                 )}"
                 alt=""
             >
@@ -2014,24 +2115,26 @@ function loadActivity(data){
                 </div>
 
                 <div class="activity-title">
-                    ${safe(s.song)}
+                    ${escapeHTML(
+                        spotify.song
+                    )}
                 </div>
 
                 <div class="activity-details">
-                    ${safe(s.artist)}
+                    ${escapeHTML(
+                        spotify.artist
+                    )}
                 </div>
 
             </div>
-
         `;
 
         return;
+
     }
 
 
-    /*
-       Game activity
-    */
+    /* Xbox / game / other activity */
 
     if(
         data.activities &&
@@ -2040,15 +2143,14 @@ function loadActivity(data){
 
         const game =
             data.activities.find(
-                x => x.type !== 4
+                activity =>
+                    activity.type !== 4
             );
-
 
         if(game){
 
             activity.className =
                 "activity";
-
 
             activity.innerHTML = `
 
@@ -2058,7 +2160,7 @@ function loadActivity(data){
                         display:flex;
                         align-items:center;
                         justify-content:center;
-                        font-size:21px;
+                        font-size:22px;
                     "
                 >
                     🎮
@@ -2071,14 +2173,13 @@ function loadActivity(data){
                     </div>
 
                     <div class="activity-title">
-                        ${safe(
-                            game.name ||
-                            "Playing a game"
+                        ${escapeHTML(
+                            game.name
                         )}
                     </div>
 
                     <div class="activity-details">
-                        ${safe(
+                        ${escapeHTML(
                             game.details ||
                             game.state ||
                             ""
@@ -2086,18 +2187,14 @@ function loadActivity(data){
                     </div>
 
                 </div>
-
             `;
 
             return;
+
         }
 
     }
 
-
-    /*
-       No activity
-    */
 
     activity.className =
         "activity activity-empty";
@@ -2108,57 +2205,619 @@ function loadActivity(data){
 }
 
 
-/* =========================
-   ESCAPE HTML
-========================= */
+/* ==========================================
+   SAFE TEXT
+========================================== */
 
-function safe(value){
+function escapeHTML(value){
 
     return String(value || "")
-        .replaceAll(
-            "&",
-            "&amp;"
-        )
-        .replaceAll(
-            "<",
-            "&lt;"
-        )
-        .replaceAll(
-            ">",
-            "&gt;"
-        )
-        .replaceAll(
-            '"',
-            "&quot;"
-        )
-        .replaceAll(
-            "'",
-            "&#039;"
-        );
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
 
 }
 
 
-/* =========================
-   VIEW COUNTER
-========================= */
+/* ==========================================
+   MUSIC
+========================================== */
 
-const viewKey =
-    "soxsuva_views";
+const audio =
+    document.getElementById(
+        "audio"
+    );
+
+const playButton =
+    document.getElementById(
+        "playButton"
+    );
+
+const progress =
+    document.getElementById(
+        "progress"
+    );
+
+const progressFill =
+    document.getElementById(
+        "progressFill"
+    );
+
+const currentTime =
+    document.getElementById(
+        "currentTime"
+    );
+
+const duration =
+    document.getElementById(
+        "duration"
+    );
+
+const musicStatus =
+    document.getElementById(
+        "musicStatus"
+    );
+
+
+function formatTime(seconds){
+
+    if(
+        !Number.isFinite(seconds)
+    ){
+        return "0:00";
+    }
+
+    const minutes =
+        Math.floor(
+            seconds / 60
+        );
+
+    const secs =
+        Math.floor(
+            seconds % 60
+        )
+        .toString()
+        .padStart(2,"0");
+
+    return `${minutes}:${secs}`;
+
+}
+
+
+function updateMusic(){
+
+    if(
+        audio.duration
+    ){
+
+        progressFill.style.width =
+            (
+                audio.currentTime /
+                audio.duration *
+                100
+            ) + "%";
+
+        currentTime.textContent =
+            formatTime(
+                audio.currentTime
+            );
+
+        duration.textContent =
+            formatTime(
+                audio.duration
+            );
+
+    }
+
+}
+
+
+audio.addEventListener(
+    "loadedmetadata",
+    updateMusic
+);
+
+audio.addEventListener(
+    "timeupdate",
+    updateMusic
+);
+
+
+audio.addEventListener(
+    "play",
+    () => {
+
+        playButton.textContent =
+            "❚❚";
+
+        musicStatus.textContent =
+            "Playing";
+
+    }
+);
+
+
+audio.addEventListener(
+    "pause",
+    () => {
+
+        playButton.textContent =
+            "▶";
+
+        musicStatus.textContent =
+            "Paused";
+
+    }
+);
+
+
+playButton.addEventListener(
+    "click",
+    () => {
+
+        if(audio.paused){
+
+            audio.play().catch(
+                () => {}
+            );
+
+        }else{
+
+            audio.pause();
+
+        }
+
+    }
+);
+
+
+progress.addEventListener(
+    "click",
+    event => {
+
+        if(!audio.duration)
+            return;
+
+        const rect =
+            progress.getBoundingClientRect();
+
+        const percent =
+            (
+                event.clientX -
+                rect.left
+            ) / rect.width;
+
+        audio.currentTime =
+            percent *
+            audio.duration;
+
+    }
+);
+
+
+/* ==========================================
+   CLICK TO ENTER
+========================================== */
+
+const enterScreen =
+    document.getElementById(
+        "enterScreen"
+    );
+
+const enterBanner =
+    document.getElementById(
+        "enterBanner"
+    );
+
+const enterPfp =
+    document.getElementById(
+        "enterPfp"
+    );
+
+const enterContent =
+    document.getElementById(
+        "enterContent"
+    );
+
+const mainBanner =
+    document.getElementById(
+        "mainBanner"
+    );
+
+const profilePfp =
+    document.getElementById(
+        "profilePfp"
+    );
+
+
+let entered =
+    false;
+
+
+enterScreen.addEventListener(
+    "click",
+    () => {
+
+        if(entered)
+            return;
+
+        entered = true;
+
+
+        /* Start music */
+
+        audio.play()
+            .catch(
+                () => {}
+            );
+
+
+        /*
+           IMPORTANT:
+           Clone the PFP instead of moving
+           the real entrance PFP.
+
+           This means the original PFP can
+           never disappear from the main page.
+        */
+
+        const pfpClone =
+            enterPfp.cloneNode(true);
+
+        pfpClone.id =
+            "pfpAnimationClone";
+
+        document.body.appendChild(
+            pfpClone
+        );
+
+
+        const source =
+            enterPfp.getBoundingClientRect();
+
+        const destination =
+            profilePfp.getBoundingClientRect();
+
+
+        const sourceCenterX =
+            source.left +
+            source.width / 2;
+
+        const sourceCenterY =
+            source.top +
+            source.height / 2;
+
+        const destinationCenterX =
+            destination.left +
+            destination.width / 2;
+
+        const destinationCenterY =
+            destination.top +
+            destination.height / 2;
+
+
+        const x =
+            destinationCenterX -
+            sourceCenterX;
+
+        const y =
+            destinationCenterY -
+            sourceCenterY;
+
+
+        const scale =
+            destination.width /
+            source.width;
+
+
+        pfpClone.style.cssText = `
+
+            position:fixed;
+
+            left:${source.left}px;
+
+            top:${source.top}px;
+
+            width:${source.width}px;
+
+            height:${source.height}px;
+
+            object-fit:cover;
+
+            border-radius:50%;
+
+            border:3px solid rgba(255,255,255,.92);
+
+            z-index:100005;
+
+            pointer-events:none;
+
+            box-shadow:
+                0 0 35px rgba(255,255,255,.2);
+
+            transition:
+                transform 1.05s
+                cubic-bezier(.16,1,.3,1),
+                opacity .2s ease;
+
+        `;
+
+
+        /*
+           Clone banner.
+           It moves toward the main banner
+           but does NOT zoom ridiculously.
+        */
+
+        const bannerClone =
+            enterBanner.cloneNode(true);
+
+        bannerClone.id =
+            "bannerAnimationClone";
+
+        document.body.appendChild(
+            bannerClone
+        );
+
+
+        const bannerSource =
+            enterBanner.getBoundingClientRect();
+
+        const bannerDestination =
+            mainBanner.getBoundingClientRect();
+
+
+        const bannerSourceCenterX =
+            bannerSource.left +
+            bannerSource.width / 2;
+
+        const bannerSourceCenterY =
+            bannerSource.top +
+            bannerSource.height / 2;
+
+        const bannerDestinationCenterX =
+            bannerDestination.left +
+            bannerDestination.width / 2;
+
+        const bannerDestinationCenterY =
+            bannerDestination.top +
+            bannerDestination.height / 2;
+
+
+        const bx =
+            bannerDestinationCenterX -
+            bannerSourceCenterX;
+
+        const by =
+            bannerDestinationCenterY -
+            bannerSourceCenterY;
+
+
+        /*
+           Keep the banner nearly the same scale.
+        */
+
+        const bscale =
+            Math.max(
+                .88,
+                Math.min(
+                    1.05,
+                    bannerDestination.width /
+                    bannerSource.width
+                )
+            );
+
+
+        bannerClone.style.cssText = `
+
+            position:fixed;
+
+            left:${bannerSource.left}px;
+
+            top:${bannerSource.top}px;
+
+            width:${bannerSource.width}px;
+
+            height:${bannerSource.height}px;
+
+            object-fit:cover;
+
+            z-index:100004;
+
+            pointer-events:none;
+
+            filter:brightness(.58);
+
+            transition:
+                transform 1.05s
+                cubic-bezier(.16,1,.3,1),
+                opacity .25s ease;
+
+        `;
+
+
+        requestAnimationFrame(
+            () => {
+
+                pfpClone.style.transform =
+                    `
+                    translate(
+                        ${x}px,
+                        ${y}px
+                    )
+                    scale(
+                        ${scale}
+                    )
+                    `;
+
+
+                bannerClone.style.transform =
+                    `
+                    translate(
+                        ${bx}px,
+                        ${by}px
+                    )
+                    scale(
+                        ${bscale}
+                    )
+                    `;
+
+
+                enterContent.style.opacity =
+                    "0";
+
+            }
+        );
+
+
+        setTimeout(
+            () => {
+
+                enterScreen.style.opacity =
+                    "0";
+
+                pfpClone.style.opacity =
+                    "0";
+
+                bannerClone.style.opacity =
+                    "0";
+
+            },
+            850
+        );
+
+
+        setTimeout(
+            () => {
+
+                enterScreen.style.visibility =
+                    "hidden";
+
+                enterScreen.style.pointerEvents =
+                    "none";
+
+                pfpClone.remove();
+
+                bannerClone.remove();
+
+            },
+            1250
+        );
+
+    }
+);
+
+
+/* ==========================================
+   CHERRY BLOSSOM GENERATOR
+========================================== */
+
+const blossoms =
+    document.getElementById(
+        "blossoms"
+    );
+
+
+for(
+    let i = 0;
+    i < 28;
+    i++
+){
+
+    const blossom =
+        document.createElement(
+            "div"
+        );
+
+    blossom.className =
+        "blossom";
+
+
+    blossom.style.left =
+        Math.random() * 100 + "%";
+
+
+    blossom.style.animationDuration =
+        (
+            7 +
+            Math.random() * 8
+        ) + "s";
+
+
+    blossom.style.animationDelay =
+        (
+            Math.random() * 9
+        ) + "s";
+
+
+    blossom.style.setProperty(
+        "--drift",
+        (
+            -80 +
+            Math.random() * 160
+        ) + "px"
+    );
+
+
+    blossom.style.width =
+        (
+            6 +
+            Math.random() * 6
+        ) + "px";
+
+
+    blossom.style.height =
+        (
+            5 +
+            Math.random() * 5
+        ) + "px";
+
+
+    blossoms.appendChild(
+        blossom
+    );
+
+}
+
+
+/* ==========================================
+   GLOBAL VIEW COUNTER
+   TEMPORARY LOCAL VERSION
+========================================== */
+
+const viewedKey =
+    "soxsuva_viewed_v2";
 
 let views =
     Number(
         localStorage.getItem(
-            viewKey
+            "soxsuva_views_v2"
         )
     ) || 0;
 
-views++;
 
-localStorage.setItem(
-    viewKey,
-    views
-);
+if(
+    !localStorage.getItem(
+        viewedKey
+    )
+){
+
+    views++;
+
+    localStorage.setItem(
+        "soxsuva_views_v2",
+        views
+    );
+
+    localStorage.setItem(
+        viewedKey,
+        "true"
+    );
+
+}
+
 
 document.getElementById(
     "views"
@@ -2166,19 +2825,20 @@ document.getElementById(
     views;
 
 
-/* =========================
-   LIKE COUNTER
-========================= */
+/* ==========================================
+   ONE-TIME LIKE
+========================================== */
 
-const likeKey =
-    "soxsuva_likes";
+const likedKey =
+    "soxsuva_liked_v2";
 
 let likes =
     Number(
         localStorage.getItem(
-            likeKey
+            "soxsuva_likes_v2"
         )
     ) || 0;
+
 
 document.getElementById(
     "likes"
@@ -2186,31 +2846,74 @@ document.getElementById(
     likes;
 
 
-document.getElementById(
-    "likeButton"
-).addEventListener(
+const likeButton =
+    document.getElementById(
+        "likeButton"
+    );
+
+
+if(
+    localStorage.getItem(
+        likedKey
+    )
+){
+
+    likeButton.classList.add(
+        "liked"
+    );
+
+    likeButton.disabled =
+        true;
+
+}
+
+
+likeButton.addEventListener(
     "click",
     () => {
+
+        if(
+            localStorage.getItem(
+                likedKey
+            )
+        ){
+            return;
+        }
+
 
         likes++;
 
         localStorage.setItem(
-            likeKey,
+            "soxsuva_likes_v2",
             likes
         );
+
+        localStorage.setItem(
+            likedKey,
+            "true"
+        );
+
 
         document.getElementById(
             "likes"
         ).textContent =
             likes;
 
+
+        likeButton.classList.add(
+            "liked"
+        );
+
+        likeButton.disabled =
+            true;
+
     }
 );
 
 
-/* =========================
+/* ==========================================
    ADMIN PANEL
-========================= */
+========================================== */
 
 const adminButton =
     document.getElementById(
@@ -2235,10 +2938,6 @@ adminButton.addEventListener(
 );
 
 
-/* =========================
-   ADMIN DATA
-========================= */
-
 const defaultData = {
 
     name:
@@ -2250,11 +2949,11 @@ const defaultData = {
     bio:
         "welcome to my profile",
 
-    followers:
-        "691",
-
     following:
         "186",
+
+    followers:
+        "691",
 
     likes:
         "4,398"
@@ -2262,18 +2961,19 @@ const defaultData = {
 };
 
 
-function loadAdminData(){
+function loadAdmin(){
 
     const saved =
         JSON.parse(
             localStorage.getItem(
-                "soxsuva_site"
+                "soxsuva_profile_v2"
             ) || "null"
         );
 
 
     const data =
-        saved || defaultData;
+        saved ||
+        defaultData;
 
 
     document.getElementById(
@@ -2295,15 +2995,15 @@ function loadAdminData(){
 
 
     document.getElementById(
-        "followers"
-    ).textContent =
-        data.followers;
-
-
-    document.getElementById(
         "following"
     ).textContent =
         data.following;
+
+
+    document.getElementById(
+        "followers"
+    ).textContent =
+        data.followers;
 
 
     document.getElementById(
@@ -2331,15 +3031,15 @@ function loadAdminData(){
 
 
     document.getElementById(
-        "adminFollowers"
-    ).value =
-        data.followers;
-
-
-    document.getElementById(
         "adminFollowing"
     ).value =
         data.following;
+
+
+    document.getElementById(
+        "adminFollowers"
+    ).value =
+        data.followers;
 
 
     document.getElementById(
@@ -2350,12 +3050,8 @@ function loadAdminData(){
 }
 
 
-loadAdminData();
+loadAdmin();
 
-
-/* =========================
-   SAVE ADMIN
-========================= */
 
 document.getElementById(
     "saveAdmin"
@@ -2383,15 +3079,15 @@ document.getElementById(
                 ).value ||
                 "welcome to my profile",
 
-            followers:
-                document.getElementById(
-                    "adminFollowers"
-                ).value ||
-                "0",
-
             following:
                 document.getElementById(
                     "adminFollowing"
+                ).value ||
+                "0",
+
+            followers:
+                document.getElementById(
+                    "adminFollowers"
                 ).value ||
                 "0",
 
@@ -2405,25 +3101,20 @@ document.getElementById(
 
 
         localStorage.setItem(
-            "soxsuva_site",
+            "soxsuva_profile_v2",
             JSON.stringify(data)
         );
 
 
-        loadAdminData();
-
+        loadAdmin();
 
         alert(
-            "Saved on this device."
+            "Saved on this browser."
         );
 
     }
 );
 
-
-/* =========================
-   RESET ADMIN
-========================= */
 
 document.getElementById(
     "resetAdmin"
@@ -2432,29 +3123,24 @@ document.getElementById(
     () => {
 
         localStorage.removeItem(
-            "soxsuva_site"
+            "soxsuva_profile_v2"
         );
 
-        loadAdminData();
+        loadAdmin();
 
     }
 );
 
 
-/* =========================
+/* ==========================================
    START DISCORD
-========================= */
+========================================== */
 
-loadDiscord();
+updateDiscord();
 
-
-/*
-   Refresh Discord status/activity
-   every 15 seconds.
-*/
 
 setInterval(
-    loadDiscord,
+    updateDiscord,
     15000
 );
 
