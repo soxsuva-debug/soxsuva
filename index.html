@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>soxsuva</title>
+    <meta name="description" content="soxsuva">
 
     <style>
         * {
@@ -18,14 +18,14 @@
             --text: #ffffff;
             --muted: rgba(255, 255, 255, 0.58);
             --border: rgba(255, 255, 255, 0.13);
-            --glass: rgba(5, 5, 5, 0.67);
+            --glass: rgba(5, 5, 5, 0.68);
         }
 
         html,
         body {
             min-height: 100%;
             background: #000;
-            color: var(--text);
+            color: white;
             font-family: Arial, Helvetica, sans-serif;
         }
 
@@ -43,25 +43,26 @@
             z-index: 99999;
 
             display: flex;
-            align-items: center;
             justify-content: center;
+            align-items: center;
 
             cursor: pointer;
 
             background:
                 linear-gradient(
-                    rgba(0, 0, 0, 0.52),
-                    rgba(0, 0, 0, 0.82)
+                    rgba(0, 0, 0, 0.42),
+                    rgba(0, 0, 0, 0.78)
                 ),
-                url("banner.gif") center center / cover no-repeat;
+                url("banner.gif") center / cover no-repeat;
 
             transition:
-                opacity 0.8s ease,
-                visibility 0.8s ease;
+                opacity 0.7s ease,
+                visibility 0.7s ease;
         }
 
         #enterScreen::after {
             content: "";
+
             position: absolute;
             inset: 0;
 
@@ -69,8 +70,8 @@
                 radial-gradient(
                     circle at center,
                     transparent 0%,
-                    rgba(0, 0, 0, 0.35) 55%,
-                    rgba(0, 0, 0, 0.7) 100%
+                    rgba(0, 0, 0, 0.18) 45%,
+                    rgba(0, 0, 0, 0.58) 100%
                 );
 
             pointer-events: none;
@@ -85,38 +86,68 @@
         .enter-content {
             position: relative;
             z-index: 2;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
             text-align: center;
 
-            animation: enterFloat 2.5s ease-in-out infinite alternate;
+            transition:
+                opacity 0.65s ease,
+                transform 0.65s ease;
+        }
+
+        #enterPfp {
+            width: 150px;
+            height: 150px;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+
+            border: 3px solid rgba(255,255,255,0.92);
+
+            box-shadow:
+                0 0 35px rgba(255,255,255,0.18),
+                0 0 100px rgba(255,255,255,0.06);
+
+            margin-bottom: 20px;
+
+            will-change: transform;
         }
 
         .enter-name {
-            font-size: clamp(50px, 10vw, 90px);
+            font-size: clamp(52px, 10vw, 90px);
             font-weight: 900;
+
             letter-spacing: -4px;
 
             text-shadow:
-                0 0 25px rgba(255,255,255,0.15),
-                0 0 70px rgba(255,255,255,0.08);
+                0 0 25px rgba(255,255,255,0.16),
+                0 0 70px rgba(255,255,255,0.07);
         }
 
         .enter-text {
             margin-top: 14px;
 
-            color: rgba(255,255,255,0.65);
+            color: rgba(255,255,255,0.68);
 
             font-size: 13px;
             letter-spacing: 2px;
-            text-transform: lowercase;
+
+            animation:
+                enterPulse 2s ease-in-out infinite;
         }
 
-        @keyframes enterFloat {
-            from {
-                transform: translateY(0);
+        @keyframes enterPulse {
+            0%,
+            100% {
+                opacity: 0.55;
             }
 
-            to {
-                transform: translateY(-7px);
+            50% {
+                opacity: 1;
             }
         }
 
@@ -127,12 +158,13 @@
         .background {
             position: fixed;
             inset: -25px;
+
             z-index: -5;
 
             background:
                 linear-gradient(
-                    rgba(0,0,0,0.5),
-                    rgba(0,0,0,0.84)
+                    rgba(0,0,0,0.48),
+                    rgba(0,0,0,0.85)
                 ),
                 url("banner.gif") center / cover no-repeat;
 
@@ -142,18 +174,19 @@
         .background-overlay {
             position: fixed;
             inset: 0;
+
             z-index: -4;
 
             background:
                 radial-gradient(
                     circle at center,
                     rgba(255,255,255,0.04),
-                    rgba(0,0,0,0.75)
+                    rgba(0,0,0,0.76)
                 );
         }
 
         /* =====================================================
-           MAIN
+           MAIN PAGE
         ===================================================== */
 
         .page {
@@ -171,7 +204,9 @@
 
             padding: 30px;
 
-            border: 1px solid var(--border);
+            border:
+                1px solid var(--border);
+
             border-radius: 25px;
 
             background: var(--glass);
@@ -183,7 +218,8 @@
                 0 25px 100px rgba(0,0,0,0.6),
                 inset 0 1px rgba(255,255,255,0.05);
 
-            animation: cardAppear 0.8s ease;
+            animation:
+                cardAppear 0.8s ease;
         }
 
         @keyframes cardAppear {
@@ -206,7 +242,7 @@
             text-align: center;
         }
 
-        .pfp {
+        #profilePfp {
             width: 120px;
             height: 120px;
 
@@ -214,15 +250,19 @@
 
             border-radius: 50%;
 
-            border: 3px solid rgba(255,255,255,0.9);
+            border:
+                3px solid rgba(255,255,255,0.9);
 
             box-shadow:
                 0 0 35px rgba(255,255,255,0.13);
 
-            transition: transform 0.3s ease;
+            transition:
+                transform 0.3s ease;
+
+            will-change: transform;
         }
 
-        .pfp:hover {
+        #profilePfp:hover {
             transform: scale(1.04);
         }
 
@@ -231,6 +271,7 @@
 
             font-size: 31px;
             font-weight: 900;
+
             letter-spacing: -1px;
         }
 
@@ -245,7 +286,8 @@
         .bio {
             max-width: 400px;
 
-            margin: 18px auto 0;
+            margin:
+                18px auto 0;
 
             color: #d0d0d0;
 
@@ -270,19 +312,24 @@
         .social {
             display: flex;
             align-items: center;
+
             gap: 8px;
 
             padding: 10px 14px;
 
-            color: #fff;
+            color: white;
+
             text-decoration: none;
 
             font-size: 13px;
 
-            border: 1px solid var(--border);
+            border:
+                1px solid var(--border);
+
             border-radius: 11px;
 
-            background: rgba(255,255,255,0.045);
+            background:
+                rgba(255,255,255,0.045);
 
             transition:
                 transform 0.2s ease,
@@ -293,7 +340,8 @@
         .social:hover {
             transform: translateY(-2px);
 
-            background: rgba(255,255,255,0.1);
+            background:
+                rgba(255,255,255,0.1);
 
             border-color:
                 rgba(255,255,255,0.27);
@@ -304,18 +352,20 @@
         }
 
         /* =====================================================
-           TIKTOK STATS
+           STATS
         ===================================================== */
 
         .stats {
             display: flex;
             justify-content: center;
+
             gap: 35px;
 
             margin-top: 25px;
             padding-top: 21px;
 
-            border-top: 1px solid var(--border);
+            border-top:
+                1px solid var(--border);
         }
 
         .stat {
@@ -333,7 +383,9 @@
             color: var(--muted);
 
             font-size: 10px;
+
             text-transform: uppercase;
+
             letter-spacing: 1px;
         }
 
@@ -354,6 +406,7 @@
             font-weight: 700;
 
             text-transform: uppercase;
+
             letter-spacing: 1.6px;
         }
 
@@ -371,10 +424,13 @@
 
             padding: 12px;
 
-            border: 1px solid var(--border);
+            border:
+                1px solid var(--border);
+
             border-radius: 15px;
 
-            background: rgba(255,255,255,0.035);
+            background:
+                rgba(255,255,255,0.035);
         }
 
         .activity-art {
@@ -387,7 +443,8 @@
 
             border-radius: 10px;
 
-            background: rgba(255,255,255,0.07);
+            background:
+                rgba(255,255,255,0.07);
         }
 
         .activity-info {
@@ -443,10 +500,13 @@
 
             padding: 15px;
 
-            border: 1px solid var(--border);
+            border:
+                1px solid var(--border);
+
             border-radius: 15px;
 
-            background: rgba(255,255,255,0.035);
+            background:
+                rgba(255,255,255,0.035);
         }
 
         .music-header {
@@ -489,10 +549,13 @@
         .counter {
             padding: 8px 12px;
 
-            border: 1px solid var(--border);
+            border:
+                1px solid var(--border);
+
             border-radius: 10px;
 
-            background: rgba(255,255,255,0.035);
+            background:
+                rgba(255,255,255,0.035);
 
             color: #999;
 
@@ -500,7 +563,7 @@
         }
 
         .counter strong {
-            color: #fff;
+            color: white;
         }
 
         /* =====================================================
@@ -514,7 +577,9 @@
 
             padding: 7px 12px;
 
-            border: 1px solid var(--border);
+            border:
+                1px solid var(--border);
+
             border-radius: 8px;
 
             background: transparent;
@@ -529,7 +594,7 @@
         }
 
         .admin-button:hover {
-            color: #fff;
+            color: white;
 
             border-color:
                 rgba(255,255,255,0.3);
@@ -541,14 +606,18 @@
             margin-top: 12px;
             padding: 12px;
 
-            border: 1px solid var(--border);
+            border:
+                1px solid var(--border);
+
             border-radius: 10px;
 
             color: #999;
 
-            background: rgba(255,255,255,0.03);
+            background:
+                rgba(255,255,255,0.03);
 
             font-size: 11px;
+
             line-height: 1.5;
 
             text-align: center;
@@ -574,7 +643,7 @@
                 border-radius: 20px;
             }
 
-            .pfp {
+            #profilePfp {
                 width: 105px;
                 height: 105px;
             }
@@ -590,6 +659,11 @@
             .enter-name {
                 letter-spacing: -2px;
             }
+
+            #enterPfp {
+                width: 125px;
+                height: 125px;
+            }
         }
     </style>
 </head>
@@ -597,12 +671,18 @@
 <body>
 
     <!-- =====================================================
-         CLICK TO ENTER SCREEN
+         CLICK TO ENTER
     ====================================================== -->
 
     <div id="enterScreen">
 
         <div class="enter-content">
+
+            <img
+                id="enterPfp"
+                src="pfp.jpeg"
+                alt="soxsuva"
+            >
 
             <div class="enter-name">
                 soxsuva
@@ -627,7 +707,7 @@
 
 
     <!-- =====================================================
-         MAIN WEBSITE
+         MAIN SITE
     ====================================================== -->
 
     <main class="page">
@@ -639,7 +719,7 @@
             <div class="profile">
 
                 <img
-                    class="pfp"
+                    id="profilePfp"
                     src="pfp.jpeg"
                     alt="soxsuva"
                 >
@@ -659,9 +739,7 @@
             </div>
 
 
-            <!-- =================================================
-                 SOCIAL LINKS
-            ================================================== -->
+            <!-- SOCIALS -->
 
             <div class="socials">
 
@@ -710,9 +788,7 @@
             </div>
 
 
-            <!-- =================================================
-                 TIKTOK STATS
-            ================================================== -->
+            <!-- TIKTOK STATS -->
 
             <div class="stats">
 
@@ -766,9 +842,7 @@
             </div>
 
 
-            <!-- =================================================
-                 ACTIVITY
-            ================================================== -->
+            <!-- ACTIVITY -->
 
             <div class="section">
 
@@ -786,9 +860,7 @@
             </div>
 
 
-            <!-- =================================================
-                 MUSIC
-            ================================================== -->
+            <!-- MUSIC -->
 
             <div class="music">
 
@@ -817,9 +889,7 @@
             </div>
 
 
-            <!-- =================================================
-                 LIVE COUNTERS
-            ================================================== -->
+            <!-- LIVE COUNTERS -->
 
             <div class="counters">
 
@@ -842,9 +912,7 @@
             </div>
 
 
-            <!-- =================================================
-                 ADMIN
-            ================================================== -->
+            <!-- ADMIN -->
 
             <button
                 class="admin-button"
@@ -857,8 +925,8 @@
                 class="admin-message"
                 id="adminMessage"
             >
-                The secure admin dashboard will be connected
-                to the database in the next step.
+                Secure admin controls will be connected
+                to the database next.
             </div>
 
         </section>
@@ -872,24 +940,26 @@
 
     <script>
 
-        /*
-         * =====================================================
-         * SOXS UVA SETTINGS
-         * =====================================================
-         */
+        /* =====================================================
+           SETTINGS
+        ===================================================== */
 
         const DISCORD_ID =
             "1491533148914450614";
 
 
-        /*
-         * =====================================================
-         * CLICK TO ENTER + MUSIC
-         * =====================================================
-         */
+        /* =====================================================
+           ELEMENTS
+        ===================================================== */
 
         const enterScreen =
             document.getElementById("enterScreen");
+
+        const enterPfp =
+            document.getElementById("enterPfp");
+
+        const profilePfp =
+            document.getElementById("profilePfp");
 
         const music =
             document.getElementById("music");
@@ -898,7 +968,15 @@
             document.getElementById("musicStatus");
 
 
+        /* =====================================================
+           CLICK TO ENTER PFP MORPH
+        ===================================================== */
+
         enterScreen.addEventListener("click", async () => {
+
+            /*
+             * Start music from the user's click.
+             */
 
             try {
 
@@ -916,24 +994,175 @@
 
                 musicStatus.textContent =
                     "Click play";
-
             }
 
-            enterScreen.classList.add("hidden");
+
+            /*
+             * Get the exact positions of both PFPs.
+             */
+
+            const startRect =
+                enterPfp.getBoundingClientRect();
+
+            const endRect =
+                profilePfp.getBoundingClientRect();
+
+
+            /*
+             * Calculate the movement required
+             * to move the entrance PFP directly
+             * onto the profile PFP.
+             */
+
+            const startCenterX =
+                startRect.left +
+                startRect.width / 2;
+
+            const startCenterY =
+                startRect.top +
+                startRect.height / 2;
+
+            const endCenterX =
+                endRect.left +
+                endRect.width / 2;
+
+            const endCenterY =
+                endRect.top +
+                endRect.height / 2;
+
+
+            const moveX =
+                endCenterX -
+                startCenterX;
+
+            const moveY =
+                endCenterY -
+                startCenterY;
+
+
+            /*
+             * Calculate the size change.
+             */
+
+            const scale =
+                endRect.width /
+                startRect.width;
+
+
+            /*
+             * Hide the main PFP temporarily so
+             * the flying PFP is the only one visible.
+             */
+
+            profilePfp.style.opacity = "0";
+
+
+            /*
+             * Disable clicks while animation happens.
+             */
+
+            enterScreen.style.pointerEvents =
+                "none";
+
+
+            /*
+             * Fade the text away.
+             */
+
+            const enterContent =
+                document.querySelector(
+                    ".enter-content"
+                );
+
+            const enterName =
+                document.querySelector(
+                    ".enter-name"
+                );
+
+            const enterText =
+                document.querySelector(
+                    ".enter-text"
+                );
+
+
+            enterName.style.transition =
+                "opacity 0.35s ease";
+
+            enterText.style.transition =
+                "opacity 0.3s ease";
+
+
+            enterName.style.opacity = "0";
+            enterText.style.opacity = "0";
+
+
+            /*
+             * Move the PFP.
+             */
+
+            enterPfp.style.transition =
+                "transform 0.95s cubic-bezier(.16,1,.3,1)";
+
+
+            enterPfp.style.transform =
+                `translate(${moveX}px, ${moveY}px) scale(${scale})`;
+
+
+            /*
+             * After the PFP reaches the profile,
+             * fade away the entrance screen.
+             */
+
+            setTimeout(() => {
+
+                enterScreen.style.opacity =
+                    "0";
+
+            }, 700);
+
+
+            /*
+             * Reveal the real profile PFP at
+             * almost the exact same moment.
+             */
+
+            setTimeout(() => {
+
+                profilePfp.style.transition =
+                    "opacity 0.18s ease";
+
+                profilePfp.style.opacity =
+                    "1";
+
+            }, 790);
+
+
+            /*
+             * Completely remove entrance screen.
+             */
+
+            setTimeout(() => {
+
+                enterScreen.classList.add(
+                    "hidden"
+                );
+
+            }, 1000);
 
         });
 
 
-        /*
-         * =====================================================
-         * DISCORD / LANYARD
-         * =====================================================
-         */
+        /* =====================================================
+           LANYARD / DISCORD ACTIVITY
+        ===================================================== */
 
         async function loadActivity() {
 
             const activity =
-                document.getElementById("activity");
+                document.getElementById(
+                    "activity"
+                );
+
 
             try {
 
@@ -941,6 +1170,7 @@
                     await fetch(
                         `https://api.lanyard.rest/v1/users/${DISCORD_ID}`
                     );
+
 
                 const result =
                     await response.json();
@@ -962,9 +1192,9 @@
                     result.data;
 
 
-                /*
-                 * SPOTIFY
-                 */
+                /* =================================================
+                   SPOTIFY
+                ================================================= */
 
                 if (
                     data.listening_to_spotify &&
@@ -1008,16 +1238,18 @@
                             </div>
 
                         </div>
+
                     `;
+
 
                     return;
 
                 }
 
 
-                /*
-                 * DISCORD ACTIVITIES
-                 */
+                /* =================================================
+                   DISCORD GAME ACTIVITY
+                ================================================= */
 
                 if (
                     data.activities &&
@@ -1076,6 +1308,7 @@
 
                         `;
 
+
                         return;
 
                     }
@@ -1083,9 +1316,9 @@
                 }
 
 
-                /*
-                 * NOTHING ACTIVE
-                 */
+                /* =================================================
+                   NOTHING ACTIVE
+                ================================================= */
 
                 activity.className =
                     "activity activity-empty";
@@ -1101,6 +1334,7 @@
                     error
                 );
 
+
                 activity.className =
                     "activity activity-empty";
 
@@ -1112,11 +1346,9 @@
         }
 
 
-        /*
-         * =====================================================
-         * HTML ESCAPING
-         * =====================================================
-         */
+        /* =====================================================
+           HTML ESCAPING
+        ===================================================== */
 
         function escapeHTML(value) {
 
@@ -1134,11 +1366,9 @@
         }
 
 
-        /*
-         * =====================================================
-         * ADMIN BUTTON
-         * =====================================================
-         */
+        /* =====================================================
+           ADMIN PLACEHOLDER
+        ===================================================== */
 
         function toggleAdmin() {
 
@@ -1147,6 +1377,7 @@
                     "adminMessage"
                 );
 
+
             message.classList.toggle(
                 "show"
             );
@@ -1154,11 +1385,9 @@
         }
 
 
-        /*
-         * =====================================================
-         * START ACTIVITY
-         * =====================================================
-         */
+        /* =====================================================
+           START LANYARD
+        ===================================================== */
 
         loadActivity();
 
@@ -1177,4 +1406,3 @@
 
 </body>
 </html>
-```
