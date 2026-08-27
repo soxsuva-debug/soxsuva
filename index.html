@@ -1,1839 +1,2179 @@
-```html id="f9k2mw"
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
 
-    <title>soxsuva</title>
-    <meta name="description" content="soxsuva">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <style>
+<title>soxsuva</title>
 
-        /* =====================================================
-           RESET
-        ===================================================== */
+<meta name="description"
+      content="soxsuva">
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<style>
 
+/* =========================================================
+   RESET
+========================================================= */
 
-        :root {
-            --text: #ffffff;
-            --muted: rgba(255,255,255,0.58);
-            --border: rgba(255,255,255,0.13);
-            --glass: rgba(5,5,5,0.68);
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+html,
+body {
+    min-height: 100%;
+    background: #000;
+    color: #fff;
 
-        html,
-        body {
-            min-height: 100%;
-            background: #000;
-            color: white;
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
 
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
-        }
+body {
+    overflow-x: hidden;
+}
 
 
-        body {
-            overflow-x: hidden;
-        }
+/* =========================================================
+   ENTRANCE SCREEN
+========================================================= */
 
+#enterScreen {
 
-        /* =====================================================
-           CLICK TO ENTER
-        ===================================================== */
+    position: fixed;
 
-        #enterScreen {
-            position: fixed;
-            inset: 0;
+    inset: 0;
 
-            z-index: 99999;
+    z-index: 99999;
 
-            display: flex;
-            justify-content: center;
-            align-items: center;
+    display: flex;
 
-            cursor: pointer;
+    align-items: center;
+    justify-content: center;
 
-            background:
-                linear-gradient(
-                    rgba(0,0,0,0.40),
-                    rgba(0,0,0,0.78)
-                ),
-                url("banner.gif")
-                center / cover
-                no-repeat;
+    cursor: pointer;
 
-            transition:
-                opacity 0.7s ease,
-                visibility 0.7s ease;
-        }
+    overflow: hidden;
 
+    background: #000;
 
-        #enterScreen::after {
-            content: "";
+    transition:
+        opacity 0.9s ease,
+        visibility 0.9s ease;
+}
 
-            position: absolute;
-            inset: 0;
 
-            background:
-                radial-gradient(
-                    circle at center,
-                    transparent 0%,
-                    rgba(0,0,0,0.18) 45%,
-                    rgba(0,0,0,0.58) 100%
-                );
+/*
+   This is the BIG entrance banner.
+   It starts covering the entire screen.
+*/
 
-            pointer-events: none;
-        }
+#enterBanner {
 
+    position: absolute;
 
-        #enterScreen.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
+    inset: -5%;
 
+    width: 110%;
+    height: 110%;
 
-        .enter-content {
-            position: relative;
+    object-fit: cover;
 
-            z-index: 2;
+    z-index: 0;
 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+    transform:
+        scale(1);
 
-            text-align: center;
+    filter:
+        brightness(0.55);
 
-            animation:
-                enterFloat
-                2.5s
-                ease-in-out
-                infinite
-                alternate;
-        }
+    will-change:
+        transform;
 
+}
 
-        #enterPfp {
-            width: 150px;
-            height: 150px;
 
-            object-fit: cover;
+/*
+   Dark overlay.
+*/
 
-            border-radius: 50%;
+.enter-overlay {
 
-            border:
-                3px solid
-                rgba(255,255,255,0.92);
+    position: absolute;
 
-            box-shadow:
-                0 0 35px
-                rgba(255,255,255,0.18),
+    inset: 0;
 
-                0 0 100px
-                rgba(255,255,255,0.06);
+    z-index: 1;
 
-            margin-bottom: 20px;
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.18),
+            rgba(0,0,0,0.72)
+        );
 
-            will-change:
-                transform;
-        }
+    pointer-events: none;
+}
 
 
-        .enter-name {
-            font-size:
-                clamp(52px, 10vw, 90px);
+/*
+   Extra vignette.
+*/
 
-            font-weight: 900;
+.enter-vignette {
 
-            letter-spacing: -4px;
+    position: absolute;
 
-            text-shadow:
-                0 0 25px
-                rgba(255,255,255,0.16),
+    inset: 0;
 
-                0 0 70px
-                rgba(255,255,255,0.07);
-        }
+    z-index: 2;
 
+    background:
+        radial-gradient(
+            circle at center,
+            transparent 0%,
+            rgba(0,0,0,0.15) 45%,
+            rgba(0,0,0,0.65) 100%
+        );
 
-        .enter-text {
-            margin-top: 14px;
+    pointer-events: none;
+}
 
-            color:
-                rgba(255,255,255,0.68);
 
-            font-size: 13px;
+/* =========================================================
+   ENTRANCE CONTENT
+========================================================= */
 
-            letter-spacing: 2px;
+.enter-content {
 
-            animation:
-                enterPulse
-                2s
-                ease-in-out
-                infinite;
-        }
+    position: relative;
 
+    z-index: 5;
 
-        @keyframes enterFloat {
+    display: flex;
 
-            from {
-                transform:
-                    translateY(0);
-            }
+    flex-direction: column;
 
-            to {
-                transform:
-                    translateY(-7px);
-            }
+    align-items: center;
 
-        }
+    text-align: center;
 
+    will-change:
+        transform,
+        opacity;
+}
 
-        @keyframes enterPulse {
 
-            0%,
-            100% {
-                opacity: 0.55;
-            }
+/*
+   Entrance PFP.
+*/
 
-            50% {
-                opacity: 1;
-            }
+#enterPfp {
 
-        }
+    width: 150px;
+    height: 150px;
 
+    object-fit: cover;
 
-        /* =====================================================
-           BACKGROUND
-        ===================================================== */
+    border-radius: 50%;
 
-        .background {
-            position: fixed;
+    border:
+        3px solid
+        rgba(255,255,255,0.95);
 
-            inset: -30px;
+    box-shadow:
 
-            z-index: -5;
+        0 0 35px
+        rgba(255,255,255,0.22),
 
-            background:
-                linear-gradient(
-                    rgba(0,0,0,0.48),
-                    rgba(0,0,0,0.85)
-                ),
-                url("banner.gif")
-                center / cover
-                no-repeat;
+        0 0 100px
+        rgba(255,255,255,0.08);
 
-            filter: blur(5px);
-        }
+    margin-bottom: 20px;
 
+    will-change:
+        transform;
+}
 
-        .background-overlay {
-            position: fixed;
 
-            inset: 0;
+/*
+   Entrance name.
+*/
 
-            z-index: -4;
+.enter-name {
 
-            background:
-                radial-gradient(
-                    circle at center,
-                    rgba(255,255,255,0.04),
-                    rgba(0,0,0,0.76)
-                );
-        }
+    font-size:
+        clamp(52px, 10vw, 90px);
 
+    font-weight: 900;
 
-        /* =====================================================
-           MAIN PAGE
-        ===================================================== */
+    letter-spacing: -4px;
 
-        .page {
-            min-height: 100vh;
+    text-shadow:
 
-            display: flex;
+        0 0 25px
+        rgba(255,255,255,0.18),
 
-            justify-content: center;
-            align-items: center;
+        0 0 70px
+        rgba(255,255,255,0.08);
+}
 
-            padding:
-                35px
-                15px;
-        }
 
+/*
+   Click text.
+*/
 
-        .card {
-            width:
-                min(540px, 100%);
+.enter-text {
 
-            overflow: hidden;
+    margin-top: 14px;
 
-            border:
-                1px solid
-                var(--border);
+    color:
+        rgba(255,255,255,0.68);
 
-            border-radius: 25px;
+    font-size: 13px;
 
-            background:
-                var(--glass);
+    letter-spacing: 2px;
 
-            backdrop-filter:
-                blur(20px);
+    animation:
+        pulseText
+        2s
+        ease-in-out
+        infinite;
+}
 
-            -webkit-backdrop-filter:
-                blur(20px);
+@keyframes pulseText {
 
-            box-shadow:
-                0 25px 100px
-                rgba(0,0,0,0.6),
+    0%,
+    100% {
+        opacity: 0.5;
+    }
 
-                inset 0 1px
-                rgba(255,255,255,0.05);
+    50% {
+        opacity: 1;
+    }
 
-            animation:
-                cardAppear
-                0.8s
-                ease;
-        }
+}
 
 
-        @keyframes cardAppear {
+/* =========================================================
+   MAIN BACKGROUND
+========================================================= */
 
-            from {
-                opacity: 0;
+.background {
 
-                transform:
-                    translateY(20px)
-                    scale(0.98);
-            }
+    position: fixed;
 
-            to {
-                opacity: 1;
+    inset: -30px;
 
-                transform:
-                    translateY(0)
-                    scale(1);
-            }
+    z-index: -10;
 
-        }
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.5),
+            rgba(0,0,0,0.87)
+        ),
+        url("banner.gif")
+        center / cover
+        no-repeat;
 
+    filter:
+        blur(6px);
+}
 
-        /* =====================================================
-           MAIN BANNER
-        ===================================================== */
 
-        .main-banner {
-            position: relative;
+.background-overlay {
 
-            width: 100%;
+    position: fixed;
 
-            height: 190px;
+    inset: 0;
 
-            overflow: visible;
+    z-index: -9;
 
-            background:
-                #111;
-        }
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(255,255,255,0.035),
+            rgba(0,0,0,0.78)
+        );
+}
 
 
-        .main-banner img {
-            width: 100%;
-            height: 100%;
+/* =========================================================
+   PAGE
+========================================================= */
 
-            display: block;
+.page {
 
-            object-fit: cover;
-        }
+    min-height: 100vh;
 
+    display: flex;
 
-        .banner-shade {
-            position: absolute;
+    justify-content: center;
+    align-items: center;
 
-            inset: 0;
+    padding:
+        35px
+        15px;
+}
 
-            background:
-                linear-gradient(
-                    to bottom,
-                    rgba(0,0,0,0.05),
-                    rgba(0,0,0,0.35)
-                );
 
-            pointer-events: none;
-        }
+/* =========================================================
+   MAIN CARD
+========================================================= */
 
+.card {
 
-        /* =====================================================
-           PROFILE AREA
-        ===================================================== */
+    width:
+        min(540px, 100%);
 
-        .profile-area {
-            position: relative;
+    overflow: hidden;
 
-            padding:
-                70px
-                30px
-                30px;
-        }
+    border:
+        1px solid
+        rgba(255,255,255,0.13);
 
+    border-radius: 25px;
 
-        .profile {
-            text-align: center;
-        }
+    background:
+        rgba(5,5,5,0.68);
 
+    backdrop-filter:
+        blur(20px);
 
-        #profilePfp {
-            position: absolute;
+    -webkit-backdrop-filter:
+        blur(20px);
 
-            top: -60px;
-            left: 50%;
+    box-shadow:
 
-            transform:
-                translateX(-50%);
+        0 25px 100px
+        rgba(0,0,0,0.6),
 
-            width: 120px;
-            height: 120px;
+        inset 0 1px
+        rgba(255,255,255,0.05);
 
-            object-fit: cover;
+    animation:
+        cardAppear
+        0.8s
+        ease;
+}
 
-            border-radius: 50%;
+@keyframes cardAppear {
 
-            border:
-                4px solid
-                #111;
+    from {
 
-            box-shadow:
-                0 0 30px
-                rgba(0,0,0,0.55);
+        opacity: 0;
 
-            background: #111;
+        transform:
+            translateY(20px)
+            scale(0.98);
+    }
 
-            z-index: 5;
+    to {
 
-            will-change:
-                transform,
-                opacity;
-        }
+        opacity: 1;
 
+        transform:
+            translateY(0)
+            scale(1);
+    }
 
-        .name {
-            font-size: 31px;
+}
 
-            font-weight: 900;
 
-            letter-spacing: -1px;
-        }
+/* =========================================================
+   REAL MAIN BANNER
+========================================================= */
 
+.main-banner {
 
-        .username {
-            margin-top: 5px;
+    position: relative;
 
-            color:
-                var(--muted);
+    width: 100%;
 
-            font-size: 13px;
-        }
+    height: 190px;
 
+    overflow: hidden;
 
-        .bio {
-            max-width: 400px;
+    background: #111;
+}
 
-            margin:
-                18px auto 0;
 
-            color:
-                #d0d0d0;
+/*
+   This is the actual banner the entrance
+   animation lands on.
+*/
 
-            font-size: 14px;
+#mainBanner {
 
-            line-height: 1.55;
-        }
+    width: 100%;
+    height: 100%;
 
+    display: block;
 
-        /* =====================================================
-           SOCIALS
-        ===================================================== */
+    object-fit: cover;
+}
 
-        .socials {
-            display: flex;
 
-            flex-wrap: wrap;
+/*
+   Banner shading.
+*/
 
-            justify-content: center;
+.banner-shade {
 
-            gap: 9px;
+    position: absolute;
 
-            margin-top: 25px;
-        }
+    inset: 0;
 
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,0.02),
+            rgba(0,0,0,0.38)
+        );
 
-        .social {
-            display: flex;
+    pointer-events: none;
+}
 
-            align-items: center;
 
-            gap: 8px;
+/* =========================================================
+   PROFILE AREA
+========================================================= */
 
-            padding:
-                10px
-                14px;
+.profile-area {
 
-            color: white;
+    position: relative;
 
-            text-decoration: none;
+    padding:
+        70px
+        30px
+        30px;
+}
 
-            font-size: 13px;
 
-            border:
-                1px solid
-                var(--border);
+.profile {
 
-            border-radius: 11px;
+    text-align: center;
+}
 
-            background:
-                rgba(255,255,255,0.045);
 
-            transition:
-                transform 0.2s ease,
-                background 0.2s ease,
-                border-color 0.2s ease;
-        }
+/*
+   Main PFP.
+*/
 
+#profilePfp {
 
-        .social:hover {
-            transform:
-                translateY(-2px);
+    position: absolute;
 
-            background:
-                rgba(255,255,255,0.1);
+    top: -60px;
 
-            border-color:
-                rgba(255,255,255,0.27);
-        }
+    left: 50%;
 
+    width: 120px;
+    height: 120px;
 
-        .social-icon {
-            font-size: 16px;
-        }
+    transform:
+        translateX(-50%);
 
+    object-fit: cover;
 
-        /* =====================================================
-           TIKTOK STATS
-        ===================================================== */
+    border-radius: 50%;
 
-        .stats {
-            display: flex;
+    border:
+        4px solid
+        #111;
 
-            justify-content: center;
+    background: #111;
 
-            gap: 35px;
+    box-shadow:
+        0 0 30px
+        rgba(0,0,0,0.55);
 
-            margin-top: 25px;
+    z-index: 5;
 
-            padding-top: 21px;
+    will-change:
+        transform,
+        opacity;
+}
 
-            border-top:
-                1px solid
-                var(--border);
-        }
 
+/* =========================================================
+   PROFILE TEXT
+========================================================= */
 
-        .stat {
-            text-align: center;
-        }
+.name {
 
+    font-size: 31px;
 
-        .stat-number {
-            font-size: 17px;
+    font-weight: 900;
 
-            font-weight: 800;
-        }
+    letter-spacing: -1px;
+}
 
 
-        .stat-label {
-            margin-top: 4px;
+.username {
 
-            color:
-                var(--muted);
+    margin-top: 5px;
 
-            font-size: 10px;
+    color:
+        rgba(255,255,255,0.58);
 
-            text-transform: uppercase;
+    font-size: 13px;
+}
 
-            letter-spacing: 1px;
-        }
 
+.bio {
 
-        /* =====================================================
-           SECTIONS
-        ===================================================== */
+    max-width: 400px;
 
-        .section {
-            margin-top: 25px;
-        }
+    margin:
+        18px auto 0;
 
+    color:
+        #d0d0d0;
 
-        .section-title {
-            margin-bottom: 10px;
+    font-size: 14px;
 
-            color: #999;
+    line-height: 1.55;
+}
 
-            font-size: 10px;
 
-            font-weight: 700;
+/* =========================================================
+   SOCIAL BUTTONS
+========================================================= */
 
-            text-transform: uppercase;
+.socials {
 
-            letter-spacing: 1.6px;
-        }
+    display: flex;
 
+    flex-wrap: wrap;
 
-        /* =====================================================
-           ACTIVITY
-        ===================================================== */
+    justify-content: center;
 
-        .activity {
-            min-height: 70px;
+    gap: 9px;
 
-            display: flex;
+    margin-top: 25px;
+}
 
-            align-items: center;
 
-            gap: 13px;
+.social {
 
-            padding: 12px;
+    display: flex;
 
-            border:
-                1px solid
-                var(--border);
+    align-items: center;
 
-            border-radius: 15px;
+    gap: 8px;
 
-            background:
-                rgba(255,255,255,0.035);
-        }
+    padding:
+        10px
+        14px;
 
+    color: #fff;
 
-        .activity-art {
-            width: 48px;
-            height: 48px;
+    text-decoration: none;
 
-            flex-shrink: 0;
+    font-size: 13px;
 
-            object-fit: cover;
+    border:
+        1px solid
+        rgba(255,255,255,0.13);
 
-            border-radius: 10px;
+    border-radius: 11px;
 
-            background:
-                rgba(255,255,255,0.07);
-        }
+    background:
+        rgba(255,255,255,0.045);
 
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
 
-        .activity-info {
-            min-width: 0;
 
-            flex: 1;
-        }
+.social:hover {
 
+    transform:
+        translateY(-2px);
 
-        .activity-type {
-            margin-bottom: 4px;
+    background:
+        rgba(255,255,255,0.1);
 
-            color:
-                var(--muted);
+    border-color:
+        rgba(255,255,255,0.27);
+}
 
-            font-size: 10px;
-        }
 
+.social-icon {
 
-        .activity-title {
-            overflow: hidden;
+    font-size: 16px;
+}
 
-            font-size: 14px;
 
-            font-weight: 800;
+/* =========================================================
+   STATS
+========================================================= */
 
-            white-space: nowrap;
+.stats {
 
-            text-overflow: ellipsis;
-        }
+    display: flex;
 
+    justify-content: center;
 
-        .activity-details {
-            margin-top: 4px;
+    gap: 35px;
 
-            overflow: hidden;
+    margin-top: 25px;
 
-            color: #999;
+    padding-top: 21px;
 
-            font-size: 11px;
+    border-top:
+        1px solid
+        rgba(255,255,255,0.13);
+}
 
-            white-space: nowrap;
 
-            text-overflow: ellipsis;
-        }
+.stat {
 
+    text-align: center;
+}
 
-        .activity-empty {
-            justify-content: center;
 
-            color:
-                var(--muted);
+.stat-number {
 
-            font-size: 12px;
-        }
+    font-size: 17px;
 
+    font-weight: 800;
+}
 
-        /* =====================================================
-           MUSIC
-        ===================================================== */
 
-        .music {
-            margin-top: 25px;
+.stat-label {
 
-            padding: 15px;
+    margin-top: 4px;
 
-            border:
-                1px solid
-                var(--border);
+    color:
+        rgba(255,255,255,0.58);
 
-            border-radius: 15px;
+    font-size: 10px;
 
-            background:
-                rgba(255,255,255,0.035);
-        }
+    text-transform: uppercase;
 
+    letter-spacing: 1px;
+}
 
-        .music-header {
-            display: flex;
 
-            justify-content: space-between;
+/* =========================================================
+   SECTION
+========================================================= */
 
-            align-items: center;
+.section {
 
-            margin-bottom: 10px;
-        }
+    margin-top: 25px;
+}
 
 
-        .music-name {
-            font-size: 13px;
+.section-title {
 
-            font-weight: 800;
-        }
+    margin-bottom: 10px;
 
+    color: #999;
 
-        .music-status {
-            color:
-                var(--muted);
+    font-size: 10px;
 
-            font-size: 10px;
-        }
+    font-weight: 700;
 
+    text-transform: uppercase;
 
-        audio {
-            width: 100%;
+    letter-spacing: 1.6px;
+}
 
-            height: 35px;
-        }
 
+/* =========================================================
+   ACTIVITY
+========================================================= */
 
-        /* =====================================================
-           COUNTERS
-        ===================================================== */
+.activity {
 
-        .counters {
-            display: flex;
+    min-height: 70px;
 
-            justify-content: center;
+    display: flex;
 
-            gap: 10px;
+    align-items: center;
 
-            margin-top: 20px;
-        }
+    gap: 13px;
 
+    padding: 12px;
 
-        .counter {
-            padding:
-                8px
-                12px;
+    border:
+        1px solid
+        rgba(255,255,255,0.13);
 
-            border:
-                1px solid
-                var(--border);
+    border-radius: 15px;
 
-            border-radius: 10px;
+    background:
+        rgba(255,255,255,0.035);
+}
 
-            background:
-                rgba(255,255,255,0.035);
 
-            color:
-                #999;
+.activity-art {
 
-            font-size: 11px;
-        }
+    width: 48px;
+    height: 48px;
 
+    flex-shrink: 0;
 
-        .counter strong {
-            color: white;
-        }
+    object-fit: cover;
 
+    border-radius: 10px;
 
-        /* =====================================================
-           ADMIN
-        ===================================================== */
+    background:
+        rgba(255,255,255,0.07);
+}
 
-        .admin-button {
-            display: block;
 
-            margin:
-                25px
-                auto
-                30px;
+.activity-info {
 
-            padding:
-                7px
-                12px;
+    min-width: 0;
 
-            border:
-                1px solid
-                var(--border);
+    flex: 1;
+}
 
-            border-radius: 8px;
 
-            background:
-                transparent;
+.activity-type {
 
-            color: #777;
+    margin-bottom: 4px;
 
-            font-size: 10px;
+    color:
+        rgba(255,255,255,0.58);
 
-            cursor: pointer;
+    font-size: 10px;
+}
 
-            transition:
-                0.2s ease;
-        }
 
+.activity-title {
 
-        .admin-button:hover {
-            color: white;
+    overflow: hidden;
 
-            border-color:
-                rgba(255,255,255,0.3);
-        }
+    font-size: 14px;
 
+    font-weight: 800;
 
-        .admin-message {
-            display: none;
+    white-space: nowrap;
 
-            margin:
-                -18px
-                25px
-                25px;
+    text-overflow: ellipsis;
+}
 
-            padding: 12px;
 
-            border:
-                1px solid
-                var(--border);
+.activity-details {
 
-            border-radius: 10px;
+    margin-top: 4px;
 
-            color: #999;
+    overflow: hidden;
 
-            background:
-                rgba(255,255,255,0.03);
+    color: #999;
 
-            font-size: 11px;
+    font-size: 11px;
 
-            line-height: 1.5;
+    white-space: nowrap;
 
-            text-align: center;
-        }
+    text-overflow: ellipsis;
+}
 
 
-        .admin-message.show {
-            display: block;
-        }
+.activity-empty {
 
+    justify-content: center;
 
-        /* =====================================================
-           MOBILE
-        ===================================================== */
+    color:
+        rgba(255,255,255,0.58);
 
-        @media (max-width: 500px) {
+    font-size: 12px;
+}
 
-            .page {
-                padding:
-                    15px;
-            }
 
+/* =========================================================
+   MUSIC
+========================================================= */
 
-            .main-banner {
-                height: 155px;
-            }
+.music {
 
+    margin-top: 25px;
 
-            .profile-area {
-                padding:
-                    62px
-                    18px
-                    25px;
-            }
+    padding: 15px;
 
+    border:
+        1px solid
+        rgba(255,255,255,0.13);
 
-            #profilePfp {
-                width: 105px;
-                height: 105px;
+    border-radius: 15px;
 
-                top: -52px;
-            }
+    background:
+        rgba(255,255,255,0.035);
+}
 
 
-            .name {
-                font-size: 28px;
-            }
+.music-header {
 
+    display: flex;
 
-            .stats {
-                gap: 22px;
-            }
+    justify-content: space-between;
 
+    align-items: center;
 
-            #enterPfp {
-                width: 125px;
-                height: 125px;
-            }
+    margin-bottom: 10px;
+}
 
 
-            .enter-name {
-                letter-spacing: -2px;
-            }
+.music-name {
 
-        }
+    font-size: 13px;
 
-    </style>
+    font-weight: 800;
+}
+
+
+.music-status {
+
+    color:
+        rgba(255,255,255,0.58);
+
+    font-size: 10px;
+}
+
+
+audio {
+
+    width: 100%;
+
+    height: 35px;
+}
+
+
+/* =========================================================
+   LIVE COUNTERS
+========================================================= */
+
+.counters {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+
+.counter {
+
+    padding:
+        8px
+        12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.13);
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,0.035);
+
+    color: #999;
+
+    font-size: 11px;
+}
+
+
+.counter strong {
+
+    color: #fff;
+}
+
+
+/* =========================================================
+   ADMIN
+========================================================= */
+
+.admin-button {
+
+    display: block;
+
+    margin:
+        25px
+        auto
+        30px;
+
+    padding:
+        7px
+        12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.13);
+
+    border-radius: 8px;
+
+    background:
+        transparent;
+
+    color: #777;
+
+    font-size: 10px;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+}
+
+
+.admin-button:hover {
+
+    color: #fff;
+
+    border-color:
+        rgba(255,255,255,0.3);
+}
+
+
+.admin-message {
+
+    display: none;
+
+    margin:
+        -18px
+        25px
+        25px;
+
+    padding: 12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.13);
+
+    border-radius: 10px;
+
+    color: #999;
+
+    background:
+        rgba(255,255,255,0.03);
+
+    font-size: 11px;
+
+    line-height: 1.5;
+
+    text-align: center;
+}
+
+
+.admin-message.show {
+
+    display: block;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 500px) {
+
+    .page {
+
+        padding:
+            15px;
+    }
+
+
+    .main-banner {
+
+        height: 155px;
+    }
+
+
+    .profile-area {
+
+        padding:
+            62px
+            18px
+            25px;
+    }
+
+
+    #profilePfp {
+
+        width: 105px;
+        height: 105px;
+
+        top: -52px;
+    }
+
+
+    .name {
+
+        font-size: 28px;
+    }
+
+
+    .stats {
+
+        gap: 22px;
+    }
+
+
+    #enterPfp {
+
+        width: 125px;
+        height: 125px;
+    }
+
+
+    .enter-name {
+
+        letter-spacing: -2px;
+    }
+
+}
+
+</style>
 </head>
 
 
 <body>
 
 
-    <!-- =====================================================
-         CLICK TO ENTER
-    ====================================================== -->
+<!-- =======================================================
+     CLICK TO ENTER
+======================================================== -->
 
-    <div id="enterScreen">
+<div id="enterScreen">
 
-        <div class="enter-content">
 
-            <img
-                id="enterPfp"
-                src="pfp.jpeg"
-                alt="soxsuva"
-            >
+    <!--
+        FULL SCREEN BANNER
+    -->
 
-            <div class="enter-name">
-                soxsuva
-            </div>
+    <img
+        id="enterBanner"
+        src="banner.gif"
+        alt=""
+    >
 
-            <div class="enter-text">
-                click to enter
-            </div>
 
+    <div class="enter-overlay"></div>
+
+    <div class="enter-vignette"></div>
+
+
+    <!--
+        PFP + NAME
+    -->
+
+    <div class="enter-content">
+
+
+        <img
+            id="enterPfp"
+            src="pfp.jpeg"
+            alt="soxsuva"
+        >
+
+
+        <div class="enter-name">
+            soxsuva
         </div>
+
+
+        <div class="enter-text">
+            click to enter
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =======================================================
+     BACKGROUND
+======================================================== -->
+
+<div class="background"></div>
+
+<div class="background-overlay"></div>
+
+
+
+<!-- =======================================================
+     MAIN PAGE
+======================================================== -->
+
+<main class="page">
+
+
+<section class="card">
+
+
+    <!-- ===================================================
+         MAIN BANNER
+    ==================================================== -->
+
+    <div class="main-banner">
+
+
+        <img
+            id="mainBanner"
+            src="banner.gif"
+            alt="soxsuva banner"
+        >
+
+
+        <div class="banner-shade"></div>
+
 
     </div>
 
 
-    <!-- =====================================================
-         BACKGROUND
-    ====================================================== -->
 
-    <div class="background"></div>
+    <!-- ===================================================
+         PROFILE
+    ==================================================== -->
 
-    <div class="background-overlay"></div>
-
-
-    <!-- =====================================================
-         MAIN PAGE
-    ====================================================== -->
-
-    <main class="page">
-
-        <section class="card">
+    <div class="profile-area">
 
 
-            <!-- =================================================
-                 BANNER
-            ================================================== -->
+        <div class="profile">
 
-            <div class="main-banner">
 
-                <img
-                    src="banner.gif"
-                    alt="soxsuva banner"
+            <img
+                id="profilePfp"
+                src="pfp.jpeg"
+                alt="soxsuva"
+            >
+
+
+            <h1 class="name">
+                soxsuva
+            </h1>
+
+
+            <div class="username">
+                @soxsuva
+            </div>
+
+
+            <p class="bio">
+                welcome to my profile
+            </p>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             SOCIALS
+        ================================================== -->
+
+        <div class="socials">
+
+
+            <a
+                class="social"
+                href="https://www.tiktok.com/@not.p1nk"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                <span class="social-icon">
+                    ♪
+                </span>
+
+                TikTok
+
+            </a>
+
+
+
+            <a
+                class="social"
+                href="https://www.roblox.com/users/2807349866/profile"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                <span class="social-icon">
+                    ▣
+                </span>
+
+                Roblox
+
+            </a>
+
+
+
+            <a
+                class="social"
+                href="https://open.spotify.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+
+                <span class="social-icon">
+                    ♫
+                </span>
+
+                Spotify
+
+            </a>
+
+
+
+            <a
+                class="social"
+                href="#"
+                onclick="return false;"
+            >
+
+                <span class="social-icon">
+                    ◉
+                </span>
+
+                Xbox
+
+            </a>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             TIKTOK STATS
+        ================================================== -->
+
+        <div class="stats">
+
+
+            <div class="stat">
+
+                <div
+                    class="stat-number"
+                    id="followers"
                 >
+                    —
+                </div>
 
-                <div class="banner-shade"></div>
+                <div class="stat-label">
+                    Followers
+                </div>
 
             </div>
 
 
-            <!-- =================================================
-                 PROFILE
-            ================================================== -->
+            <div class="stat">
 
-            <div class="profile-area">
+                <div
+                    class="stat-number"
+                    id="following"
+                >
+                    —
+                </div>
 
-                <div class="profile">
+                <div class="stat-label">
+                    Following
+                </div>
 
-
-                    <img
-                        id="profilePfp"
-                        src="pfp.jpeg"
-                        alt="soxsuva"
-                    >
-
-
-                    <h1 class="name">
-                        soxsuva
-                    </h1>
+            </div>
 
 
-                    <div class="username">
-                        @soxsuva
-                    </div>
+            <div class="stat">
+
+                <div
+                    class="stat-number"
+                    id="tiktokLikes"
+                >
+                    —
+                </div>
+
+                <div class="stat-label">
+                    Likes
+                </div>
+
+            </div>
 
 
-                    <p class="bio">
-                        welcome to my profile
-                    </p>
+        </div>
 
 
+
+        <!-- =================================================
+             ACTIVITY
+        ================================================== -->
+
+        <div class="section">
+
+
+            <div class="section-title">
+                Activity
+            </div>
+
+
+            <div
+                class="activity activity-empty"
+                id="activity"
+            >
+                Loading activity...
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             MUSIC
+        ================================================== -->
+
+        <div class="music">
+
+
+            <div class="music-header">
+
+
+                <div class="music-name">
+                    needy — Ariana Grande
                 </div>
 
 
-                <!-- =================================================
-                     SOCIALS
-                ================================================== -->
-
-                <div class="socials">
-
-
-                    <a
-                        class="social"
-                        href="https://www.tiktok.com/@not.p1nk"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-
-                        <span class="social-icon">
-                            ♪
-                        </span>
-
-                        TikTok
-
-                    </a>
-
-
-                    <a
-                        class="social"
-                        href="https://www.roblox.com/users/2807349866/profile"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-
-                        <span class="social-icon">
-                            ▣
-                        </span>
-
-                        Roblox
-
-                    </a>
-
-
-                    <a
-                        class="social"
-                        href="https://open.spotify.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-
-                        <span class="social-icon">
-                            ♫
-                        </span>
-
-                        Spotify
-
-                    </a>
-
-
-                    <a
-                        class="social"
-                        href="#"
-                        onclick="return false;"
-                    >
-
-                        <span class="social-icon">
-                            ◉
-                        </span>
-
-                        Xbox
-
-                    </a>
-
-
+                <div
+                    class="music-status"
+                    id="musicStatus"
+                >
+                    Ready
                 </div>
 
 
-                <!-- =================================================
-                     TIKTOK STATS
-                ================================================== -->
-
-                <div class="stats">
+            </div>
 
 
-                    <div class="stat">
-
-                        <div
-                            class="stat-number"
-                            id="followers"
-                        >
-                            —
-                        </div>
-
-                        <div class="stat-label">
-                            Followers
-                        </div>
-
-                    </div>
+            <audio
+                id="music"
+                src="needy.mp3"
+                controls
+                loop
+            ></audio>
 
 
-                    <div class="stat">
-
-                        <div
-                            class="stat-number"
-                            id="following"
-                        >
-                            —
-                        </div>
-
-                        <div class="stat-label">
-                            Following
-                        </div>
-
-                    </div>
+        </div>
 
 
-                    <div class="stat">
 
-                        <div
-                            class="stat-number"
-                            id="tiktokLikes"
-                        >
-                            —
-                        </div>
+        <!-- =================================================
+             COUNTERS
+        ================================================== -->
 
-                        <div class="stat-label">
-                            Likes
-                        </div>
-
-                    </div>
+        <div class="counters">
 
 
-                </div>
+            <div class="counter">
+
+                👁
+
+                <strong id="views">
+                    —
+                </strong>
+
+                views
+
+            </div>
 
 
-                <!-- =================================================
-                     ACTIVITY
-                ================================================== -->
+            <div class="counter">
 
-                <div class="section">
+                ♥
+
+                <strong id="likes">
+                    —
+                </strong>
+
+                likes
+
+            </div>
 
 
-                    <div class="section-title">
-                        Activity
+        </div>
+
+
+
+        <!-- =================================================
+             ADMIN
+        ================================================== -->
+
+        <button
+            class="admin-button"
+            onclick="toggleAdmin()"
+        >
+            Admin
+        </button>
+
+
+        <div
+            class="admin-message"
+            id="adminMessage"
+        >
+            Admin controls will be connected
+            to the secure backend.
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+</main>
+
+
+
+<script>
+
+
+/* =========================================================
+   DISCORD / LANYARD
+========================================================= */
+
+const DISCORD_ID =
+    "1491533148914450614";
+
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const enterScreen =
+    document.getElementById(
+        "enterScreen"
+    );
+
+
+const enterBanner =
+    document.getElementById(
+        "enterBanner"
+    );
+
+
+const enterPfp =
+    document.getElementById(
+        "enterPfp"
+    );
+
+
+const mainBanner =
+    document.getElementById(
+        "mainBanner"
+    );
+
+
+const profilePfp =
+    document.getElementById(
+        "profilePfp"
+    );
+
+
+const music =
+    document.getElementById(
+        "music"
+    );
+
+
+const musicStatus =
+    document.getElementById(
+        "musicStatus"
+    );
+
+
+
+/* =========================================================
+   THE TUFF PART
+   PFP + BANNER TRANSITION
+========================================================= */
+
+enterScreen.addEventListener(
+    "click",
+    async function() {
+
+
+        /*
+         * Start music because this click
+         * gives the browser permission.
+         */
+
+        try {
+
+            await music.play();
+
+            musicStatus.textContent =
+                "Playing";
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Music autoplay blocked:",
+                error
+            );
+
+            musicStatus.textContent =
+                "Click play";
+
+        }
+
+
+
+        /*
+         * Stop the little floating animation.
+         */
+
+        const enterContent =
+            document.querySelector(
+                ".enter-content"
+            );
+
+
+        enterContent.style.animation =
+            "none";
+
+
+
+        /*
+         * Get exact PFP locations.
+         */
+
+        const startPfp =
+            enterPfp.getBoundingClientRect();
+
+
+        const endPfp =
+            profilePfp.getBoundingClientRect();
+
+
+
+        /*
+         * Calculate PFP centers.
+         */
+
+        const startPfpX =
+            startPfp.left +
+            startPfp.width / 2;
+
+
+        const startPfpY =
+            startPfp.top +
+            startPfp.height / 2;
+
+
+        const endPfpX =
+            endPfp.left +
+            endPfp.width / 2;
+
+
+        const endPfpY =
+            endPfp.top +
+            endPfp.height / 2;
+
+
+
+        /*
+         * Calculate movement.
+         */
+
+        const pfpMoveX =
+            endPfpX -
+            startPfpX;
+
+
+        const pfpMoveY =
+            endPfpY -
+            startPfpY;
+
+
+
+        /*
+         * Calculate size change.
+         */
+
+        const pfpScale =
+            endPfp.width /
+            startPfp.width;
+
+
+
+        /*
+         * Hide the real PFP while
+         * the entrance PFP flies into it.
+         */
+
+        profilePfp.style.opacity =
+            "0";
+
+
+
+        /*
+         * Get the actual main banner
+         * position.
+         */
+
+        const startBanner =
+            enterBanner.getBoundingClientRect();
+
+
+        const endBanner =
+            mainBanner.getBoundingClientRect();
+
+
+
+        /*
+         * Calculate banner centers.
+         */
+
+        const startBannerX =
+            startBanner.left +
+            startBanner.width / 2;
+
+
+        const startBannerY =
+            startBanner.top +
+            startBanner.height / 2;
+
+
+        const endBannerX =
+            endBanner.left +
+            endBanner.width / 2;
+
+
+        const endBannerY =
+            endBanner.top +
+            endBanner.height / 2;
+
+
+
+        /*
+         * Banner movement.
+         */
+
+        const bannerMoveX =
+            endBannerX -
+            startBannerX;
+
+
+        const bannerMoveY =
+            endBannerY -
+            startBannerY;
+
+
+
+        /*
+         * Banner scale.
+         */
+
+        const bannerScaleX =
+            endBanner.width /
+            startBanner.width;
+
+
+        const bannerScaleY =
+            endBanner.height /
+            startBanner.height;
+
+
+
+        /*
+         * Fade out the text.
+         */
+
+        const enterName =
+            document.querySelector(
+                ".enter-name"
+            );
+
+
+        const enterText =
+            document.querySelector(
+                ".enter-text"
+            );
+
+
+        enterName.style.transition =
+            "opacity 0.35s ease";
+
+
+        enterText.style.transition =
+            "opacity 0.3s ease";
+
+
+        enterName.style.opacity =
+            "0";
+
+
+        enterText.style.opacity =
+            "0";
+
+
+
+        /*
+         * =================================================
+         * BANNER ZOOM OUT
+         * =================================================
+         *
+         * It starts HUGE.
+         *
+         * Then shrinks into the actual
+         * banner at the top of the card.
+         */
+
+        enterBanner.style.transition =
+            "transform 1.15s cubic-bezier(.16,1,.3,1)";
+
+
+        enterBanner.style.transformOrigin =
+            "center center";
+
+
+        enterBanner.style.transform =
+            `
+            translate(
+                ${bannerMoveX}px,
+                ${bannerMoveY}px
+            )
+            scale(
+                ${Math.min(
+                    bannerScaleX,
+                    bannerScaleY
+                )}
+            )
+            `;
+
+
+
+        /*
+         * =================================================
+         * PFP FLY-IN
+         * =================================================
+         */
+
+        enterPfp.style.transition =
+            "transform 1.05s cubic-bezier(.16,1,.3,1)";
+
+
+        enterPfp.style.transform =
+            `
+            translate(
+                ${pfpMoveX}px,
+                ${pfpMoveY}px
+            )
+            scale(
+                ${pfpScale}
+            )
+            `;
+
+
+
+        /*
+         * Make the enter text disappear.
+         */
+
+        setTimeout(
+            () => {
+
+                enterContent.style.opacity =
+                    "0";
+
+            },
+            350
+        );
+
+
+
+        /*
+         * Fade out the entrance overlay
+         * after the banner has started
+         * landing in place.
+         */
+
+        setTimeout(
+            () => {
+
+                enterScreen.style.opacity =
+                    "0";
+
+            },
+            780
+        );
+
+
+
+        /*
+         * Reveal the real PFP.
+         */
+
+        setTimeout(
+            () => {
+
+                profilePfp.style.transition =
+                    "opacity 0.2s ease";
+
+
+                profilePfp.style.opacity =
+                    "1";
+
+            },
+            950
+        );
+
+
+
+        /*
+         * Remove the entrance screen.
+         */
+
+        setTimeout(
+            () => {
+
+                enterScreen.style.visibility =
+                    "hidden";
+
+
+                enterScreen.style.pointerEvents =
+                    "none";
+
+            },
+            1250
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   LANYARD ACTIVITY
+========================================================= */
+
+async function loadActivity() {
+
+
+    const activity =
+        document.getElementById(
+            "activity"
+        );
+
+
+    try {
+
+
+        const response =
+            await fetch(
+                `https://api.lanyard.rest/v1/users/${DISCORD_ID}`
+            );
+
+
+        const result =
+            await response.json();
+
+
+        if (
+            !result.success ||
+            !result.data
+        ) {
+
+            throw new Error(
+                "No Lanyard data"
+            );
+
+        }
+
+
+        const data =
+            result.data;
+
+
+
+        /*
+         * SPOTIFY
+         */
+
+        if (
+            data.listening_to_spotify &&
+            data.spotify
+        ) {
+
+
+            const spotify =
+                data.spotify;
+
+
+            activity.className =
+                "activity";
+
+
+            activity.innerHTML = `
+
+                <img
+                    class="activity-art"
+                    src="${escapeHTML(
+                        spotify.album_art_url
+                    )}"
+                    alt=""
+                >
+
+
+                <div
+                    class="activity-info"
+                >
+
+                    <div
+                        class="activity-type"
+                    >
+                        🎵 Listening on Spotify
                     </div>
 
 
                     <div
-                        class="activity activity-empty"
-                        id="activity"
+                        class="activity-title"
                     >
-                        Loading activity...
+                        ${escapeHTML(
+                            spotify.song
+                        )}
                     </div>
 
 
-                </div>
-
-
-                <!-- =================================================
-                     MUSIC
-                ================================================== -->
-
-                <div class="music">
-
-
-                    <div class="music-header">
-
-                        <div class="music-name">
-                            needy — Ariana Grande
-                        </div>
-
-
-                        <div
-                            class="music-status"
-                            id="musicStatus"
-                        >
-                            Ready
-                        </div>
-
+                    <div
+                        class="activity-details"
+                    >
+                        ${escapeHTML(
+                            spotify.artist
+                        )}
                     </div>
 
-
-                    <audio
-                        id="music"
-                        src="needy.mp3"
-                        controls
-                        loop
-                    ></audio>
-
-
                 </div>
 
+            `;
 
-                <!-- =================================================
-                     LIVE COUNTERS
-                ================================================== -->
 
-                <div class="counters">
-
-
-                    <div class="counter">
-
-                        👁
-
-                        <strong id="views">
-                            —
-                        </strong>
-
-                        views
-
-                    </div>
-
-
-                    <div class="counter">
-
-                        ♥
-
-                        <strong id="likes">
-                            —
-                        </strong>
-
-                        likes
-
-                    </div>
-
-
-                </div>
-
-
-                <!-- =================================================
-                     ADMIN
-                ================================================== -->
-
-                <button
-                    class="admin-button"
-                    onclick="toggleAdmin()"
-                >
-                    Admin
-                </button>
-
-
-                <div
-                    class="admin-message"
-                    id="adminMessage"
-                >
-                    Secure admin controls will be connected
-                    to the database next.
-                </div>
-
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =====================================================
-         JAVASCRIPT
-    ====================================================== -->
-
-    <script>
-
-
-        /* =====================================================
-           DISCORD
-        ===================================================== */
-
-        const DISCORD_ID =
-            "1491533148914450614";
-
-
-        /* =====================================================
-           ELEMENTS
-        ===================================================== */
-
-        const enterScreen =
-            document.getElementById(
-                "enterScreen"
-            );
-
-
-        const enterPfp =
-            document.getElementById(
-                "enterPfp"
-            );
-
-
-        const profilePfp =
-            document.getElementById(
-                "profilePfp"
-            );
-
-
-        const music =
-            document.getElementById(
-                "music"
-            );
-
-
-        const musicStatus =
-            document.getElementById(
-                "musicStatus"
-            );
-
-
-        /* =====================================================
-           CLICK TO ENTER
-        ===================================================== */
-
-        enterScreen.addEventListener(
-            "click",
-            async () => {
-
-
-                /*
-                 * Start music.
-                 */
-
-                try {
-
-                    await music.play();
-
-                    musicStatus.textContent =
-                        "Playing";
-
-                }
-
-                catch (error) {
-
-                    console.log(
-                        "Music could not start:",
-                        error
-                    );
-
-                    musicStatus.textContent =
-                        "Click play";
-
-                }
-
-
-                /*
-                 * Get exact positions.
-                 */
-
-                const startRect =
-                    enterPfp.getBoundingClientRect();
-
-
-                const endRect =
-                    profilePfp.getBoundingClientRect();
-
-
-                /*
-                 * Centers.
-                 */
-
-                const startX =
-                    startRect.left +
-                    startRect.width / 2;
-
-
-                const startY =
-                    startRect.top +
-                    startRect.height / 2;
-
-
-                const endX =
-                    endRect.left +
-                    endRect.width / 2;
-
-
-                const endY =
-                    endRect.top +
-                    endRect.height / 2;
-
-
-                /*
-                 * Movement.
-                 */
-
-                const moveX =
-                    endX -
-                    startX;
-
-
-                const moveY =
-                    endY -
-                    startY;
-
-
-                /*
-                 * Size.
-                 */
-
-                const scale =
-                    endRect.width /
-                    startRect.width;
-
-
-                /*
-                 * Hide actual PFP.
-                 */
-
-                profilePfp.style.opacity =
-                    "0";
-
-
-                /*
-                 * Stop enter animation.
-                 */
-
-                const enterContent =
-                    document.querySelector(
-                        ".enter-content"
-                    );
-
-
-                enterContent.style.animation =
-                    "none";
-
-
-                /*
-                 * Fade text.
-                 */
-
-                const enterName =
-                    document.querySelector(
-                        ".enter-name"
-                    );
-
-
-                const enterText =
-                    document.querySelector(
-                        ".enter-text"
-                    );
-
-
-                enterName.style.transition =
-                    "opacity 0.35s ease";
-
-
-                enterText.style.transition =
-                    "opacity 0.3s ease";
-
-
-                enterName.style.opacity =
-                    "0";
-
-
-                enterText.style.opacity =
-                    "0";
-
-
-                /*
-                 * Move PFP directly into
-                 * the main profile PFP.
-                 */
-
-                enterPfp.style.transition =
-                    "transform 0.95s cubic-bezier(.16,1,.3,1)";
-
-
-                enterPfp.style.transform =
-                    `translate(${moveX}px, ${moveY}px) scale(${scale})`;
-
-
-                /*
-                 * Fade background.
-                 */
-
-                setTimeout(() => {
-
-                    enterScreen.style.opacity =
-                        "0";
-
-                }, 650);
-
-
-                /*
-                 * Reveal main PFP.
-                 */
-
-                setTimeout(() => {
-
-                    profilePfp.style.transition =
-                        "opacity 0.18s ease";
-
-
-                    profilePfp.style.opacity =
-                        "1";
-
-                }, 820);
-
-
-                /*
-                 * Remove enter screen.
-                 */
-
-                setTimeout(() => {
-
-                    enterScreen.classList.add(
-                        "hidden"
-                    );
-
-                }, 1050);
-
-            }
-        );
-
-
-        /* =====================================================
-           LANYARD
-        ===================================================== */
-
-        async function loadActivity() {
-
-
-            const activity =
-                document.getElementById(
-                    "activity"
-                );
-
-
-            try {
-
-
-                const response =
-                    await fetch(
-                        `https://api.lanyard.rest/v1/users/${DISCORD_ID}`
-                    );
-
-
-                const result =
-                    await response.json();
-
-
-                if (
-                    !result.success ||
-                    !result.data
-                ) {
-
-                    throw new Error(
-                        "No Lanyard data"
-                    );
-
-                }
-
-
-                const data =
-                    result.data;
-
-
-                /*
-                 * SPOTIFY
-                 */
-
-                if (
-                    data.listening_to_spotify &&
-                    data.spotify
-                ) {
-
-
-                    const spotify =
-                        data.spotify;
-
-
-                    activity.className =
-                        "activity";
-
-
-                    activity.innerHTML = `
-
-                        <img
-                            class="activity-art"
-                            src="${escapeHTML(
-                                spotify.album_art_url
-                            )}"
-                            alt=""
-                        >
-
-                        <div
-                            class="activity-info"
-                        >
-
-                            <div
-                                class="activity-type"
-                            >
-                                🎵 Listening on Spotify
-                            </div>
-
-
-                            <div
-                                class="activity-title"
-                            >
-                                ${escapeHTML(
-                                    spotify.song
-                                )}
-                            </div>
-
-
-                            <div
-                                class="activity-details"
-                            >
-                                ${escapeHTML(
-                                    spotify.artist
-                                )}
-                            </div>
-
-                        </div>
-
-                    `;
-
-
-                    return;
-
-                }
-
-
-                /*
-                 * GAME
-                 */
-
-                if (
-                    data.activities &&
-                    data.activities.length
-                ) {
-
-
-                    const game =
-                        data.activities.find(
-                            item =>
-                                item.type !== 4
-                        );
-
-
-                    if (game) {
-
-
-                        activity.className =
-                            "activity";
-
-
-                        activity.innerHTML = `
-
-                            <div
-                                class="activity-art"
-                                style="
-                                    display:flex;
-                                    align-items:center;
-                                    justify-content:center;
-                                    font-size:20px;
-                                "
-                            >
-                                🎮
-                            </div>
-
-
-                            <div
-                                class="activity-info"
-                            >
-
-                                <div
-                                    class="activity-type"
-                                >
-                                    🎮 Playing
-                                </div>
-
-
-                                <div
-                                    class="activity-title"
-                                >
-                                    ${escapeHTML(
-                                        game.name ||
-                                        "A game"
-                                    )}
-                                </div>
-
-
-                                <div
-                                    class="activity-details"
-                                >
-                                    ${escapeHTML(
-                                        game.details ||
-                                        game.state ||
-                                        ""
-                                    )}
-                                </div>
-
-                            </div>
-
-                        `;
-
-
-                        return;
-
-                    }
-
-                }
-
-
-                /*
-                 * NOTHING
-                 */
-
-                activity.className =
-                    "activity activity-empty";
-
-
-                activity.textContent =
-                    "No activity right now";
-
-
-            }
-
-            catch (error) {
-
-
-                console.error(
-                    "Lanyard error:",
-                    error
-                );
-
-
-                activity.className =
-                    "activity activity-empty";
-
-
-                activity.textContent =
-                    "Activity unavailable";
-
-            }
+            return;
 
         }
 
-
-        /* =====================================================
-           ESCAPE HTML
-        ===================================================== */
-
-        function escapeHTML(value) {
-
-
-            if (!value) {
-                return "";
-            }
-
-
-            return String(value)
-
-                .replaceAll(
-                    "&",
-                    "&amp;"
-                )
-
-                .replaceAll(
-                    "<",
-                    "&lt;"
-                )
-
-                .replaceAll(
-                    ">",
-                    "&gt;"
-                )
-
-                .replaceAll(
-                    '"',
-                    "&quot;"
-                )
-
-                .replaceAll(
-                    "'",
-                    "&#039;"
-                );
-
-        }
-
-
-        /* =====================================================
-           ADMIN
-        ===================================================== */
-
-        function toggleAdmin() {
-
-
-            const message =
-                document.getElementById(
-                    "adminMessage"
-                );
-
-
-            message.classList.toggle(
-                "show"
-            );
-
-        }
-
-
-        /* =====================================================
-           LOAD
-        ===================================================== */
-
-        loadActivity();
 
 
         /*
-         * Refresh Discord activity.
+         * GAME
          */
 
-        setInterval(
-            loadActivity,
-            15000
+        if (
+            data.activities &&
+            data.activities.length
+        ) {
+
+
+            const game =
+                data.activities.find(
+                    item =>
+                        item.type !== 4
+                );
+
+
+            if (game) {
+
+
+                activity.className =
+                    "activity";
+
+
+                activity.innerHTML = `
+
+                    <div
+                        class="activity-art"
+                        style="
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            font-size:20px;
+                        "
+                    >
+                        🎮
+                    </div>
+
+
+                    <div
+                        class="activity-info"
+                    >
+
+                        <div
+                            class="activity-type"
+                        >
+                            🎮 Playing
+                        </div>
+
+
+                        <div
+                            class="activity-title"
+                        >
+                            ${escapeHTML(
+                                game.name ||
+                                "A game"
+                            )}
+                        </div>
+
+
+                        <div
+                            class="activity-details"
+                        >
+                            ${escapeHTML(
+                                game.details ||
+                                game.state ||
+                                ""
+                            )}
+                        </div>
+
+                    </div>
+
+                `;
+
+
+                return;
+
+            }
+
+        }
+
+
+
+        /*
+         * NOTHING ACTIVE
+         */
+
+        activity.className =
+            "activity activity-empty";
+
+
+        activity.textContent =
+            "No activity right now";
+
+
+    }
+
+    catch (error) {
+
+
+        console.error(
+            "Lanyard error:",
+            error
         );
 
 
-    </script>
+        activity.className =
+            "activity activity-empty";
+
+
+        activity.textContent =
+            "Activity unavailable";
+
+    }
+
+}
+
+
+
+/* =========================================================
+   SECURITY
+========================================================= */
+
+function escapeHTML(value) {
+
+    if (!value) {
+        return "";
+    }
+
+
+    return String(value)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+
+/* =========================================================
+   ADMIN PLACEHOLDER
+========================================================= */
+
+function toggleAdmin() {
+
+    const message =
+        document.getElementById(
+            "adminMessage"
+        );
+
+
+    message.classList.toggle(
+        "show"
+    );
+
+}
+
+
+
+/* =========================================================
+   START ACTIVITY
+========================================================= */
+
+loadActivity();
+
+
+/*
+ * Refresh every 15 seconds.
+ */
+
+setInterval(
+    loadActivity,
+    15000
+);
+
+
+</script>
 
 </body>
 </html>
-```
