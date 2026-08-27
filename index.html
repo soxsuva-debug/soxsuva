@@ -2,74 +2,81 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#000000">
+
 <title>soxsuva</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-html,body{
-    width:100%;
-    min-height:100%;
-    background:#000;
-    color:#fff;
-    font-family:Arial,Helvetica,sans-serif;
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+    background: #000;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-body{
-    overflow-x:hidden;
+body {
+    overflow-x: hidden;
 }
 
-/* =========================
+/* =========================================================
    BACKGROUND
-========================= */
+========================================================= */
 
-.background{
-    position:fixed;
-    inset:-30px;
-    z-index:-20;
+.background {
+    position: fixed;
+    inset: -35px;
+    z-index: -20;
 
     background:
         linear-gradient(
-            rgba(0,0,0,.35),
-            rgba(0,0,0,.9)
+            rgba(0,0,0,.42),
+            rgba(0,0,0,.88)
         ),
-        url("banner.gif") center/cover no-repeat;
+        url("banner.gif") center / cover no-repeat;
 
-    filter:blur(15px);
-    transform:scale(1.08);
+    filter: blur(16px);
+    transform: scale(1.08);
 }
 
-/* =========================
+/* =========================================================
    CHERRY BLOSSOMS
-========================= */
+========================================================= */
 
-.blossoms{
-    position:fixed;
-    inset:0;
-    overflow:hidden;
-    pointer-events:none;
-    z-index:9000;
+.blossoms {
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+    overflow: hidden;
+
+    z-index: 9000;
 }
 
-.blossom{
-    position:absolute;
-    top:-25px;
+.blossom {
+    position: absolute;
+    top: -30px;
 
-    width:8px;
-    height:6px;
+    width: 8px;
+    height: 6px;
 
-    background:#fff;
-    border-radius:70% 30% 70% 30%;
+    background: #fff;
 
-    opacity:.8;
+    border-radius:
+        70% 30% 70% 30%;
+
+    opacity: .72;
 
     box-shadow:
-        0 0 6px rgba(255,255,255,.5);
+        0 0 7px rgba(255,255,255,.5);
 
     animation:
         blossomFall
@@ -78,203 +85,164 @@ body{
         var(--delay)
         infinite;
 
-    will-change:transform;
+    will-change: transform;
 }
 
-@keyframes blossomFall{
+@keyframes blossomFall {
 
-    0%{
+    0% {
         transform:
             translate3d(0,-30px,0)
             rotate(0deg);
     }
 
-    25%{
+    25% {
         transform:
             translate3d(var(--x1),25vh,0)
             rotate(90deg);
     }
 
-    50%{
+    50% {
         transform:
             translate3d(var(--x2),50vh,0)
             rotate(180deg);
     }
 
-    75%{
+    75% {
         transform:
             translate3d(var(--x3),75vh,0)
             rotate(270deg);
     }
 
-    100%{
+    100% {
         transform:
             translate3d(var(--x4),110vh,0)
             rotate(360deg);
     }
 }
 
-/* =========================
+/* =========================================================
    CLICK TO ENTER
-========================= */
+========================================================= */
 
-#enterScreen{
-    position:fixed;
-    inset:0;
+#enterScreen {
+    position: fixed;
+    inset: 0;
 
-    z-index:100000;
+    z-index: 100000;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    overflow:hidden;
+    overflow: hidden;
 
-    cursor:pointer;
+    cursor: pointer;
 
-    background:#000;
+    background: #000;
 
-    /*
-      IMPORTANT:
-      The whole entrance screen fades together.
-      Nothing underneath gets exposed early.
-    */
-
-    opacity:1;
+    opacity: 1;
 
     transition:
-        opacity 1s cubic-bezier(.22,1,.36,1),
-        visibility 1s ease;
+        opacity 300ms ease;
 }
 
-/* STATIC BANNER */
+#enterBanner {
+    position: absolute;
+    inset: 0;
 
-#enterBanner{
-    position:absolute;
-    inset:0;
+    width: 100%;
+    height: 100%;
 
-    width:100%;
-    height:100%;
+    object-fit: cover;
 
-    object-fit:cover;
-
-    filter:brightness(.55);
+    filter: brightness(.58);
 
     /*
-      NO TRANSFORM.
-      NO ANIMATION.
-      NO ZOOM.
+       IMPORTANT:
+       The banner NEVER moves.
     */
+    transform: none;
 }
 
-.enter-dark{
-    position:absolute;
-    inset:0;
+.enter-dark {
+    position: absolute;
+    inset: 0;
 
     background:
         linear-gradient(
             to bottom,
             rgba(0,0,0,.05),
-            rgba(0,0,0,.65)
+            rgba(0,0,0,.72)
         );
 }
 
-.enter-vignette{
-    position:absolute;
-    inset:0;
+.enter-vignette {
+    position: absolute;
+    inset: 0;
 
     background:
         radial-gradient(
             circle,
-            transparent 15%,
-            rgba(0,0,0,.75) 100%
+            transparent 10%,
+            rgba(0,0,0,.78) 100%
         );
 }
 
-/*
-   This is the important part.
+.enter-content {
+    position: relative;
+    z-index: 5;
 
-   The content does NOT disappear before
-   the entrance screen fades.
-*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-.enter-content{
-    position:relative;
-    z-index:5;
-
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-
-    text-align:center;
-
-    transform:translate3d(0,0,0);
-
-    opacity:1;
-
-    transition:
-        transform 1s cubic-bezier(.16,1,.3,1);
+    text-align: center;
 }
 
-/* =========================
-   ENTER PFP
-========================= */
+#enterPfp {
+    display: block;
 
-#enterPfp{
-    width:145px;
-    height:145px;
+    width: 145px;
+    height: 145px;
 
-    object-fit:cover;
+    object-fit: cover;
 
-    border-radius:50%;
+    border-radius: 50%;
 
-    border:
-        3px solid rgba(255,255,255,.95);
+    border: 3px solid rgba(255,255,255,.95);
 
     box-shadow:
-        0 0 35px rgba(255,255,255,.25),
+        0 0 35px rgba(255,255,255,.24),
         0 0 100px rgba(255,255,255,.08);
-
-    /*
-      Smooth morph toward the main profile.
-    */
-
-    transform:
-        translate3d(0,0,0)
-        scale(1);
-
-    transition:
-        transform 1s cubic-bezier(.16,1,.3,1),
-        opacity .9s ease;
 }
 
-.enter-name{
-    margin-top:20px;
+.enter-name {
+    margin-top: 20px;
 
     font-size:
-        clamp(50px,9vw,82px);
+        clamp(50px, 9vw, 82px);
 
-    font-weight:900;
+    font-weight: 900;
 
-    letter-spacing:-4px;
+    letter-spacing: -4px;
 
     text-shadow:
         0 0 30px rgba(255,255,255,.2);
 
     transition:
-        opacity .65s ease,
-        transform .7s cubic-bezier(.16,1,.3,1);
+        opacity 300ms ease,
+        transform 400ms cubic-bezier(.16,1,.3,1);
 }
 
-.enter-text{
-    margin-top:12px;
+.enter-text {
+    margin-top: 12px;
 
-    font-size:10px;
+    font-size: 10px;
 
-    letter-spacing:3px;
+    letter-spacing: 3px;
 
-    color:
-        rgba(255,255,255,.6);
+    color: rgba(255,255,255,.62);
 
     animation:
         enterPulse
@@ -283,330 +251,320 @@ body{
         infinite;
 
     transition:
-        opacity .5s ease,
-        transform .6s ease;
+        opacity 250ms ease,
+        transform 350ms ease;
 }
 
-@keyframes enterPulse{
+@keyframes enterPulse {
 
-    0%,100%{
-        opacity:.4;
+    0%,
+    100% {
+        opacity: .4;
     }
 
-    50%{
-        opacity:1;
+    50% {
+        opacity: 1;
     }
 }
 
-/* =========================
-   ENTERING STATE
-========================= */
+/* =========================================================
+   FLYING PFP
+========================================================= */
 
-#enterScreen.entering{
-    opacity:0;
+.pfp-flyer {
+    position: fixed;
 
-    pointer-events:none;
-}
+    z-index: 100001;
 
-#enterScreen.entering .enter-content{
-    transform:
-        translate3d(
-            0,
-            28px,
-            0
-        );
-}
+    margin: 0;
 
-#enterScreen.entering #enterPfp{
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    pointer-events: none;
+
+    will-change:
+        left,
+        top,
+        width,
+        height;
+
     /*
-      PFP remains visible while the entire
-      entrance fades away.
-
-      This prevents the blank-banner glitch.
+       This is the actual movement curve.
+       Starts quickly and gently settles.
     */
 
-    transform:
-        translate3d(
-            0,
-            38px,
-            0
-        )
-        scale(.76);
-
-    opacity:1;
+    transition:
+        left 900ms cubic-bezier(.16,1,.3,1),
+        top 900ms cubic-bezier(.16,1,.3,1),
+        width 900ms cubic-bezier(.16,1,.3,1),
+        height 900ms cubic-bezier(.16,1,.3,1),
+        border-radius 900ms cubic-bezier(.16,1,.3,1),
+        border-width 900ms cubic-bezier(.16,1,.3,1),
+        box-shadow 900ms cubic-bezier(.16,1,.3,1);
 }
 
-#enterScreen.entering .enter-name{
-    opacity:0;
-
-    transform:
-        translateY(-12px);
-}
-
-#enterScreen.entering .enter-text{
-    opacity:0;
-
-    transform:
-        translateY(-8px);
-}
-
-/* =========================
+/* =========================================================
    MAIN PAGE
-========================= */
+========================================================= */
 
-.page{
-    min-height:100vh;
+.page {
+    min-height: 100vh;
 
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    padding:30px 14px;
+    padding: 30px 14px;
 }
 
-.card{
-    width:min(570px,100%);
+.card {
+    width: min(570px,100%);
 
-    overflow:hidden;
+    overflow: hidden;
 
     border:
         1px solid rgba(255,255,255,.11);
 
-    border-radius:27px;
+    border-radius: 27px;
 
     background:
-        rgba(8,8,10,.7);
+        rgba(8,8,10,.70);
 
-    backdrop-filter:blur(25px);
-    -webkit-backdrop-filter:blur(25px);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
 
     box-shadow:
         0 35px 120px rgba(0,0,0,.75),
         inset 0 1px rgba(255,255,255,.05);
 }
 
-/* =========================
+/* =========================================================
    MAIN BANNER
-========================= */
+========================================================= */
 
-.banner{
-    position:relative;
+.banner {
+    position: relative;
 
-    width:100%;
-    height:200px;
+    width: 100%;
+    height: 200px;
 
-    overflow:hidden;
+    overflow: hidden;
 }
 
-#mainBanner{
-    width:100%;
-    height:100%;
+#mainBanner {
+    display: block;
 
-    display:block;
+    width: 100%;
+    height: 100%;
 
-    object-fit:cover;
+    object-fit: cover;
 }
 
-.banner-shade{
-    position:absolute;
-    inset:0;
+.banner-shade {
+    position: absolute;
+    inset: 0;
 
     background:
         linear-gradient(
             to bottom,
-            transparent 30%,
-            rgba(0,0,0,.55)
+            transparent 25%,
+            rgba(0,0,0,.6)
         );
 }
 
-/* =========================
-   PROFILE
-========================= */
+/* =========================================================
+   PROFILE AREA
+========================================================= */
 
-.profile-area{
-    position:relative;
+.profile-area {
+    position: relative;
 
     padding:
         70px 27px 28px;
 }
 
-.profile{
-    text-align:center;
+.profile {
+    text-align: center;
 }
 
-.pfp-wrap{
-    position:absolute;
+/* =========================================================
+   MAIN PFP
+========================================================= */
 
-    left:50%;
-    top:-62px;
+.pfp-wrap {
+    position: absolute;
 
-    width:124px;
-    height:124px;
+    left: 50%;
+    top: -62px;
+
+    width: 124px;
+    height: 124px;
 
     transform:
         translateX(-50%);
 
-    z-index:20;
+    z-index: 20;
 }
 
-#profilePfp{
-    display:block;
+#profilePfp {
+    display: block;
 
-    width:100%;
-    height:100%;
+    width: 100%;
+    height: 100%;
 
-    object-fit:cover;
+    object-fit: cover;
 
-    border-radius:50%;
+    border-radius: 50%;
 
-    border:
-        4px solid #111;
+    border: 4px solid #111;
 
-    background:#111;
+    background: #111;
 
     box-shadow:
         0 12px 35px rgba(0,0,0,.7);
 }
 
-/* =========================
+/* =========================================================
    DISCORD STATUS
-========================= */
+========================================================= */
 
-.discord-status{
-    position:absolute;
+.discord-status {
+    position: absolute;
 
-    right:3px;
-    bottom:3px;
+    right: 2px;
+    bottom: 2px;
 
-    width:31px;
-    height:31px;
+    width: 31px;
+    height: 31px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    border-radius:50%;
+    border-radius: 50%;
 
-    background:#111;
+    background: #111;
 
     box-shadow:
         0 0 0 3px #111;
 }
 
-.discord-status::after{
-    content:"";
+.discord-status::after {
+    content: "";
 
-    width:17px;
-    height:17px;
+    width: 17px;
+    height: 17px;
 
-    border-radius:50%;
+    border-radius: 50%;
 
-    background:#747f8d;
+    background: #747f8d;
 }
 
-.discord-status.online::after{
-    background:#23a55a;
+.discord-status.online::after {
+    background: #23a55a;
 }
 
-.discord-status.idle::after{
-    background:#f0b232;
+.discord-status.idle::after {
+    background: #f0b232;
 }
 
-.discord-status.dnd::after{
-    width:17px;
-    height:17px;
+.discord-status.dnd::after {
+    width: 17px;
+    height: 17px;
 
-    background:#ed4245;
+    background: #ed4245;
 }
 
-.discord-status.dnd::before{
-    content:"";
+.discord-status.dnd::before {
+    content: "";
 
-    position:absolute;
+    position: absolute;
 
-    width:9px;
-    height:3px;
+    width: 9px;
+    height: 3px;
 
-    border-radius:3px;
+    border-radius: 3px;
 
-    background:#111;
+    background: #111;
 }
 
-.discord-status.offline::after{
-    background:#747f8d;
+.discord-status.offline::after {
+    background: #747f8d;
 }
 
-/* =========================
+/* =========================================================
    PROFILE TEXT
-========================= */
+========================================================= */
 
-.name{
-    font-size:32px;
+.name {
+    font-size: 32px;
 
-    font-weight:900;
+    font-weight: 900;
 
-    letter-spacing:-1.5px;
+    letter-spacing: -1.5px;
 }
 
-.username{
-    margin-top:5px;
+.username {
+    margin-top: 5px;
 
-    color:
-        rgba(255,255,255,.52);
+    color: rgba(255,255,255,.52);
 
-    font-size:13px;
+    font-size: 13px;
 }
 
-.bio{
-    max-width:410px;
+.bio {
+    max-width: 410px;
 
     margin:
         14px auto 0;
 
-    color:#d0d0d0;
+    color: #d0d0d0;
 
-    font-size:14px;
+    font-size: 14px;
 
-    line-height:1.55;
+    line-height: 1.55;
 }
 
-/* =========================
+/* =========================================================
    BADGES
-========================= */
+========================================================= */
 
-.badges{
-    display:flex;
+.badges {
+    display: flex;
 
-    justify-content:center;
+    align-items: center;
+    justify-content: center;
 
-    gap:7px;
+    gap: 7px;
 
-    margin-top:15px;
+    margin-top: 15px;
 }
 
-.badge{
-    width:30px;
-    height:30px;
+.badge {
+    width: 30px;
+    height: 30px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     border:
         1px solid rgba(255,255,255,.12);
 
-    border-radius:8px;
+    border-radius: 8px;
 
     background:
         rgba(255,255,255,.045);
 
     transition:
-        transform .2s ease,
-        background .2s ease,
-        box-shadow .2s ease;
+        transform 200ms ease,
+        background 200ms ease,
+        box-shadow 200ms ease;
 }
 
-.badge:hover{
+.badge:hover {
     transform:
         translateY(-3px);
 
@@ -617,42 +575,42 @@ body{
         0 0 15px rgba(255,255,255,.1);
 }
 
-.badge svg{
-    width:18px;
-    height:18px;
+.badge svg {
+    width: 18px;
+    height: 18px;
 }
 
-/* =========================
+/* =========================================================
    TIKTOK
-========================= */
+========================================================= */
 
-.tiktok{
-    display:block;
+.tiktok {
+    display: block;
 
-    margin-top:24px;
+    margin-top: 24px;
 
-    padding:15px;
+    padding: 15px;
 
-    color:#fff;
+    color: #fff;
 
-    text-decoration:none;
+    text-decoration: none;
 
     border:
         1px solid rgba(255,255,255,.11);
 
-    border-radius:17px;
+    border-radius: 17px;
 
     background:
         rgba(255,255,255,.035);
 
     transition:
-        transform .25s ease,
-        border-color .25s ease,
-        background .25s ease,
-        box-shadow .25s ease;
+        transform 250ms ease,
+        border-color 250ms ease,
+        background 250ms ease,
+        box-shadow 250ms ease;
 }
 
-.tiktok:hover{
+.tiktok:hover {
     transform:
         translateY(-3px);
 
@@ -666,149 +624,151 @@ body{
         0 0 30px rgba(255,255,255,.1);
 }
 
-.tiktok-top{
-    display:flex;
-    align-items:center;
+.tiktok-top {
+    display: flex;
+    align-items: center;
 
-    gap:12px;
+    gap: 12px;
 }
 
-.tiktok-logo{
-    width:44px;
-    height:44px;
+.tiktok-logo {
+    width: 44px;
+    height: 44px;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    border-radius:12px;
+    border-radius: 12px;
 
-    background:#050505;
+    background: #050505;
 
     border:
         1px solid rgba(255,255,255,.12);
 }
 
-.tiktok-logo svg{
-    width:23px;
-    height:23px;
+.tiktok-logo svg {
+    width: 23px;
+    height: 23px;
 }
 
-.tiktok-info{
-    flex:1;
+.tiktok-info {
+    flex: 1;
 }
 
-.tiktok-title{
-    font-size:14px;
-    font-weight:900;
+.tiktok-title {
+    font-size: 14px;
+    font-weight: 900;
 }
 
-.tiktok-handle{
-    margin-top:3px;
+.tiktok-handle {
+    margin-top: 3px;
 
-    color:#777;
+    color: #777;
 
-    font-size:11px;
+    font-size: 11px;
 }
 
-.tiktok-arrow{
-    color:#777;
-    font-size:18px;
+.tiktok-arrow {
+    color: #777;
+
+    font-size: 18px;
 
     transition:
-        transform .2s ease,
-        color .2s ease;
+        transform 200ms ease,
+        color 200ms ease;
 }
 
-.tiktok:hover .tiktok-arrow{
-    color:#fff;
+.tiktok:hover .tiktok-arrow {
+    color: #fff;
 
     transform:
         translateX(4px);
 }
 
-.tiktok-stats{
-    display:grid;
+.tiktok-stats {
+    display: grid;
 
     grid-template-columns:
         repeat(3,1fr);
 
-    margin-top:14px;
+    margin-top: 14px;
 
-    padding-top:14px;
+    padding-top: 14px;
 
     border-top:
         1px solid rgba(255,255,255,.1);
 }
 
-.stat{
-    text-align:center;
+.stat {
+    text-align: center;
 }
 
-.stat-number{
-    font-size:16px;
-    font-weight:900;
+.stat-number {
+    font-size: 16px;
+
+    font-weight: 900;
 }
 
-.stat-label{
-    margin-top:4px;
+.stat-label {
+    margin-top: 4px;
 
-    color:#777;
+    color: #777;
 
-    font-size:9px;
+    font-size: 9px;
 
-    text-transform:uppercase;
+    text-transform: uppercase;
 
-    letter-spacing:1px;
+    letter-spacing: 1px;
 }
 
-/* =========================
+/* =========================================================
    SECTION TITLES
-========================= */
+========================================================= */
 
-.section-title{
+.section-title {
     margin:
         25px 0 10px;
 
-    color:#777;
+    color: #777;
 
-    font-size:10px;
+    font-size: 10px;
 
-    font-weight:800;
+    font-weight: 800;
 
-    letter-spacing:1.7px;
+    letter-spacing: 1.7px;
 
-    text-transform:uppercase;
+    text-transform: uppercase;
 }
 
-/* =========================
+/* =========================================================
    ACTIVITY
-========================= */
+========================================================= */
 
-.activity{
-    display:flex;
-    align-items:center;
+.activity {
+    display: flex;
+    align-items: center;
 
-    gap:12px;
+    gap: 12px;
 
-    min-height:72px;
+    min-height: 72px;
 
-    padding:12px;
+    padding: 12px;
 
     border:
         1px solid rgba(255,255,255,.11);
 
-    border-radius:16px;
+    border-radius: 16px;
 
     background:
         rgba(255,255,255,.035);
 
     transition:
-        border-color .25s ease,
-        box-shadow .25s ease;
+        border-color 250ms ease,
+        box-shadow 250ms ease;
 }
 
-.activity:hover{
+.activity:hover {
     border-color:
         rgba(255,255,255,.28);
 
@@ -816,159 +776,162 @@ body{
         0 0 25px rgba(255,255,255,.06);
 }
 
-.activity-art{
-    width:49px;
-    height:49px;
+.activity-art {
+    width: 49px;
+    height: 49px;
 
-    flex-shrink:0;
+    flex-shrink: 0;
 
-    border-radius:11px;
+    border-radius: 11px;
 
-    object-fit:cover;
+    object-fit: cover;
 
-    background:#111;
+    background: #111;
 }
 
-.activity-info{
-    min-width:0;
-    flex:1;
+.activity-info {
+    min-width: 0;
+
+    flex: 1;
 }
 
-.activity-type{
-    margin-bottom:4px;
+.activity-type {
+    margin-bottom: 4px;
 
-    color:#777;
+    color: #777;
 
-    font-size:10px;
+    font-size: 10px;
 }
 
-.activity-title{
-    overflow:hidden;
+.activity-title {
+    overflow: hidden;
 
-    font-size:14px;
+    font-size: 14px;
 
-    font-weight:800;
+    font-weight: 800;
 
-    white-space:nowrap;
+    white-space: nowrap;
 
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
 }
 
-.activity-details{
-    margin-top:4px;
+.activity-details {
+    margin-top: 4px;
 
-    overflow:hidden;
+    overflow: hidden;
 
-    color:#999;
+    color: #999;
 
-    font-size:11px;
+    font-size: 11px;
 
-    white-space:nowrap;
+    white-space: nowrap;
 
-    text-overflow:ellipsis;
+    text-overflow: ellipsis;
 }
 
-.activity-empty{
-    justify-content:center;
+.activity-empty {
+    justify-content: center;
 
-    color:#777;
+    color: #777;
 
-    font-size:12px;
+    font-size: 12px;
 }
 
-/* =========================
+/* =========================================================
    MUSIC
-========================= */
+========================================================= */
 
-.music{
-    padding:16px;
+.music {
+    padding: 16px;
 
     border:
         1px solid rgba(255,255,255,.11);
 
-    border-radius:18px;
+    border-radius: 18px;
 
     background:
         rgba(255,255,255,.035);
 }
 
-.music-top{
-    display:flex;
-    align-items:center;
+.music-top {
+    display: flex;
+    align-items: center;
 
-    gap:13px;
+    gap: 13px;
 }
 
-.album{
-    width:55px;
-    height:55px;
+.album {
+    width: 55px;
+    height: 55px;
 
-    object-fit:cover;
+    object-fit: cover;
 
-    border-radius:12px;
+    border-radius: 12px;
 }
 
-.music-info{
-    flex:1;
-    min-width:0;
+.music-info {
+    flex: 1;
+
+    min-width: 0;
 }
 
-.music-title{
-    font-size:14px;
-    font-weight:900;
+.music-title {
+    font-size: 14px;
+
+    font-weight: 900;
 }
 
-.music-artist{
-    margin-top:4px;
+.music-artist {
+    margin-top: 4px;
 
-    color:#999;
+    color: #999;
 
-    font-size:11px;
+    font-size: 11px;
 }
 
-.music-status{
-    color:#777;
+.music-status {
+    color: #777;
 
-    font-size:10px;
+    font-size: 10px;
 }
 
-.music-player{
-    display:flex;
-    align-items:center;
+.music-player {
+    display: flex;
+    align-items: center;
 
-    gap:10px;
+    gap: 10px;
 
-    margin-top:14px;
+    margin-top: 14px;
 }
 
-.play-button{
-    width:38px;
-    height:38px;
+.play-button {
+    width: 38px;
+    height: 38px;
 
-    flex-shrink:0;
+    flex-shrink: 0;
 
-    border:0;
+    border: 0;
 
-    border-radius:50%;
+    border-radius: 50%;
 
-    background:#fff;
+    background: #fff;
 
-    color:#000;
+    color: #000;
 
-    cursor:pointer;
+    cursor: pointer;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    font-size:12px;
+    font-size: 12px;
 
     transition:
-        transform .2s ease,
-        box-shadow .2s ease;
+        transform 200ms ease,
+        box-shadow 200ms ease;
 }
 
-.play-button:hover{
+.play-button:hover {
     transform:
         scale(1.07);
 
@@ -976,89 +939,93 @@ body{
         0 0 20px rgba(255,255,255,.2);
 }
 
-.progress-area{
-    flex:1;
+.progress-area {
+    flex: 1;
 }
 
-.progress{
-    width:100%;
-    height:5px;
+.progress {
+    width: 100%;
+    height: 5px;
 
-    overflow:hidden;
+    overflow: hidden;
 
-    border-radius:20px;
+    border-radius: 20px;
 
     background:
         rgba(255,255,255,.13);
 
-    cursor:pointer;
+    cursor: pointer;
 }
 
-.progress-fill{
-    width:0%;
-    height:100%;
+.progress-fill {
+    width: 0%;
+    height: 100%;
 
-    border-radius:20px;
+    border-radius: 20px;
 
-    background:#fff;
+    background: #fff;
+
+    transition:
+        width 100ms linear;
 }
 
-.time{
-    display:flex;
-    justify-content:space-between;
+.time {
+    display: flex;
+    justify-content: space-between;
 
-    margin-top:6px;
+    margin-top: 6px;
 
-    color:#666;
+    color: #666;
 
-    font-size:9px;
+    font-size: 9px;
 }
 
-audio{
-    display:none;
+audio {
+    display: none;
 }
 
-/* =========================
+/* =========================================================
    SOCIALS
-========================= */
+========================================================= */
 
-.socials{
-    display:grid;
+.socials {
+    display: grid;
 
     grid-template-columns:
         repeat(3,1fr);
 
-    gap:9px;
+    gap: 9px;
 }
 
-.social{
-    min-height:88px;
+.social {
+    min-height: 88px;
 
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
+    display: flex;
+    flex-direction: column;
 
-    color:#fff;
+    align-items: center;
+    justify-content: center;
 
-    text-decoration:none;
+    color: #fff;
+
+    text-decoration: none;
 
     border:
         1px solid rgba(255,255,255,.11);
 
-    border-radius:16px;
+    border-radius: 16px;
 
     background:
         rgba(255,255,255,.035);
 
     transition:
-        transform .25s ease,
-        border-color .25s ease,
-        background .25s ease,
-        box-shadow .25s ease;
+        transform 250ms ease,
+        border-color 250ms ease,
+        background 250ms ease,
+        box-shadow 250ms ease;
 }
 
-.social:hover{
+.social:hover {
     transform:
         translateY(-4px);
 
@@ -1072,71 +1039,73 @@ audio{
         0 0 30px rgba(255,255,255,.11);
 }
 
-.social-logo{
-    width:25px;
-    height:25px;
+.social-logo {
+    width: 25px;
+    height: 25px;
 
-    margin-bottom:8px;
+    margin-bottom: 8px;
 }
 
-.social-name{
-    font-size:11px;
-    font-weight:800;
+.social-name {
+    font-size: 11px;
+
+    font-weight: 800;
 }
 
-.social-user{
-    margin-top:3px;
+.social-user {
+    margin-top: 3px;
 
-    color:#777;
+    color: #777;
 
-    font-size:9px;
+    font-size: 9px;
 }
 
-/* =========================
+/* =========================================================
    COUNTERS
-========================= */
+========================================================= */
 
-.counters{
-    display:flex;
-    justify-content:center;
+.counters {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    gap:8px;
+    gap: 8px;
 
-    margin-top:20px;
+    margin-top: 20px;
 }
 
-.counter{
+.counter {
     padding:
         9px 13px;
 
     border:
         1px solid rgba(255,255,255,.11);
 
-    border-radius:11px;
+    border-radius: 11px;
 
     background:
         rgba(255,255,255,.035);
 
-    color:#888;
+    color: #888;
 
-    font-size:10px;
+    font-size: 10px;
 }
 
-.counter strong{
-    color:#fff;
+.counter strong {
+    color: #fff;
 }
 
-.like-button{
-    cursor:pointer;
+.like-button {
+    cursor: pointer;
 
-    font-family:inherit;
+    font-family: inherit;
 
     transition:
-        background .2s ease,
-        border-color .2s ease;
+        background 200ms ease,
+        border-color 200ms ease;
 }
 
-.like-button:hover{
+.like-button:hover {
     background:
         rgba(255,255,255,.07);
 
@@ -1144,7 +1113,7 @@ audio{
         rgba(255,255,255,.3);
 }
 
-.like-button.liked{
+.like-button.liked {
     background:
         rgba(255,255,255,.1);
 
@@ -1152,16 +1121,16 @@ audio{
         rgba(255,255,255,.35);
 }
 
-.like-button:disabled{
-    cursor:default;
+.like-button:disabled {
+    cursor: default;
 }
 
-/* =========================
+/* =========================================================
    ADMIN
-========================= */
+========================================================= */
 
-.admin-button{
-    display:block;
+.admin-button {
+    display: block;
 
     margin:
         25px auto 4px;
@@ -1172,32 +1141,32 @@ audio{
     border:
         1px solid rgba(255,255,255,.11);
 
-    border-radius:9px;
+    border-radius: 9px;
 
-    background:transparent;
+    background: transparent;
 
-    color:#666;
+    color: #666;
 
-    cursor:pointer;
+    cursor: pointer;
 
-    font-size:9px;
+    font-size: 9px;
 
-    letter-spacing:1px;
+    letter-spacing: 1px;
 
     transition:
-        color .2s ease,
-        border-color .2s ease;
+        color 200ms ease,
+        border-color 200ms ease;
 }
 
-.admin-button:hover{
-    color:#fff;
+.admin-button:hover {
+    color: #fff;
 
     border-color:
         rgba(255,255,255,.3);
 }
 
-#adminPanel{
-    display:none;
+#adminPanel {
+    display: none;
 
     margin:
         18px -27px -28px;
@@ -1212,162 +1181,164 @@ audio{
         rgba(0,0,0,.35);
 }
 
-#adminPanel.show{
-    display:block;
+#adminPanel.show {
+    display: block;
 }
 
-.admin-title{
-    font-size:14px;
-    font-weight:900;
+.admin-title {
+    font-size: 14px;
+
+    font-weight: 900;
 }
 
-.admin-note{
-    margin-top:5px;
+.admin-note {
+    margin-top: 5px;
 
-    color:#777;
+    color: #777;
 
-    font-size:10px;
+    font-size: 10px;
 
-    line-height:1.5;
+    line-height: 1.5;
 }
 
-.admin-grid{
-    display:grid;
-    gap:8px;
+.admin-grid {
+    display: grid;
 
-    margin-top:14px;
+    gap: 8px;
+
+    margin-top: 14px;
 }
 
-.admin-row{
-    display:grid;
+.admin-row {
+    display: grid;
 
     grid-template-columns:
         1fr 1fr;
 
-    gap:8px;
+    gap: 8px;
 }
 
 .admin-input,
-.admin-textarea{
-    width:100%;
+.admin-textarea {
+    width: 100%;
 
-    outline:none;
+    outline: none;
 
-    padding:10px;
+    padding: 10px;
 
     border:
         1px solid rgba(255,255,255,.11);
 
-    border-radius:9px;
+    border-radius: 9px;
 
     background:
         rgba(255,255,255,.045);
 
-    color:#fff;
+    color: #fff;
 
-    font-family:inherit;
+    font-family: inherit;
 }
 
-.admin-textarea{
-    min-height:70px;
+.admin-textarea {
+    min-height: 70px;
 
-    resize:vertical;
+    resize: vertical;
 }
 
-.admin-actions{
-    display:flex;
+.admin-actions {
+    display: flex;
 
-    gap:8px;
+    gap: 8px;
 
-    margin-top:9px;
+    margin-top: 9px;
 }
 
-.admin-action{
-    flex:1;
+.admin-action {
+    flex: 1;
 
-    padding:10px;
+    padding: 10px;
 
     border:
         1px solid rgba(255,255,255,.11);
 
-    border-radius:9px;
+    border-radius: 9px;
 
     background:
         rgba(255,255,255,.06);
 
-    color:#fff;
+    color: #fff;
 
-    cursor:pointer;
+    cursor: pointer;
 }
 
-/* =========================
+/* =========================================================
    MOBILE
-========================= */
+========================================================= */
 
-@media(max-width:560px){
+@media (max-width: 560px) {
 
-    .page{
-        padding:10px;
+    .page {
+        padding: 10px;
     }
 
-    .card{
-        border-radius:23px;
+    .card {
+        border-radius: 23px;
     }
 
-    .banner{
-        height:165px;
+    .banner {
+        height: 165px;
     }
 
-    .profile-area{
+    .profile-area {
         padding:
             68px 16px 22px;
     }
 
-    .pfp-wrap{
-        width:110px;
-        height:110px;
+    .pfp-wrap {
+        width: 110px;
+        height: 110px;
 
-        top:-55px;
+        top: -55px;
     }
 
-    .discord-status{
-        width:28px;
-        height:28px;
+    .discord-status {
+        width: 28px;
+        height: 28px;
     }
 
-    .discord-status::after{
-        width:15px;
-        height:15px;
+    .discord-status::after {
+        width: 15px;
+        height: 15px;
     }
 
-    .name{
-        font-size:28px;
+    .name {
+        font-size: 28px;
     }
 
-    .socials{
-        grid-template-columns:1fr;
+    .socials {
+        grid-template-columns: 1fr;
     }
 
-    .social{
-        min-height:66px;
+    .social {
+        min-height: 66px;
 
-        flex-direction:row;
+        flex-direction: row;
 
-        justify-content:flex-start;
+        justify-content: flex-start;
 
-        padding:13px;
+        padding: 13px;
     }
 
-    .social-logo{
+    .social-logo {
         margin:
             0 12px 0 0;
     }
 
-    .social-user{
-        margin-top:2px;
+    .social-user {
+        margin-top: 2px;
     }
 
-    #adminPanel{
+    #adminPanel {
         margin:
             18px -16px -22px;
 
@@ -1375,31 +1346,32 @@ audio{
             18px 16px;
     }
 
-    .admin-row{
-        grid-template-columns:1fr;
+    .admin-row {
+        grid-template-columns: 1fr;
     }
 }
 
-@media(prefers-reduced-motion:reduce){
+@media (prefers-reduced-motion: reduce) {
 
-    .blossom{
-        animation:none;
+    .blossom {
+        animation: none;
     }
-}
-
-/* =========================
-   PAGE ENTRANCE
-========================= */
-
-.page{
-    opacity:1;
 }
 </style>
 </head>
 
 <body>
 
+<!-- =======================================================
+     BACKGROUND
+======================================================= -->
+
 <div class="background"></div>
+
+
+<!-- =======================================================
+     CHERRY BLOSSOMS
+======================================================= -->
 
 <div
     class="blossoms"
@@ -1407,13 +1379,12 @@ audio{
 ></div>
 
 
-<!-- =========================
+<!-- =======================================================
      CLICK TO ENTER
-========================= -->
+======================================================= -->
 
 <div id="enterScreen">
 
-    <!-- STATIC BANNER -->
     <img
         id="enterBanner"
         src="banner.gif"
@@ -1424,10 +1395,7 @@ audio{
 
     <div class="enter-vignette"></div>
 
-    <div
-        class="enter-content"
-        id="enterContent"
-    >
+    <div class="enter-content">
 
         <img
             id="enterPfp"
@@ -1448,13 +1416,15 @@ audio{
 </div>
 
 
-<!-- =========================
+<!-- =======================================================
      MAIN SITE
-========================= -->
+======================================================= -->
 
 <main class="page">
 
 <section class="card">
+
+    <!-- MAIN BANNER -->
 
     <div class="banner">
 
@@ -1468,6 +1438,8 @@ audio{
 
     </div>
 
+
+    <!-- PROFILE -->
 
     <div class="profile-area">
 
@@ -1514,49 +1486,78 @@ audio{
             </div>
 
 
+            <!-- BADGES -->
+
             <div class="badges">
+
+                <!-- Nitro -->
 
                 <div
                     class="badge"
                     title="Discord Nitro"
                 >
-                    <svg viewBox="0 0 24 24">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
                         <path
                             d="M5 4.5A2.5 2.5 0 0 1 7.5 2h9A2.5 2.5 0 0 1 19 4.5v15a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 19.5v-15Z"
                             fill="white"
                         />
+
                         <path
                             d="M8 7.5h8M8 11.5h8M8 15.5h5"
                             stroke="#111"
                             stroke-width="1.5"
                             stroke-linecap="round"
                         />
+
                     </svg>
+
                 </div>
 
+
+                <!-- Booster -->
 
                 <div
                     class="badge"
                     title="Server Booster"
                 >
-                    <svg viewBox="0 0 24 24">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
                         <path
                             fill="white"
                             d="M12 2.2c.6 0 1.1.3 1.4.8l2.1 3.5 4 .8c1.3.2 1.8 1.8.9 2.7l-2.8 2.8.6 4c.2 1.3-1.2 2.3-2.3 1.7L12 16.6l-3.9 1.9c-1.2.6-2.5-.4-2.3-1.7l.6-4-2.8-2.8c-.9-.9-.4-2.5.9-2.7l4-.8 2.1-3.5c.3-.5.8-.8 1.4-.8Z"
                         />
+
                     </svg>
+
                 </div>
 
+
+                <!-- Quest -->
 
                 <div
                     class="badge"
                     title="Discord Quest"
                 >
-                    <svg viewBox="0 0 24 24" fill="none">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
                         <path
                             d="M7 4h10a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3h-4l-3.5 3V17H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z"
                             fill="white"
                         />
+
                         <path
                             d="m8 11 2.3 2.2L16 7.8"
                             stroke="#111"
@@ -1564,15 +1565,24 @@ audio{
                             stroke-linecap="round"
                             stroke-linejoin="round"
                         />
+
                     </svg>
+
                 </div>
 
+
+                <!-- Orbs -->
 
                 <div
                     class="badge"
                     title="Discord Orbs"
                 >
-                    <svg viewBox="0 0 24 24" fill="none">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+
                         <circle
                             cx="12"
                             cy="12"
@@ -1580,19 +1590,23 @@ audio{
                             stroke="white"
                             stroke-width="2"
                         />
+
                         <circle
                             cx="12"
                             cy="12"
                             r="3"
                             fill="white"
                         />
+
                         <circle
                             cx="17.5"
                             cy="6.5"
                             r="1.5"
                             fill="white"
                         />
+
                     </svg>
+
                 </div>
 
             </div>
@@ -1600,7 +1614,9 @@ audio{
         </div>
 
 
-        <!-- TIKTOK -->
+        <!-- =================================================
+             TIKTOK
+        ================================================= -->
 
         <a
             class="tiktok"
@@ -1613,7 +1629,10 @@ audio{
 
                 <div class="tiktok-logo">
 
-                    <svg viewBox="0 0 24 24">
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
 
                         <path
                             fill="white"
@@ -1648,6 +1667,7 @@ audio{
             <div class="tiktok-stats">
 
                 <div class="stat">
+
                     <div
                         class="stat-number"
                         id="following"
@@ -1658,10 +1678,12 @@ audio{
                     <div class="stat-label">
                         Following
                     </div>
+
                 </div>
 
 
                 <div class="stat">
+
                     <div
                         class="stat-number"
                         id="followers"
@@ -1672,10 +1694,12 @@ audio{
                     <div class="stat-label">
                         Followers
                     </div>
+
                 </div>
 
 
                 <div class="stat">
+
                     <div
                         class="stat-number"
                         id="tiktokLikes"
@@ -1686,6 +1710,7 @@ audio{
                     <div class="stat-label">
                         Likes
                     </div>
+
                 </div>
 
             </div>
@@ -1693,7 +1718,9 @@ audio{
         </a>
 
 
-        <!-- ACTIVITY -->
+        <!-- =================================================
+             ACTIVITY
+        ================================================= -->
 
         <div class="section-title">
             Activity
@@ -1708,7 +1735,9 @@ audio{
         </div>
 
 
-        <!-- MUSIC -->
+        <!-- =================================================
+             MUSIC
+        ================================================= -->
 
         <div class="section-title">
             Music
@@ -1725,6 +1754,7 @@ audio{
                     alt=""
                 >
 
+
                 <div class="music-info">
 
                     <div class="music-title">
@@ -1736,6 +1766,7 @@ audio{
                     </div>
 
                 </div>
+
 
                 <div
                     class="music-status"
@@ -1800,7 +1831,9 @@ audio{
         </div>
 
 
-        <!-- SOCIALS -->
+        <!-- =================================================
+             SOCIALS
+        ================================================= -->
 
         <div class="section-title">
             Socials
@@ -1808,6 +1841,8 @@ audio{
 
 
         <div class="socials">
+
+            <!-- ROBLOX -->
 
             <a
                 class="social"
@@ -1833,9 +1868,11 @@ audio{
 
                 </svg>
 
+
                 <div class="social-name">
                     Roblox
                 </div>
+
 
                 <div class="social-user">
                     serdemsivridagg
@@ -1843,6 +1880,8 @@ audio{
 
             </a>
 
+
+            <!-- SPOTIFY -->
 
             <a
                 class="social"
@@ -1873,9 +1912,11 @@ audio{
 
                 </svg>
 
+
                 <div class="social-name">
                     Spotify
                 </div>
+
 
                 <div class="social-user">
                     soxsuva
@@ -1883,6 +1924,8 @@ audio{
 
             </a>
 
+
+            <!-- XBOX -->
 
             <a
                 class="social"
@@ -1893,6 +1936,7 @@ audio{
                 <svg
                     class="social-logo"
                     viewBox="0 0 24 24"
+                    fill="none"
                 >
 
                     <circle
@@ -1903,8 +1947,14 @@ audio{
                     />
 
                     <path
-                        d="M7.2 8.1C8.7 6.7 10.5 6 12 7.2c1.5-1.2 3.3-.5 4.8.9M7.2 16.2c1.4-2.7 3.2-4.6 4.8-4.6s3.4 1.9 4.8 4.6"
-                        fill="none"
+                        d="M7 7.5c1.8-1.3 3.4-1.9 5-1.9s3.2.6 5 1.9M7 16.5c2-3.1 3.7-4.7 5-4.7s3 1.6 5 4.7"
+                        stroke="#000"
+                        stroke-width="1.7"
+                        stroke-linecap="round"
+                    />
+
+                    <path
+                        d="M8.2 7.1c1.5 1.1 2.7 2.5 3.8 4.7 1.1-2.2 2.3-3.6 3.8-4.7"
                         stroke="#000"
                         stroke-width="1.7"
                         stroke-linecap="round"
@@ -1912,9 +1962,11 @@ audio{
 
                 </svg>
 
+
                 <div class="social-name">
                     Xbox
                 </div>
+
 
                 <div class="social-user">
                     soxsuva
@@ -1925,7 +1977,9 @@ audio{
         </div>
 
 
-        <!-- COUNTERS -->
+        <!-- =================================================
+             COUNTERS
+        ================================================= -->
 
         <div class="counters">
 
@@ -1960,7 +2014,9 @@ audio{
         </div>
 
 
-        <!-- ADMIN -->
+        <!-- =================================================
+             ADMIN
+        ================================================= -->
 
         <button
             class="admin-button"
@@ -1978,7 +2034,9 @@ audio{
             </div>
 
             <div class="admin-note">
-                Secure global controls will be connected to the Vercel backend next.
+                Local profile controls are available below.
+                Global syncing will require the secure Vercel
+                backend we set up next.
             </div>
 
 
@@ -1990,11 +2048,13 @@ audio{
                     placeholder="Display name"
                 >
 
+
                 <input
                     class="admin-input"
                     id="adminUsername"
                     placeholder="Username"
                 >
+
 
                 <textarea
                     class="admin-textarea"
@@ -2011,6 +2071,7 @@ audio{
                         placeholder="Following"
                     >
 
+
                     <input
                         class="admin-input"
                         id="adminFollowers"
@@ -2023,7 +2084,7 @@ audio{
                 <input
                     class="admin-input"
                     id="adminLikes"
-                    placeholder="Likes"
+                    placeholder="TikTok Likes"
                 >
 
             </div>
@@ -2038,6 +2099,7 @@ audio{
                 >
                     Save
                 </button>
+
 
                 <button
                     class="admin-action"
@@ -2060,14 +2122,14 @@ audio{
 
 <script>
 
-/* =========================
+/* =========================================================
    CHERRY BLOSSOMS
-========================= */
+========================================================= */
 
 const blossomContainer =
     document.getElementById("blossoms");
 
-for(let i = 0; i < 24; i++){
+for (let i = 0; i < 24; i++) {
 
     const blossom =
         document.createElement("div");
@@ -2123,17 +2185,17 @@ for(let i = 0; i < 24; i++){
 }
 
 
-/* =========================
+/* =========================================================
    DISCORD / LANYARD
-========================= */
+========================================================= */
 
 const DISCORD_ID =
     "1491533148914450614";
 
 
-async function updateDiscord(){
+async function updateDiscord() {
 
-    try{
+    try {
 
         const response =
             await fetch(
@@ -2144,10 +2206,10 @@ async function updateDiscord(){
         const json =
             await response.json();
 
-        if(
+        if (
             !json.success ||
             !json.data
-        ){
+        ) {
             throw new Error(
                 "Discord unavailable"
             );
@@ -2177,7 +2239,7 @@ async function updateDiscord(){
 
         updateActivity(data);
 
-    }catch(error){
+    } catch (error) {
 
         const statusElement =
             document.getElementById(
@@ -2204,11 +2266,11 @@ async function updateDiscord(){
 }
 
 
-/* =========================
+/* =========================================================
    ACTIVITY
-========================= */
+========================================================= */
 
-function updateActivity(data){
+function updateActivity(data) {
 
     const activity =
         document.getElementById(
@@ -2216,10 +2278,12 @@ function updateActivity(data){
         );
 
 
-    if(
+    /* SPOTIFY */
+
+    if (
         data.listening_to_spotify &&
         data.spotify
-    ){
+    ) {
 
         const spotify =
             data.spotify;
@@ -2262,10 +2326,12 @@ function updateActivity(data){
     }
 
 
-    if(
+    /* GAME */
+
+    if (
         data.activities &&
         data.activities.length
-    ){
+    ) {
 
         const game =
             data.activities.find(
@@ -2273,7 +2339,7 @@ function updateActivity(data){
                     item.type !== 4
             );
 
-        if(game){
+        if (game) {
 
             activity.className =
                 "activity";
@@ -2328,11 +2394,11 @@ function updateActivity(data){
 }
 
 
-/* =========================
+/* =========================================================
    ESCAPE HTML
-========================= */
+========================================================= */
 
-function escapeHTML(value){
+function escapeHTML(value) {
 
     return String(value || "")
         .replaceAll("&","&amp;")
@@ -2343,9 +2409,9 @@ function escapeHTML(value){
 }
 
 
-/* =========================
+/* =========================================================
    MUSIC
-========================= */
+========================================================= */
 
 const audio =
     document.getElementById(
@@ -2383,11 +2449,11 @@ const musicStatus =
     );
 
 
-function formatTime(seconds){
+function formatTime(seconds) {
 
-    if(
+    if (
         !Number.isFinite(seconds)
-    ){
+    ) {
         return "0:00";
     }
 
@@ -2428,8 +2494,9 @@ audio.addEventListener(
     "timeupdate",
     () => {
 
-        if(!audio.duration)
+        if (!audio.duration) {
             return;
+        }
 
         const percent =
             (
@@ -2481,13 +2548,13 @@ playButton.addEventListener(
     "click",
     () => {
 
-        if(audio.paused){
+        if (audio.paused) {
 
             audio.play().catch(
                 () => {}
             );
 
-        }else{
+        } else {
 
             audio.pause();
 
@@ -2501,8 +2568,9 @@ progress.addEventListener(
     "click",
     event => {
 
-        if(!audio.duration)
+        if (!audio.duration) {
             return;
+        }
 
         const rect =
             progress.getBoundingClientRect();
@@ -2521,18 +2589,13 @@ progress.addEventListener(
 );
 
 
-/* =========================
-   CLICK TO ENTER
-========================= */
+/* =========================================================
+   REAL PFP FLIGHT ANIMATION
+========================================================= */
 
 const enterScreen =
     document.getElementById(
         "enterScreen"
-    );
-
-const enterContent =
-    document.getElementById(
-        "enterContent"
     );
 
 const enterPfp =
@@ -2540,6 +2603,10 @@ const enterPfp =
         "enterPfp"
     );
 
+const mainPfp =
+    document.getElementById(
+        "profilePfp"
+    );
 
 let hasEntered =
     false;
@@ -2549,16 +2616,15 @@ enterScreen.addEventListener(
     "click",
     () => {
 
-        if(hasEntered)
+        if (hasEntered) {
             return;
+        }
 
         hasEntered = true;
 
 
         /*
-          START MUSIC IMMEDIATELY.
-          Because the user clicked, browsers
-          allow audio playback here.
+          Start music from the user's click.
         */
 
         audio.play().catch(
@@ -2567,66 +2633,202 @@ enterScreen.addEventListener(
 
 
         /*
-          IMPORTANT FIX:
-
-          We DO NOT set the PFP opacity to 0.
-
-          We DO NOT hide the enter content first.
-
-          Instead the entire entrance screen
-          fades away while the PFP is still visible.
+          Get the exact position of the
+          large PFP.
         */
 
-        enterScreen.classList.add(
-            "entering"
+        const start =
+            enterPfp.getBoundingClientRect();
+
+
+        /*
+          Get the exact position of the
+          MAIN PFP.
+
+          This means the destination is
+          calculated instead of guessed.
+        */
+
+        const destination =
+            mainPfp.getBoundingClientRect();
+
+
+        /*
+          Make a clone.
+
+          The clone is what travels.
+          The original PFP never disappears.
+        */
+
+        const flyer =
+            document.createElement("img");
+
+        flyer.src =
+            enterPfp.currentSrc ||
+            enterPfp.src;
+
+        flyer.className =
+            "pfp-flyer";
+
+
+        /*
+          Start EXACTLY over the big PFP.
+        */
+
+        flyer.style.left =
+            start.left + "px";
+
+        flyer.style.top =
+            start.top + "px";
+
+        flyer.style.width =
+            start.width + "px";
+
+        flyer.style.height =
+            start.height + "px";
+
+        flyer.style.borderRadius =
+            "50%";
+
+        flyer.style.border =
+            getComputedStyle(
+                enterPfp
+            ).border;
+
+
+        flyer.style.boxShadow =
+            getComputedStyle(
+                enterPfp
+            ).boxShadow;
+
+
+        document.body.appendChild(
+            flyer
         );
 
 
         /*
-          Give the browser a moment to begin
-          the animation before removing the
-          overlay from the page.
+          Fade the words out.
+        */
+
+        enterScreen.classList.add(
+            "leaving"
+        );
+
+
+        /*
+          Force layout so the browser
+          registers the starting position.
+        */
+
+        flyer.getBoundingClientRect();
+
+
+        /*
+          BEGIN THE ACTUAL FLIGHT.
+
+          Large PFP
+               ↓
+          Main PFP position
+        */
+
+        requestAnimationFrame(() => {
+
+            flyer.style.left =
+                destination.left + "px";
+
+            flyer.style.top =
+                destination.top + "px";
+
+            flyer.style.width =
+                destination.width + "px";
+
+            flyer.style.height =
+                destination.height + "px";
+
+            flyer.style.borderRadius =
+                getComputedStyle(
+                    mainPfp
+                ).borderRadius;
+
+            flyer.style.borderWidth =
+                getComputedStyle(
+                    mainPfp
+                ).borderWidth;
+
+            flyer.style.boxShadow =
+                getComputedStyle(
+                    mainPfp
+                ).boxShadow;
+
+        });
+
+
+        /*
+          Keep the banner visible while
+          the PFP is flying.
+
+          Only fade the overlay itself
+          toward the end.
         */
 
         setTimeout(
             () => {
 
-                enterScreen.style.visibility =
-                    "hidden";
+                enterScreen.style.opacity =
+                    "0";
 
             },
-            1050
+            650
+        );
+
+
+        /*
+          Remove everything only AFTER
+          the PFP has reached the main PFP.
+        */
+
+        setTimeout(
+            () => {
+
+                enterScreen.style.display =
+                    "none";
+
+                flyer.remove();
+
+            },
+            950
         );
 
     }
 );
 
 
-/* =========================
+/* =========================================================
    VIEWS
-========================= */
+========================================================= */
 
 const viewKey =
-    "soxsuva_viewed_v3";
+    "soxsuva_viewed_v4";
 
 let views =
     Number(
         localStorage.getItem(
-            "soxsuva_views_v3"
+            "soxsuva_views_v4"
         )
     ) || 0;
 
 
-if(
+if (
     !localStorage.getItem(
         viewKey
     )
-){
+) {
 
     views++;
 
     localStorage.setItem(
-        "soxsuva_views_v3",
+        "soxsuva_views_v4",
         views
     );
 
@@ -2643,17 +2845,17 @@ document.getElementById(
     views;
 
 
-/* =========================
+/* =========================================================
    LIKES
-========================= */
+========================================================= */
 
 const likeKey =
-    "soxsuva_liked_v3";
+    "soxsuva_liked_v4";
 
 let likes =
     Number(
         localStorage.getItem(
-            "soxsuva_likes_v3"
+            "soxsuva_likes_v4"
         )
     ) || 0;
 
@@ -2670,11 +2872,11 @@ const likeButton =
     );
 
 
-if(
+if (
     localStorage.getItem(
         likeKey
     )
-){
+) {
 
     likeButton.classList.add(
         "liked"
@@ -2689,34 +2891,39 @@ likeButton.addEventListener(
     "click",
     () => {
 
-        if(
+        if (
             localStorage.getItem(
                 likeKey
             )
-        ){
+        ) {
             return;
         }
 
         likes++;
 
+
         localStorage.setItem(
-            "soxsuva_likes_v3",
+            "soxsuva_likes_v4",
             likes
         );
+
 
         localStorage.setItem(
             likeKey,
             "true"
         );
 
+
         document.getElementById(
             "likes"
         ).textContent =
             likes;
 
+
         likeButton.classList.add(
             "liked"
         );
+
 
         likeButton.disabled =
             true;
@@ -2725,9 +2932,9 @@ likeButton.addEventListener(
 );
 
 
-/* =========================
+/* =========================================================
    ADMIN
-========================= */
+========================================================= */
 
 const adminButton =
     document.getElementById(
@@ -2774,14 +2981,15 @@ const defaultData = {
 };
 
 
-function loadAdmin(){
+function loadAdmin() {
 
     const saved =
         JSON.parse(
             localStorage.getItem(
-                "soxsuva_profile_v3"
+                "soxsuva_profile_v4"
             ) || "null"
         );
+
 
     const data =
         saved ||
@@ -2913,7 +3121,7 @@ document.getElementById(
 
 
         localStorage.setItem(
-            "soxsuva_profile_v3",
+            "soxsuva_profile_v4",
             JSON.stringify(data)
         );
 
@@ -2935,7 +3143,7 @@ document.getElementById(
     () => {
 
         localStorage.removeItem(
-            "soxsuva_profile_v3"
+            "soxsuva_profile_v4"
         );
 
         loadAdmin();
@@ -2944,9 +3152,9 @@ document.getElementById(
 );
 
 
-/* =========================
+/* =========================================================
    START DISCORD
-========================= */
+========================================================= */
 
 updateDiscord();
 
