@@ -70,8 +70,7 @@ body {
 
     background: #fff;
 
-    border-radius:
-        70% 30% 70% 30%;
+    border-radius: 70% 30% 70% 30%;
 
     opacity: .72;
 
@@ -143,8 +142,7 @@ body {
 
     opacity: 1;
 
-    transition:
-        opacity 300ms ease;
+    transition: opacity 300ms ease;
 }
 
 #enterBanner {
@@ -158,10 +156,6 @@ body {
 
     filter: brightness(.58);
 
-    /*
-       IMPORTANT:
-       The banner NEVER moves.
-    */
     transform: none;
 }
 
@@ -289,11 +283,6 @@ body {
         top,
         width,
         height;
-
-    /*
-       This is the actual movement curve.
-       Starts quickly and gently settles.
-    */
 
     transition:
         left 900ms cubic-bezier(.16,1,.3,1),
@@ -1039,13 +1028,6 @@ audio {
         0 0 30px rgba(255,255,255,.11);
 }
 
-.social-logo {
-    width: 25px;
-    height: 25px;
-
-    margin-bottom: 8px;
-}
-
 .social-name {
     font-size: 11px;
 
@@ -1053,7 +1035,7 @@ audio {
 }
 
 .social-user {
-    margin-top: 3px;
+    margin-top: 5px;
 
     color: #777;
 
@@ -1126,152 +1108,6 @@ audio {
 }
 
 /* =========================================================
-   ADMIN
-========================================================= */
-
-.admin-button {
-    display: block;
-
-    margin:
-        25px auto 4px;
-
-    padding:
-        8px 13px;
-
-    border:
-        1px solid rgba(255,255,255,.11);
-
-    border-radius: 9px;
-
-    background: transparent;
-
-    color: #666;
-
-    cursor: pointer;
-
-    font-size: 9px;
-
-    letter-spacing: 1px;
-
-    transition:
-        color 200ms ease,
-        border-color 200ms ease;
-}
-
-.admin-button:hover {
-    color: #fff;
-
-    border-color:
-        rgba(255,255,255,.3);
-}
-
-#adminPanel {
-    display: none;
-
-    margin:
-        18px -27px -28px;
-
-    padding:
-        20px 27px;
-
-    border-top:
-        1px solid rgba(255,255,255,.1);
-
-    background:
-        rgba(0,0,0,.35);
-}
-
-#adminPanel.show {
-    display: block;
-}
-
-.admin-title {
-    font-size: 14px;
-
-    font-weight: 900;
-}
-
-.admin-note {
-    margin-top: 5px;
-
-    color: #777;
-
-    font-size: 10px;
-
-    line-height: 1.5;
-}
-
-.admin-grid {
-    display: grid;
-
-    gap: 8px;
-
-    margin-top: 14px;
-}
-
-.admin-row {
-    display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap: 8px;
-}
-
-.admin-input,
-.admin-textarea {
-    width: 100%;
-
-    outline: none;
-
-    padding: 10px;
-
-    border:
-        1px solid rgba(255,255,255,.11);
-
-    border-radius: 9px;
-
-    background:
-        rgba(255,255,255,.045);
-
-    color: #fff;
-
-    font-family: inherit;
-}
-
-.admin-textarea {
-    min-height: 70px;
-
-    resize: vertical;
-}
-
-.admin-actions {
-    display: flex;
-
-    gap: 8px;
-
-    margin-top: 9px;
-}
-
-.admin-action {
-    flex: 1;
-
-    padding: 10px;
-
-    border:
-        1px solid rgba(255,255,255,.11);
-
-    border-radius: 9px;
-
-    background:
-        rgba(255,255,255,.06);
-
-    color: #fff;
-
-    cursor: pointer;
-}
-
-/* =========================================================
    MOBILE
 ========================================================= */
 
@@ -1329,25 +1165,13 @@ audio {
         padding: 13px;
     }
 
-    .social-logo {
-        margin:
-            0 12px 0 0;
+    .social-name {
+        margin-left: 0;
     }
 
     .social-user {
-        margin-top: 2px;
-    }
-
-    #adminPanel {
-        margin:
-            18px -16px -22px;
-
-        padding:
-            18px 16px;
-    }
-
-    .admin-row {
-        grid-template-columns: 1fr;
+        margin-top: 3px;
+        margin-left: 8px;
     }
 }
 
@@ -1851,28 +1675,9 @@ audio {
                 rel="noopener noreferrer"
             >
 
-                <svg
-                    class="social-logo"
-                    viewBox="0 0 24 24"
-                >
-
-                    <path
-                        fill="white"
-                        d="M4.2 2.7 21.3 7 17 21.3 2.7 17 4.2 2.7Z"
-                    />
-
-                    <path
-                        fill="#000"
-                        d="m9.4 9.2 5.3 1.3-1.3 5.3-5.3-1.3 1.3-5.3Z"
-                    />
-
-                </svg>
-
-
                 <div class="social-name">
                     Roblox
                 </div>
-
 
                 <div class="social-user">
                     serdemsivridagg
@@ -1890,33 +1695,9 @@ audio {
                 rel="noopener noreferrer"
             >
 
-                <svg
-                    class="social-logo"
-                    viewBox="0 0 24 24"
-                >
-
-                    <circle
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        fill="white"
-                    />
-
-                    <path
-                        d="M7 9.5c3.7-1 7.6-.7 10.4.5M7.8 12.8c2.9-.7 5.9-.5 8.4.4M8.5 15.8c2.1-.4 4.2-.2 6 .4"
-                        fill="none"
-                        stroke="#000"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                    />
-
-                </svg>
-
-
                 <div class="social-name">
                     Spotify
                 </div>
-
 
                 <div class="social-user">
                     soxsuva
@@ -1933,40 +1714,9 @@ audio {
                 onclick="return false;"
             >
 
-                <svg
-                    class="social-logo"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                >
-
-                    <circle
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        fill="white"
-                    />
-
-                    <path
-                        d="M7 7.5c1.8-1.3 3.4-1.9 5-1.9s3.2.6 5 1.9M7 16.5c2-3.1 3.7-4.7 5-4.7s3 1.6 5 4.7"
-                        stroke="#000"
-                        stroke-width="1.7"
-                        stroke-linecap="round"
-                    />
-
-                    <path
-                        d="M8.2 7.1c1.5 1.1 2.7 2.5 3.8 4.7 1.1-2.2 2.3-3.6 3.8-4.7"
-                        stroke="#000"
-                        stroke-width="1.7"
-                        stroke-linecap="round"
-                    />
-
-                </svg>
-
-
                 <div class="social-name">
                     Xbox
                 </div>
-
 
                 <div class="social-user">
                     soxsuva
@@ -2010,106 +1760,6 @@ audio {
                 likes
 
             </button>
-
-        </div>
-
-
-        <!-- =================================================
-             ADMIN
-        ================================================= -->
-
-        <button
-            class="admin-button"
-            id="adminButton"
-            type="button"
-        >
-            ADMIN
-        </button>
-
-
-        <div id="adminPanel">
-
-            <div class="admin-title">
-                Site Control
-            </div>
-
-            <div class="admin-note">
-                Local profile controls are available below.
-                Global syncing will require the secure Vercel
-                backend we set up next.
-            </div>
-
-
-            <div class="admin-grid">
-
-                <input
-                    class="admin-input"
-                    id="adminName"
-                    placeholder="Display name"
-                >
-
-
-                <input
-                    class="admin-input"
-                    id="adminUsername"
-                    placeholder="Username"
-                >
-
-
-                <textarea
-                    class="admin-textarea"
-                    id="adminBio"
-                    placeholder="Bio"
-                ></textarea>
-
-
-                <div class="admin-row">
-
-                    <input
-                        class="admin-input"
-                        id="adminFollowing"
-                        placeholder="Following"
-                    >
-
-
-                    <input
-                        class="admin-input"
-                        id="adminFollowers"
-                        placeholder="Followers"
-                    >
-
-                </div>
-
-
-                <input
-                    class="admin-input"
-                    id="adminLikes"
-                    placeholder="TikTok Likes"
-                >
-
-            </div>
-
-
-            <div class="admin-actions">
-
-                <button
-                    class="admin-action"
-                    id="saveAdmin"
-                    type="button"
-                >
-                    Save
-                </button>
-
-
-                <button
-                    class="admin-action"
-                    id="resetAdmin"
-                    type="button"
-                >
-                    Reset
-                </button>
-
-            </div>
 
         </div>
 
@@ -2590,7 +2240,7 @@ progress.addEventListener(
 
 
 /* =========================================================
-   REAL PFP FLIGHT ANIMATION
+   PFP FLIGHT ANIMATION
 ========================================================= */
 
 const enterScreen =
@@ -2624,7 +2274,8 @@ enterScreen.addEventListener(
 
 
         /*
-          Start music from the user's click.
+          Start music because the click
+          gives the browser permission.
         */
 
         audio.play().catch(
@@ -2633,8 +2284,7 @@ enterScreen.addEventListener(
 
 
         /*
-          Get the exact position of the
-          large PFP.
+          Exact starting PFP position.
         */
 
         const start =
@@ -2642,11 +2292,7 @@ enterScreen.addEventListener(
 
 
         /*
-          Get the exact position of the
-          MAIN PFP.
-
-          This means the destination is
-          calculated instead of guessed.
+          Exact destination PFP position.
         */
 
         const destination =
@@ -2654,10 +2300,11 @@ enterScreen.addEventListener(
 
 
         /*
-          Make a clone.
+          Create a flying copy.
 
-          The clone is what travels.
-          The original PFP never disappears.
+          IMPORTANT:
+          The real PFP underneath is never
+          removed or hidden.
         */
 
         const flyer =
@@ -2670,10 +2317,6 @@ enterScreen.addEventListener(
         flyer.className =
             "pfp-flyer";
 
-
-        /*
-          Start EXACTLY over the big PFP.
-        */
 
         flyer.style.left =
             start.left + "px";
@@ -2695,7 +2338,6 @@ enterScreen.addEventListener(
                 enterPfp
             ).border;
 
-
         flyer.style.boxShadow =
             getComputedStyle(
                 enterPfp
@@ -2708,28 +2350,39 @@ enterScreen.addEventListener(
 
 
         /*
-          Fade the words out.
+          Fade the text away.
         */
 
-        enterScreen.classList.add(
-            "leaving"
-        );
+        enterScreen.querySelector(
+            ".enter-name"
+        ).style.opacity = "0";
+
+        enterScreen.querySelector(
+            ".enter-name"
+        ).style.transform =
+            "translateY(-12px)";
+
+        enterScreen.querySelector(
+            ".enter-text"
+        ).style.opacity = "0";
+
+        enterScreen.querySelector(
+            ".enter-text"
+        ).style.transform =
+            "translateY(-8px)";
 
 
         /*
-          Force layout so the browser
-          registers the starting position.
+          Force browser to register
+          the starting position.
         */
 
         flyer.getBoundingClientRect();
 
 
         /*
-          BEGIN THE ACTUAL FLIGHT.
-
-          Large PFP
-               ↓
-          Main PFP position
+          Fly directly into the main
+          profile PFP.
         */
 
         requestAnimationFrame(() => {
@@ -2765,11 +2418,8 @@ enterScreen.addEventListener(
 
 
         /*
-          Keep the banner visible while
-          the PFP is flying.
-
-          Only fade the overlay itself
-          toward the end.
+          Slowly fade the click screen
+          after the PFP has started moving.
         */
 
         setTimeout(
@@ -2784,8 +2434,8 @@ enterScreen.addEventListener(
 
 
         /*
-          Remove everything only AFTER
-          the PFP has reached the main PFP.
+          Remove the click screen only
+          after the animation finishes.
         */
 
         setTimeout(
@@ -2927,226 +2577,6 @@ likeButton.addEventListener(
 
         likeButton.disabled =
             true;
-
-    }
-);
-
-
-/* =========================================================
-   ADMIN
-========================================================= */
-
-const adminButton =
-    document.getElementById(
-        "adminButton"
-    );
-
-const adminPanel =
-    document.getElementById(
-        "adminPanel"
-    );
-
-
-adminButton.addEventListener(
-    "click",
-    () => {
-
-        adminPanel.classList.toggle(
-            "show"
-        );
-
-    }
-);
-
-
-const defaultData = {
-
-    name:
-        "soxsuva",
-
-    username:
-        "@soxsuva",
-
-    bio:
-        "welcome to my profile",
-
-    following:
-        "186",
-
-    followers:
-        "691",
-
-    likes:
-        "4,398"
-};
-
-
-function loadAdmin() {
-
-    const saved =
-        JSON.parse(
-            localStorage.getItem(
-                "soxsuva_profile_v4"
-            ) || "null"
-        );
-
-
-    const data =
-        saved ||
-        defaultData;
-
-
-    document.getElementById(
-        "displayName"
-    ).textContent =
-        data.name;
-
-
-    document.getElementById(
-        "username"
-    ).textContent =
-        data.username;
-
-
-    document.getElementById(
-        "bio"
-    ).textContent =
-        data.bio;
-
-
-    document.getElementById(
-        "following"
-    ).textContent =
-        data.following;
-
-
-    document.getElementById(
-        "followers"
-    ).textContent =
-        data.followers;
-
-
-    document.getElementById(
-        "tiktokLikes"
-    ).textContent =
-        data.likes;
-
-
-    document.getElementById(
-        "adminName"
-    ).value =
-        data.name;
-
-
-    document.getElementById(
-        "adminUsername"
-    ).value =
-        data.username;
-
-
-    document.getElementById(
-        "adminBio"
-    ).value =
-        data.bio;
-
-
-    document.getElementById(
-        "adminFollowing"
-    ).value =
-        data.following;
-
-
-    document.getElementById(
-        "adminFollowers"
-    ).value =
-        data.followers;
-
-
-    document.getElementById(
-        "adminLikes"
-    ).value =
-        data.likes;
-
-}
-
-
-loadAdmin();
-
-
-document.getElementById(
-    "saveAdmin"
-).addEventListener(
-    "click",
-    () => {
-
-        const data = {
-
-            name:
-                document.getElementById(
-                    "adminName"
-                ).value ||
-                "soxsuva",
-
-            username:
-                document.getElementById(
-                    "adminUsername"
-                ).value ||
-                "@soxsuva",
-
-            bio:
-                document.getElementById(
-                    "adminBio"
-                ).value ||
-                "welcome to my profile",
-
-            following:
-                document.getElementById(
-                    "adminFollowing"
-                ).value ||
-                "0",
-
-            followers:
-                document.getElementById(
-                    "adminFollowers"
-                ).value ||
-                "0",
-
-            likes:
-                document.getElementById(
-                    "adminLikes"
-                ).value ||
-                "0"
-
-        };
-
-
-        localStorage.setItem(
-            "soxsuva_profile_v4",
-            JSON.stringify(data)
-        );
-
-
-        loadAdmin();
-
-        alert(
-            "Saved on this browser."
-        );
-
-    }
-);
-
-
-document.getElementById(
-    "resetAdmin"
-).addEventListener(
-    "click",
-    () => {
-
-        localStorage.removeItem(
-            "soxsuva_profile_v4"
-        );
-
-        loadAdmin();
 
     }
 );
