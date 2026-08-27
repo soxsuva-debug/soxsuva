@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-
 <title>soxsuva</title>
 
 <style>
@@ -39,8 +38,7 @@ body{
             rgba(0,0,0,.35),
             rgba(0,0,0,.9)
         ),
-        url("banner.gif")
-        center/cover no-repeat;
+        url("banner.gif") center/cover no-repeat;
 
     filter:blur(15px);
     transform:scale(1.08);
@@ -136,17 +134,20 @@ body{
 
     background:#000;
 
+    /*
+      IMPORTANT:
+      The whole entrance screen fades together.
+      Nothing underneath gets exposed early.
+    */
+
+    opacity:1;
+
     transition:
-        opacity .7s ease,
-        visibility .7s ease;
+        opacity 1s cubic-bezier(.22,1,.36,1),
+        visibility 1s ease;
 }
 
-/*
-   BANNER IS COMPLETELY STATIC.
-   NO TRANSFORM.
-   NO FADE.
-   NO ANIMATION.
-*/
+/* STATIC BANNER */
 
 #enterBanner{
     position:absolute;
@@ -158,6 +159,12 @@ body{
     object-fit:cover;
 
     filter:brightness(.55);
+
+    /*
+      NO TRANSFORM.
+      NO ANIMATION.
+      NO ZOOM.
+    */
 }
 
 .enter-dark{
@@ -184,6 +191,13 @@ body{
         );
 }
 
+/*
+   This is the important part.
+
+   The content does NOT disappear before
+   the entrance screen fades.
+*/
+
 .enter-content{
     position:relative;
     z-index:5;
@@ -194,10 +208,17 @@ body{
 
     text-align:center;
 
+    transform:translate3d(0,0,0);
+
+    opacity:1;
+
     transition:
-        opacity .45s ease,
-        transform .45s ease;
+        transform 1s cubic-bezier(.16,1,.3,1);
 }
+
+/* =========================
+   ENTER PFP
+========================= */
 
 #enterPfp{
     width:145px;
@@ -213,6 +234,18 @@ body{
     box-shadow:
         0 0 35px rgba(255,255,255,.25),
         0 0 100px rgba(255,255,255,.08);
+
+    /*
+      Smooth morph toward the main profile.
+    */
+
+    transform:
+        translate3d(0,0,0)
+        scale(1);
+
+    transition:
+        transform 1s cubic-bezier(.16,1,.3,1),
+        opacity .9s ease;
 }
 
 .enter-name{
@@ -227,6 +260,10 @@ body{
 
     text-shadow:
         0 0 30px rgba(255,255,255,.2);
+
+    transition:
+        opacity .65s ease,
+        transform .7s cubic-bezier(.16,1,.3,1);
 }
 
 .enter-text{
@@ -244,6 +281,10 @@ body{
         2s
         ease-in-out
         infinite;
+
+    transition:
+        opacity .5s ease,
+        transform .6s ease;
 }
 
 @keyframes enterPulse{
@@ -258,7 +299,59 @@ body{
 }
 
 /* =========================
-   PAGE
+   ENTERING STATE
+========================= */
+
+#enterScreen.entering{
+    opacity:0;
+
+    pointer-events:none;
+}
+
+#enterScreen.entering .enter-content{
+    transform:
+        translate3d(
+            0,
+            28px,
+            0
+        );
+}
+
+#enterScreen.entering #enterPfp{
+    /*
+      PFP remains visible while the entire
+      entrance fades away.
+
+      This prevents the blank-banner glitch.
+    */
+
+    transform:
+        translate3d(
+            0,
+            38px,
+            0
+        )
+        scale(.76);
+
+    opacity:1;
+}
+
+#enterScreen.entering .enter-name{
+    opacity:0;
+
+    transform:
+        translateY(-12px);
+}
+
+#enterScreen.entering .enter-text{
+    opacity:0;
+
+    transform:
+        translateY(-8px);
+}
+
+/* =========================
+   MAIN PAGE
 ========================= */
 
 .page{
@@ -293,7 +386,7 @@ body{
 }
 
 /* =========================
-   BANNER
+   MAIN BANNER
 ========================= */
 
 .banner{
@@ -444,7 +537,7 @@ body{
 }
 
 /* =========================
-   TEXT
+   PROFILE TEXT
 ========================= */
 
 .name{
@@ -670,7 +763,7 @@ body{
 }
 
 /* =========================
-   SECTION
+   SECTION TITLES
 ========================= */
 
 .section-title{
@@ -1292,12 +1385,14 @@ audio{
     .blossom{
         animation:none;
     }
+}
 
-    *,
-    *::before,
-    *::after{
-        transition:none !important;
-    }
+/* =========================
+   PAGE ENTRANCE
+========================= */
+
+.page{
+    opacity:1;
 }
 </style>
 </head>
@@ -1419,31 +1514,24 @@ audio{
             </div>
 
 
-            <!-- DISCORD BADGES -->
-
             <div class="badges">
 
                 <div
                     class="badge"
                     title="Discord Nitro"
                 >
-
                     <svg viewBox="0 0 24 24">
-
                         <path
                             d="M5 4.5A2.5 2.5 0 0 1 7.5 2h9A2.5 2.5 0 0 1 19 4.5v15a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 19.5v-15Z"
                             fill="white"
                         />
-
                         <path
                             d="M8 7.5h8M8 11.5h8M8 15.5h5"
                             stroke="#111"
                             stroke-width="1.5"
                             stroke-linecap="round"
                         />
-
                     </svg>
-
                 </div>
 
 
@@ -1451,16 +1539,12 @@ audio{
                     class="badge"
                     title="Server Booster"
                 >
-
                     <svg viewBox="0 0 24 24">
-
                         <path
                             fill="white"
                             d="M12 2.2c.6 0 1.1.3 1.4.8l2.1 3.5 4 .8c1.3.2 1.8 1.8.9 2.7l-2.8 2.8.6 4c.2 1.3-1.2 2.3-2.3 1.7L12 16.6l-3.9 1.9c-1.2.6-2.5-.4-2.3-1.7l.6-4-2.8-2.8c-.9-.9-.4-2.5.9-2.7l4-.8 2.1-3.5c.3-.5.8-.8 1.4-.8Z"
                         />
-
                     </svg>
-
                 </div>
 
 
@@ -1468,17 +1552,11 @@ audio{
                     class="badge"
                     title="Discord Quest"
                 >
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                    >
-
+                    <svg viewBox="0 0 24 24" fill="none">
                         <path
                             d="M7 4h10a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3h-4l-3.5 3V17H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z"
                             fill="white"
                         />
-
                         <path
                             d="m8 11 2.3 2.2L16 7.8"
                             stroke="#111"
@@ -1486,9 +1564,7 @@ audio{
                             stroke-linecap="round"
                             stroke-linejoin="round"
                         />
-
                     </svg>
-
                 </div>
 
 
@@ -1496,12 +1572,7 @@ audio{
                     class="badge"
                     title="Discord Orbs"
                 >
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                    >
-
+                    <svg viewBox="0 0 24 24" fill="none">
                         <circle
                             cx="12"
                             cy="12"
@@ -1509,23 +1580,19 @@ audio{
                             stroke="white"
                             stroke-width="2"
                         />
-
                         <circle
                             cx="12"
                             cy="12"
                             r="3"
                             fill="white"
                         />
-
                         <circle
                             cx="17.5"
                             cy="6.5"
                             r="1.5"
                             fill="white"
                         />
-
                     </svg>
-
                 </div>
 
             </div>
@@ -1581,7 +1648,6 @@ audio{
             <div class="tiktok-stats">
 
                 <div class="stat">
-
                     <div
                         class="stat-number"
                         id="following"
@@ -1592,12 +1658,10 @@ audio{
                     <div class="stat-label">
                         Following
                     </div>
-
                 </div>
 
 
                 <div class="stat">
-
                     <div
                         class="stat-number"
                         id="followers"
@@ -1608,12 +1672,10 @@ audio{
                     <div class="stat-label">
                         Followers
                     </div>
-
                 </div>
 
 
                 <div class="stat">
-
                     <div
                         class="stat-number"
                         id="tiktokLikes"
@@ -1624,7 +1686,6 @@ audio{
                     <div class="stat-label">
                         Likes
                     </div>
-
                 </div>
 
             </div>
@@ -1748,8 +1809,6 @@ audio{
 
         <div class="socials">
 
-            <!-- ROBLOX -->
-
             <a
                 class="social"
                 href="https://www.roblox.com/users/2807349866/profile"
@@ -1774,7 +1833,6 @@ audio{
 
                 </svg>
 
-
                 <div class="social-name">
                     Roblox
                 </div>
@@ -1785,8 +1843,6 @@ audio{
 
             </a>
 
-
-            <!-- SPOTIFY -->
 
             <a
                 class="social"
@@ -1817,7 +1873,6 @@ audio{
 
                 </svg>
 
-
                 <div class="social-name">
                     Spotify
                 </div>
@@ -1828,8 +1883,6 @@ audio{
 
             </a>
 
-
-            <!-- XBOX -->
 
             <a
                 class="social"
@@ -1858,7 +1911,6 @@ audio{
                     />
 
                 </svg>
-
 
                 <div class="social-name">
                     Xbox
@@ -2470,7 +2522,7 @@ progress.addEventListener(
 
 
 /* =========================
-   ENTRANCE ANIMATION
+   CLICK TO ENTER
 ========================= */
 
 const enterScreen =
@@ -2503,7 +2555,11 @@ enterScreen.addEventListener(
         hasEntered = true;
 
 
-        /* Start music */
+        /*
+          START MUSIC IMMEDIATELY.
+          Because the user clicked, browsers
+          allow audio playback here.
+        */
 
         audio.play().catch(
             () => {}
@@ -2511,58 +2567,32 @@ enterScreen.addEventListener(
 
 
         /*
-           TEXT MOVES AWAY
+          IMPORTANT FIX:
+
+          We DO NOT set the PFP opacity to 0.
+
+          We DO NOT hide the enter content first.
+
+          Instead the entire entrance screen
+          fades away while the PFP is still visible.
         */
 
-        enterContent.style.opacity =
-            "0";
-
-        enterContent.style.transform =
-            "translateY(-15px)";
-
-
-        /*
-           ONLY THE PFP ANIMATES.
-
-           THE BANNER DOES ABSOLUTELY
-           NOTHING HERE.
-        */
-
-        enterPfp.style.transition =
-            "transform 1s cubic-bezier(.16,1,.3,1), opacity .65s ease";
-
-        enterPfp.style.transform =
-            "scale(.72) translateY(45px)";
-
-        enterPfp.style.opacity =
-            "0";
-
-
-        /*
-           Fade the whole entrance
-           screen AFTER the PFP animation
-           has started.
-        */
-
-        setTimeout(
-            () => {
-
-                enterScreen.style.opacity =
-                    "0";
-
-            },
-            550
+        enterScreen.classList.add(
+            "entering"
         );
 
+
+        /*
+          Give the browser a moment to begin
+          the animation before removing the
+          overlay from the page.
+        */
 
         setTimeout(
             () => {
 
                 enterScreen.style.visibility =
                     "hidden";
-
-                enterScreen.style.pointerEvents =
-                    "none";
 
             },
             1050
