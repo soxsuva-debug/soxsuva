@@ -280,8 +280,7 @@ body {
         left,
         top,
         width,
-        height,
-        transform;
+        height;
 
     transition:
         left 900ms cubic-bezier(.16,1,.3,1),
@@ -379,6 +378,7 @@ body {
 
 /* =========================================================
    MAIN PFP
+   HIDDEN FROM FIRST PAINT
 ========================================================= */
 
 .pfp-wrap {
@@ -395,6 +395,15 @@ body {
 
     z-index: 20;
 }
+
+/*
+   IMPORTANT:
+   opacity AND visibility are set here in CSS,
+   not only through JavaScript.
+
+   This means the browser cannot briefly render
+   the main PFP underneath the flying PFP.
+*/
 
 #profilePfp {
     display: block;
@@ -413,16 +422,13 @@ body {
     box-shadow:
         0 12px 35px rgba(0,0,0,.7);
 
-    /*
-       IMPORTANT:
-       The real PFP can be hidden during
-       the enter animation without affecting
-       its layout.
-    */
-    opacity: 1;
+    opacity: 0;
+
+    visibility: hidden;
 
     transition:
-        opacity 120ms ease;
+        opacity 120ms ease,
+        visibility 0s linear 120ms;
 }
 
 /* =========================================================
@@ -1255,8 +1261,6 @@ audio {
 
 <section class="card">
 
-    <!-- BANNER -->
-
     <div class="banner">
 
         <img
@@ -1268,8 +1272,6 @@ audio {
         <div class="banner-shade"></div>
 
     </div>
-
-    <!-- PROFILE -->
 
     <div class="profile-area">
 
@@ -1316,72 +1318,45 @@ audio {
 
             <div class="badges">
 
-                <!-- Nitro -->
-
                 <div
                     class="badge"
                     title="Discord Nitro"
                 >
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                    >
-
+                    <svg viewBox="0 0 24 24" fill="none">
                         <path
                             d="M5 4.5A2.5 2.5 0 0 1 7.5 2h9A2.5 2.5 0 0 1 19 4.5v15a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 19.5v-15Z"
                             fill="white"
                         />
-
                         <path
                             d="M8 7.5h8M8 11.5h8M8 15.5h5"
                             stroke="#111"
                             stroke-width="1.5"
                             stroke-linecap="round"
                         />
-
                     </svg>
-
                 </div>
-
-                <!-- Server Booster -->
 
                 <div
                     class="badge"
                     title="Server Booster"
                 >
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                    >
-
+                    <svg viewBox="0 0 24 24" fill="none">
                         <path
                             fill="white"
                             d="M12 2.2c.6 0 1.1.3 1.4.8l2.1 3.5 4 .8c1.3.2 1.8 1.8.9 2.7l-2.8 2.8.6 4c.2 1.3-1.2 2.3-2.3 1.7L12 16.6l-3.9 1.9c-1.2.6-2.5-.4-2.3-1.7l.6-4-2.8-2.8c-.9-.9-.4-2.5.9-2.7l4-.8 2.1-3.5c.3-.5.8-.8 1.4-.8Z"
                         />
-
                     </svg>
-
                 </div>
-
-                <!-- Quest -->
 
                 <div
                     class="badge"
                     title="Discord Quest"
                 >
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                    >
-
+                    <svg viewBox="0 0 24 24" fill="none">
                         <path
                             d="M7 4h10a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3h-4l-3.5 3V17H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z"
                             fill="white"
                         />
-
                         <path
                             d="m8 11 2.3 2.2L16 7.8"
                             stroke="#111"
@@ -1389,23 +1364,14 @@ audio {
                             stroke-linecap="round"
                             stroke-linejoin="round"
                         />
-
                     </svg>
-
                 </div>
-
-                <!-- Orbs -->
 
                 <div
                     class="badge"
                     title="Discord Orbs"
                 >
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                    >
-
+                    <svg viewBox="0 0 24 24" fill="none">
                         <circle
                             cx="12"
                             cy="12"
@@ -1413,23 +1379,19 @@ audio {
                             stroke="white"
                             stroke-width="2"
                         />
-
                         <circle
                             cx="12"
                             cy="12"
                             r="3"
                             fill="white"
                         />
-
                         <circle
                             cx="17.5"
                             cy="6.5"
                             r="1.5"
                             fill="white"
                         />
-
                     </svg>
-
                 </div>
 
             </div>
@@ -1455,12 +1417,10 @@ audio {
                         viewBox="0 0 24 24"
                         fill="none"
                     >
-
                         <path
                             fill="white"
                             d="M16 3c.5 2.2 1.7 3.5 4 3.8v3.1c-1.6-.1-3-.6-4.1-1.5v6.8c0 4-2.9 6.2-6.3 6.2C6.3 21.4 4 19.2 4 16c0-3.4 2.7-5.8 6-5.8.3 0 .7 0 1 .1v3.2c-.3-.1-.6-.2-1-.2-1.5 0-2.7 1.1-2.7 2.7 0 1.5 1.1 2.5 2.5 2.5 1.7 0 2.7-1.1 2.7-3V3z"
                         />
-
                     </svg>
 
                 </div>
@@ -1486,7 +1446,6 @@ audio {
             <div class="tiktok-stats">
 
                 <div class="stat">
-
                     <div
                         class="stat-number"
                         id="following"
@@ -1497,11 +1456,9 @@ audio {
                     <div class="stat-label">
                         Following
                     </div>
-
                 </div>
 
                 <div class="stat">
-
                     <div
                         class="stat-number"
                         id="followers"
@@ -1512,11 +1469,9 @@ audio {
                     <div class="stat-label">
                         Followers
                     </div>
-
                 </div>
 
                 <div class="stat">
-
                     <div
                         class="stat-number"
                         id="tiktokLikes"
@@ -1527,7 +1482,6 @@ audio {
                     <div class="stat-label">
                         Likes
                     </div>
-
                 </div>
 
             </div>
@@ -1604,12 +1558,10 @@ audio {
                         class="progress"
                         id="progress"
                     >
-
                         <div
                             class="progress-fill"
                             id="progressFill"
                         ></div>
-
                     </div>
 
                     <div class="time">
@@ -1653,7 +1605,6 @@ audio {
                 target="_blank"
                 rel="noopener noreferrer"
             >
-
                 <div class="social-name">
                     Roblox
                 </div>
@@ -1661,7 +1612,6 @@ audio {
                 <div class="social-user">
                     serdemsivridagg
                 </div>
-
             </a>
 
             <a
@@ -1670,7 +1620,6 @@ audio {
                 target="_blank"
                 rel="noopener noreferrer"
             >
-
                 <div class="social-name">
                     Spotify
                 </div>
@@ -1678,7 +1627,6 @@ audio {
                 <div class="social-user">
                     soxsuva
                 </div>
-
             </a>
 
             <a
@@ -1686,7 +1634,6 @@ audio {
                 href="#"
                 onclick="return false;"
             >
-
                 <div class="social-name">
                     Xbox
                 </div>
@@ -1694,7 +1641,6 @@ audio {
                 <div class="social-user">
                     soxsuva
                 </div>
-
             </a>
 
         </div>
@@ -1739,7 +1685,6 @@ audio {
 </section>
 
 </main>
-
 
 <script>
 
@@ -1812,7 +1757,6 @@ for (let i = 0; i < 24; i++) {
 
 const DISCORD_ID =
     "1491533148914450614";
-
 
 async function updateDiscord() {
 
@@ -1898,9 +1842,6 @@ function updateActivity(data) {
             "activity"
         );
 
-
-    /* SPOTIFY */
-
     if (
         data.listening_to_spotify &&
         data.spotify
@@ -1945,9 +1886,6 @@ function updateActivity(data) {
 
         return;
     }
-
-
-    /* GAME */
 
     if (
         data.activities &&
@@ -2005,7 +1943,6 @@ function updateActivity(data) {
             return;
         }
     }
-
 
     activity.className =
         "activity activity-empty";
@@ -2069,7 +2006,6 @@ const musicStatus =
         "musicStatus"
     );
 
-
 function formatTime(seconds) {
 
     if (
@@ -2097,7 +2033,6 @@ function formatTime(seconds) {
     );
 }
 
-
 audio.addEventListener(
     "loadedmetadata",
     () => {
@@ -2109,7 +2044,6 @@ audio.addEventListener(
 
     }
 );
-
 
 audio.addEventListener(
     "timeupdate",
@@ -2132,10 +2066,8 @@ audio.addEventListener(
             formatTime(
                 audio.currentTime
             );
-
     }
 );
-
 
 audio.addEventListener(
     "play",
@@ -2146,10 +2078,8 @@ audio.addEventListener(
 
         musicStatus.textContent =
             "Playing";
-
     }
 );
-
 
 audio.addEventListener(
     "pause",
@@ -2160,10 +2090,8 @@ audio.addEventListener(
 
         musicStatus.textContent =
             "Paused";
-
     }
 );
-
 
 playButton.addEventListener(
     "click",
@@ -2180,10 +2108,8 @@ playButton.addEventListener(
             audio.pause();
 
         }
-
     }
 );
-
 
 progress.addEventListener(
     "click",
@@ -2205,13 +2131,12 @@ progress.addEventListener(
         audio.currentTime =
             percent *
             audio.duration;
-
     }
 );
 
 
 /* =========================================================
-   CLICK TO ENTER + PFP FLIGHT ANIMATION
+   CLICK TO ENTER + PFP FLIGHT
 ========================================================= */
 
 const enterScreen =
@@ -2234,12 +2159,12 @@ let hasEntered =
 
 
 /*
-   THE REAL MAIN PFP STARTS HIDDEN.
-
-   This prevents the destination PFP from
-   appearing behind the flying PFP.
+   Keep the main PFP completely invisible
+   before the animation begins.
 */
+
 mainPfp.style.opacity = "0";
+mainPfp.style.visibility = "hidden";
 
 
 enterScreen.addEventListener(
@@ -2253,10 +2178,7 @@ enterScreen.addEventListener(
         hasEntered = true;
 
 
-        /*
-           The click allows the browser to
-           start the music.
-        */
+        /* Start music */
 
         audio.play().catch(
             () => {}
@@ -2264,7 +2186,8 @@ enterScreen.addEventListener(
 
 
         /*
-           Get exact starting PFP position.
+           Get starting position BEFORE
+           removing the enter screen.
         */
 
         const start =
@@ -2272,7 +2195,7 @@ enterScreen.addEventListener(
 
 
         /*
-           Get exact destination position.
+           Get destination position.
         */
 
         const destination =
@@ -2280,8 +2203,8 @@ enterScreen.addEventListener(
 
 
         /*
-           Make a flying copy of the
-           enter-screen PFP.
+           Create the ONLY visible PFP
+           during the transition.
         */
 
         const flyer =
@@ -2294,10 +2217,6 @@ enterScreen.addEventListener(
         flyer.className =
             "pfp-flyer";
 
-
-        /*
-           Starting position.
-        */
 
         flyer.style.left =
             start.left + "px";
@@ -2331,10 +2250,7 @@ enterScreen.addEventListener(
 
 
         /*
-           Hide ONLY the text.
-           
-           The flying PFP stays completely
-           visible.
+           Hide the ENTER text.
         */
 
         const enterName =
@@ -2361,16 +2277,14 @@ enterScreen.addEventListener(
 
 
         /*
-           Force layout so the browser
-           registers the starting position.
+           Force browser layout.
         */
 
         flyer.getBoundingClientRect();
 
 
         /*
-           Fly the PFP into the EXACT
-           main profile circle.
+           Fly into the main PFP.
         */
 
         requestAnimationFrame(
@@ -2406,14 +2320,13 @@ enterScreen.addEventListener(
                     getComputedStyle(
                         mainPfp
                     ).boxShadow;
-
             }
         );
 
 
         /*
-           Fade the entire enter screen
-           after the PFP has begun moving.
+           Fade the enter screen away
+           while the PFP is travelling.
         */
 
         setTimeout(
@@ -2428,26 +2341,24 @@ enterScreen.addEventListener(
 
 
         /*
-           IMPORTANT:
-           The real PFP stays hidden until
-           the flying PFP has reached it.
+           The flying PFP reaches the
+           destination at approximately 900ms.
+
+           ONLY THEN do we reveal the real PFP.
         */
 
         setTimeout(
             () => {
 
-                /*
-                   Reveal the real PFP
-                   underneath the exact
-                   same position.
-                */
-
                 mainPfp.style.opacity =
                     "1";
 
+                mainPfp.style.visibility =
+                    "visible";
+
 
                 /*
-                   Remove the enter screen.
+                   Remove enter screen.
                 */
 
                 enterScreen.style.display =
@@ -2455,8 +2366,8 @@ enterScreen.addEventListener(
 
 
                 /*
-                   Remove the flying copy
-                   after the real PFP is visible.
+                   Remove flying copy AFTER
+                   real PFP is visible.
                 */
 
                 flyer.remove();
@@ -2483,11 +2394,6 @@ let views =
         )
     ) || 0;
 
-
-/*
-   Each browser gets one view.
-*/
-
 if (
     !localStorage.getItem(
         viewKey
@@ -2506,7 +2412,6 @@ if (
         "true"
     );
 }
-
 
 document.getElementById(
     "views"
@@ -2528,23 +2433,15 @@ let likes =
         )
     ) || 0;
 
-
 document.getElementById(
     "likes"
 ).textContent =
     likes;
 
-
 const likeButton =
     document.getElementById(
         "likeButton"
     );
-
-
-/*
-   If this browser has already liked,
-   permanently disable the button.
-*/
 
 if (
     localStorage.getItem(
@@ -2560,15 +2457,9 @@ if (
         true;
 }
 
-
 likeButton.addEventListener(
     "click",
     () => {
-
-        /*
-           Prevent multiple likes
-           from the same browser.
-        */
 
         if (
             localStorage.getItem(
@@ -2580,33 +2471,27 @@ likeButton.addEventListener(
 
         likes++;
 
-
         localStorage.setItem(
             "soxsuva_likes_v4",
             likes
         );
-
 
         localStorage.setItem(
             likeKey,
             "true"
         );
 
-
         document.getElementById(
             "likes"
         ).textContent =
             likes;
 
-
         likeButton.classList.add(
             "liked"
         );
 
-
         likeButton.disabled =
             true;
-
     }
 );
 
