@@ -139,7 +139,7 @@ body {
     opacity: 1;
 
     transition:
-        opacity 1100ms cubic-bezier(.16,1,.3,1);
+        opacity 700ms cubic-bezier(.16,1,.3,1);
 }
 
 #enterBanner {
@@ -156,8 +156,8 @@ body {
     transform: scale(1.01);
 
     transition:
-        transform 1400ms cubic-bezier(.16,1,.3,1),
-        filter 1400ms ease;
+        transform 1000ms cubic-bezier(.16,1,.3,1),
+        filter 1000ms ease;
 }
 
 .enter-dark {
@@ -172,7 +172,7 @@ body {
         );
 
     transition:
-        opacity 1100ms ease;
+        opacity 800ms ease;
 }
 
 .enter-vignette {
@@ -187,7 +187,7 @@ body {
         );
 
     transition:
-        opacity 1100ms ease;
+        opacity 800ms ease;
 }
 
 .enter-content {
@@ -201,8 +201,8 @@ body {
     text-align: center;
 
     transition:
-        opacity 500ms ease,
-        transform 1000ms cubic-bezier(.16,1,.3,1);
+        opacity 350ms ease,
+        transform 700ms cubic-bezier(.16,1,.3,1);
 }
 
 #enterPfp {
@@ -215,7 +215,7 @@ body {
 
     border-radius: 50%;
 
-    border: none;
+    border: 3px solid rgba(255,255,255,.95);
 
     box-shadow:
         0 0 35px rgba(255,255,255,.24),
@@ -224,22 +224,19 @@ body {
     animation: pfpPulseAnimation 3s ease-in-out infinite;
 
     transition:
-        opacity 300ms ease;
+        opacity 250ms ease;
 }
 
 @keyframes pfpPulseAnimation {
     0%, 100% {
         transform: scale(1);
-        box-shadow:
-            0 0 35px rgba(255,255,255,.24),
-            0 0 100px rgba(255,255,255,.08);
+        box-shadow: 0 0 35px rgba(255,255,255,.24), 0 0 100px rgba(255,255,255,.08);
+        border-color: rgba(255,255,255,.95);
     }
-
     50% {
-        transform: scale(1.045);
-        box-shadow:
-            0 0 50px rgba(255,255,255,.5),
-            0 0 130px rgba(255,255,255,.2);
+        transform: scale(1.06);
+        box-shadow: 0 0 50px rgba(255,255,255,.5), 0 0 130px rgba(255,255,255,.2);
+        border-color: rgba(255,255,255,1);
     }
 }
 
@@ -257,8 +254,8 @@ body {
         0 0 30px rgba(255,255,255,.2);
 
     transition:
-        opacity 500ms ease,
-        transform 800ms cubic-bezier(.16,1,.3,1);
+        opacity 350ms ease,
+        transform 500ms cubic-bezier(.16,1,.3,1);
 }
 
 .enter-text {
@@ -277,8 +274,8 @@ body {
         infinite;
 
     transition:
-        opacity 400ms ease,
-        transform 500ms ease;
+        opacity 300ms ease,
+        transform 400ms ease;
 }
 
 @keyframes enterPulse {
@@ -318,12 +315,13 @@ body {
         transform;
 
     transition:
-        left 1150ms cubic-bezier(.16,1,.3,1),
-        top 1150ms cubic-bezier(.16,1,.3,1),
-        width 1150ms cubic-bezier(.16,1,.3,1),
-        height 1150ms cubic-bezier(.16,1,.3,1),
-        border-radius 1150ms cubic-bezier(.16,1,.3,1),
-        box-shadow 1150ms cubic-bezier(.16,1,.3,1);
+        left 950ms cubic-bezier(.16,1,.3,1),
+        top 950ms cubic-bezier(.16,1,.3,1),
+        width 950ms cubic-bezier(.16,1,.3,1),
+        height 950ms cubic-bezier(.16,1,.3,1),
+        border-radius 950ms cubic-bezier(.16,1,.3,1),
+        border-width 950ms cubic-bezier(.16,1,.3,1),
+        box-shadow 950ms cubic-bezier(.16,1,.3,1);
 }
 
 /* =========================================================
@@ -344,8 +342,8 @@ body {
     visibility: hidden;
 
     transition:
-        opacity 850ms cubic-bezier(.16,1,.3,1),
-        visibility 0s linear 850ms;
+        opacity 650ms cubic-bezier(.16,1,.3,1),
+        visibility 0s linear 650ms;
 }
 
 .page.site-visible {
@@ -354,7 +352,7 @@ body {
     visibility: visible;
 
     transition:
-        opacity 850ms cubic-bezier(.16,1,.3,1),
+        opacity 650ms cubic-bezier(.16,1,.3,1),
         visibility 0s;
 }
 
@@ -453,12 +451,11 @@ body {
 
     border-radius: 50%;
 
-    border: 4px solid #111;
+    border: none;
 
-    background: #111;
+    background: transparent;
 
-    box-shadow:
-        0 12px 35px rgba(0,0,0,.7);
+    box-shadow: none;
 
     opacity: 1;
 }
@@ -473,8 +470,8 @@ body {
     right: 2px;
     bottom: 2px;
 
-    width: 22px;
-    height: 22px;
+    width: 31px;
+    height: 31px;
 
     display: flex;
     align-items: center;
@@ -485,30 +482,7 @@ body {
     background: #111;
 
     box-shadow:
-        0 0 0 2px #111;
-
-    opacity: 0;
-}
-
-.discord-status.loaded {
-    animation:
-        statusFadeIn
-        1800ms
-        ease
-        1000ms
-        forwards;
-}
-
-@keyframes statusFadeIn {
-    0% {
-        opacity: 0;
-        transform: scale(.92);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
+        0 0 0 3px #111;
 }
 
 .discord-status::after {
@@ -1206,13 +1180,13 @@ audio {
     }
 
     .discord-status {
-        width: 22px;
-        height: 22px;
+        width: 28px;
+        height: 28px;
     }
 
     .discord-status::after {
-        width: 17px;
-        height: 17px;
+        width: 15px;
+        height: 15px;
     }
 
     .name {
@@ -1812,8 +1786,7 @@ async function updateDiscord() {
 
         statusElement.className =
             "discord-status " +
-            status +
-            " loaded";
+            status;
 
         statusElement.title =
             status === "dnd"
@@ -1831,7 +1804,7 @@ async function updateDiscord() {
             );
 
         statusElement.className =
-            "discord-status offline loaded";
+            "discord-status offline";
 
         statusElement.title =
             "Offline";
@@ -1982,17 +1955,12 @@ function updateActivity(data) {
                 elapsedSeconds % 60;
 
             if (hours > 0) {
-
                 elapsedString =
                     `Elapsed: ${hours}h ${minutes}m`;
-
             } else if (minutes > 0) {
-
                 elapsedString =
                     `Elapsed: ${minutes}m ${seconds}s`;
-
             } else {
-
                 elapsedString =
                     `Elapsed: ${seconds}s`;
             }
@@ -2025,11 +1993,9 @@ function updateActivity(data) {
         if (
             customStatus.emoji
         ) {
-
             if (
                 customStatus.emoji.id
             ) {
-
                 const ext =
                     customStatus.emoji.animated
                         ? "gif"
@@ -2037,11 +2003,9 @@ function updateActivity(data) {
 
                 emojiHtml =
                     `<img src="https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.${ext}?size=48" style="width:20px;height:20px;vertical-align:middle;margin-right:6px;">`;
-
             } else if (
                 customStatus.emoji.name
             ) {
-
                 emojiHtml =
                     customStatus.emoji.name +
                     " ";
@@ -2114,7 +2078,6 @@ function formatTime(seconds) {
 audio.addEventListener(
     "loadedmetadata",
     () => {
-
         durationEl.textContent =
             formatTime(
                 audio.duration
@@ -2206,13 +2169,15 @@ const likeButton =
 
 let currentViews =
     parseInt(
-        localStorage.getItem("site_views") || "0",
+        localStorage.getItem("site_views") ||
+        "0",
         10
     );
 
 let currentLikes =
     parseInt(
-        localStorage.getItem("site_likes") || "0",
+        localStorage.getItem("site_likes") ||
+        "0",
         10
     );
 
@@ -2223,9 +2188,13 @@ likesEl.textContent =
     currentLikes;
 
 if (
-    localStorage.getItem("site_liked") === "true"
+    localStorage.getItem(
+        "site_liked"
+    ) === "true"
 ) {
-    likeButton.classList.add("liked");
+    likeButton.classList.add(
+        "liked"
+    );
 }
 
 likeButton.addEventListener(
@@ -2233,7 +2202,9 @@ likeButton.addEventListener(
     () => {
 
         if (
-            localStorage.getItem("site_liked") !== "true"
+            localStorage.getItem(
+                "site_liked"
+            ) !== "true"
         ) {
 
             currentLikes++;
@@ -2264,10 +2235,14 @@ likeButton.addEventListener(
 ========================================================= */
 
 const enterScreen =
-    document.getElementById("enterScreen");
+    document.getElementById(
+        "enterScreen"
+    );
 
 const mainPage =
-    document.getElementById("mainPage");
+    document.getElementById(
+        "mainPage"
+    );
 
 let entered = false;
 
@@ -2318,7 +2293,9 @@ enterScreen.addEventListener(
             profilePfp.getBoundingClientRect();
 
         const flyer =
-            document.createElement("img");
+            document.createElement(
+                "img"
+            );
 
         flyer.src =
             enterPfp.src;
@@ -2338,9 +2315,6 @@ enterScreen.addEventListener(
         flyer.style.height =
             enterRect.height + "px";
 
-        flyer.style.transform =
-            "translate3d(0,0,0)";
-
         document.body.appendChild(
             flyer
         );
@@ -2348,20 +2322,8 @@ enterScreen.addEventListener(
         enterScreen.style.opacity =
             "0";
 
-        const enterContent =
-            document.querySelector(
-                ".enter-content"
-            );
-
-        enterContent.style.opacity =
-            "0";
-
-        enterContent.style.transform =
-            "translate3d(0,-15px,0) scale(.97)";
-
-        requestAnimationFrame(() => {
-
-            requestAnimationFrame(() => {
+        setTimeout(
+            () => {
 
                 flyer.style.left =
                     profileRect.left + "px";
@@ -2375,28 +2337,27 @@ enterScreen.addEventListener(
                 flyer.style.height =
                     profileRect.height + "px";
 
-            });
+            },
+            20
+        );
 
-        });
+        setTimeout(
+            () => {
 
-        setTimeout(() => {
+                mainPage.classList.add(
+                    "site-visible"
+                );
 
-            mainPage.classList.add(
-                "site-visible"
-            );
+                profilePfp.style.opacity =
+                    "1";
 
-            profilePfp.style.opacity =
-                "1";
+                flyer.remove();
 
-        }, 600);
+                enterScreen.remove();
 
-        setTimeout(() => {
-
-            flyer.remove();
-
-            enterScreen.remove();
-
-        }, 1200);
+            },
+            970
+        );
     }
 );
 
