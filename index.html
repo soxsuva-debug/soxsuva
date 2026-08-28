@@ -1,1948 +1,3772 @@
 <!DOCTYPE html>
 
+
+
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <meta name="theme-color" content="#000000">
+
 <title>soxsuva</title>
 
+
+
 <style>
+
 * {
+
     margin: 0;
+
     padding: 0;
+
     box-sizing: border-box;
+
 }
+
+
 
 html,
-body {
-    width: 100%;
-    min-height: 100%;
-    background: #000;
-    color: #fff;
-    font-family: Arial, Helvetica, sans-serif;
-}
 
 body {
-    overflow-x: hidden;
+
+    width: 100%;
+
+    min-height: 100%;
+
+    background: #000;
+
+    color: #fff;
+
+    font-family: Arial, Helvetica, sans-serif;
+
 }
+
+
+
+body {
+
+    overflow-x: hidden;
+
+}
+
+
 
 /* =========================================================
+
    BACKGROUND
+
 ========================================================= */
+
+
 
 .background {
+
     position: fixed;
+
     inset: -35px;
+
     z-index: -20;
 
+
+
     background:
+
         linear-gradient(
+
             rgba(0,0,0,.42),
+
             rgba(0,0,0,.88)
+
         ),
+
         url("banner.gif") center / cover no-repeat;
 
+
+
     filter: blur(16px);
+
     transform: scale(1.08);
+
 }
+
+
 
 /* =========================================================
+
    CHERRY BLOSSOMS
+
 ========================================================= */
 
+
+
 .blossoms {
+
     position: fixed;
+
     inset: 0;
+
     pointer-events: none;
+
     overflow: hidden;
+
     z-index: 9000;
+
 }
+
+
 
 .blossom {
+
     position: absolute;
+
     top: -30px;
 
+
+
     width: 8px;
+
     height: 6px;
 
+
+
     background: #fff;
+
     border-radius: 70% 30% 70% 30%;
+
     opacity: .72;
 
+
+
     box-shadow:
+
         0 0 7px rgba(255,255,255,.5);
 
+
+
     animation:
+
         blossomFall
+
         var(--fall-time)
+
         linear
+
         var(--delay)
+
         infinite;
 
+
+
     will-change: transform;
+
 }
+
+
 
 @keyframes blossomFall {
 
+
+
     0% {
+
         transform:
+
             translate3d(0,-30px,0)
+
             rotate(0deg);
+
     }
+
+
 
     25% {
+
         transform:
+
             translate3d(var(--x1),25vh,0)
+
             rotate(90deg);
+
     }
+
+
 
     50% {
+
         transform:
+
             translate3d(var(--x2),50vh,0)
+
             rotate(180deg);
+
     }
+
+
 
     75% {
+
         transform:
+
             translate3d(var(--x3),75vh,0)
+
             rotate(270deg);
+
     }
+
+
 
     100% {
+
         transform:
+
             translate3d(var(--x4),110vh,0)
+
             rotate(360deg);
+
     }
+
 }
 
+
+
 /* =========================================================
+
    CLICK TO ENTER
+
 ========================================================= */
 
+
+
 #enterScreen {
+
     position: fixed;
+
     inset: 0;
+
+
 
     z-index: 100000;
 
+
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
+
 
     overflow: hidden;
 
+
+
     cursor: pointer;
+
+
 
     background: #000;
 
+
+
     opacity: 1;
 
+
+
     transition:
+
         opacity 700ms cubic-bezier(.16,1,.3,1);
+
 }
 
+
+
 #enterBanner {
+
     position: absolute;
+
     inset: 0;
 
+
+
     width: 100%;
+
     height: 100%;
 
+
+
     object-fit: cover;
+
+
 
     filter: brightness(.58);
 
+
+
     transform: scale(1.01);
 
+
+
     transition:
+
         transform 1000ms cubic-bezier(.16,1,.3,1),
+
         filter 1000ms ease;
+
 }
+
+
 
 .enter-dark {
+
     position: absolute;
+
     inset: 0;
 
+
+
     background:
+
         linear-gradient(
+
             to bottom,
+
             rgba(0,0,0,.05),
+
             rgba(0,0,0,.72)
+
         );
 
+
+
     transition:
+
         opacity 800ms ease;
+
 }
+
+
 
 .enter-vignette {
+
     position: absolute;
+
     inset: 0;
 
+
+
     background:
+
         radial-gradient(
+
             circle,
+
             transparent 10%,
+
             rgba(0,0,0,.78) 100%
+
         );
 
+
+
     transition:
+
         opacity 800ms ease;
+
 }
 
+
+
 .enter-content {
+
     position: relative;
+
     z-index: 5;
 
+
+
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
+
+
 
     text-align: center;
 
+
+
     transition:
+
         opacity 350ms ease,
+
         transform 700ms cubic-bezier(.16,1,.3,1);
+
 }
 
+
+
 #enterPfp {
+
     display: block;
 
+
+
     width: 145px;
+
     height: 145px;
+
+
 
     object-fit: cover;
 
+
+
     border-radius: 50%;
+
+
 
     border: 3px solid rgba(255,255,255,.95);
 
+
+
     box-shadow:
+
         0 0 35px rgba(255,255,255,.24),
+
         0 0 100px rgba(255,255,255,.08);
+
+
 
     animation: pfpPulseAnimation 3s ease-in-out infinite;
 
+
+
     transition:
+
         opacity 250ms ease;
+
 }
+
+
 
 @keyframes pfpPulseAnimation {
+
     0%, 100% {
+
         transform: scale(1);
+
         box-shadow: 0 0 35px rgba(255,255,255,.24), 0 0 100px rgba(255,255,255,.08);
+
         border-color: rgba(255,255,255,.95);
+
     }
+
     50% {
+
         transform: scale(1.06);
+
         box-shadow: 0 0 50px rgba(255,255,255,.5), 0 0 130px rgba(255,255,255,.2);
+
         border-color: rgba(255,255,255,1);
+
     }
+
 }
 
+
+
 .enter-name {
+
     margin-top: 20px;
 
+
+
     font-size:
+
         clamp(50px, 9vw, 82px);
 
+
+
     font-weight: 900;
+
+
 
     letter-spacing: -4px;
 
+
+
     text-shadow:
+
         0 0 30px rgba(255,255,255,.2);
 
+
+
     transition:
+
         opacity 350ms ease,
+
         transform 500ms cubic-bezier(.16,1,.3,1);
+
 }
 
+
+
 .enter-text {
+
     margin-top: 12px;
 
+
+
     font-size: 10px;
+
+
 
     letter-spacing: 3px;
 
+
+
     color: rgba(255,255,255,.62);
 
+
+
     animation:
+
         enterPulse
+
         2s
+
         ease-in-out
+
         infinite;
 
+
+
     transition:
+
         opacity 300ms ease,
+
         transform 400ms ease;
+
 }
+
+
 
 @keyframes enterPulse {
 
+
+
     0%,
+
     100% {
+
         opacity: .4;
+
     }
+
+
 
     50% {
+
         opacity: 1;
+
     }
+
 }
 
+
+
 /* =========================================================
+
    FLYING PFP
+
 ========================================================= */
 
+
+
 .pfp-flyer {
+
     position: fixed;
+
+
 
     z-index: 100001;
 
+
+
     margin: 0;
+
+
 
     object-fit: cover;
 
+
+
     border-radius: 50%;
+
+
 
     pointer-events: none;
 
+
+
     will-change:
+
         left,
+
         top,
+
         width,
+
         height,
+
         transform;
 
+
+
     transition:
+
         left 950ms cubic-bezier(.16,1,.3,1),
+
         top 950ms cubic-bezier(.16,1,.3,1),
+
         width 950ms cubic-bezier(.16,1,.3,1),
+
         height 950ms cubic-bezier(.16,1,.3,1),
+
         border-radius 950ms cubic-bezier(.16,1,.3,1),
+
         border-width 950ms cubic-bezier(.16,1,.3,1),
+
         box-shadow 950ms cubic-bezier(.16,1,.3,1);
+
 }
 
+
+
 /* =========================================================
+
    MAIN PAGE
+
 ========================================================= */
 
+
+
 .page {
+
     min-height: 100vh;
 
+
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
+
 
     padding: 30px 14px;
 
+
+
     opacity: 0;
+
+
 
     visibility: hidden;
 
+
+
     transition:
+
         opacity 650ms cubic-bezier(.16,1,.3,1),
+
         visibility 0s linear 650ms;
+
 }
 
+
+
 .page.site-visible {
+
     opacity: 1;
+
+
 
     visibility: visible;
 
+
+
     transition:
+
         opacity 650ms cubic-bezier(.16,1,.3,1),
+
         visibility 0s;
+
 }
 
+
+
 .card {
+
     width: min(570px,100%);
+
+
 
     overflow: hidden;
 
+
+
     border:
+
         1px solid rgba(255,255,255,.11);
+
+
 
     border-radius: 27px;
 
+
+
     background:
+
         rgba(8,8,10,.70);
 
+
+
     backdrop-filter: blur(25px);
+
     -webkit-backdrop-filter: blur(25px);
 
+
+
     box-shadow:
+
         0 35px 120px rgba(0,0,0,.75),
+
         inset 0 1px rgba(255,255,255,.05);
+
 }
 
+
+
 /* =========================================================
+
    MAIN BANNER
+
 ========================================================= */
+
+
 
 .banner {
+
     position: relative;
 
+
+
     width: 100%;
+
     height: 200px;
 
+
+
     overflow: hidden;
+
 }
+
+
 
 #mainBanner {
+
     display: block;
 
+
+
     width: 100%;
+
     height: 100%;
 
+
+
     object-fit: cover;
+
 }
+
+
 
 .banner-shade {
+
     position: absolute;
+
     inset: 0;
 
+
+
     background:
+
         linear-gradient(
+
             to bottom,
+
             transparent 25%,
+
             rgba(0,0,0,.6)
+
         );
+
 }
+
+
 
 /* =========================================================
+
    PROFILE
+
 ========================================================= */
 
+
+
 .profile-area {
+
     position: relative;
 
+
+
     padding:
+
         70px 27px 28px;
+
 }
+
+
 
 .profile {
+
     text-align: center;
+
 }
+
+
 
 .pfp-wrap {
+
     position: absolute;
 
+
+
     left: 50%;
+
     top: -62px;
 
+
+
     width: 124px;
+
     height: 124px;
 
+
+
     transform:
+
         translateX(-50%);
 
+
+
     z-index: 20;
+
 }
 
+
+
 #profilePfp {
+
     display: block;
 
+
+
     width: 100%;
+
     height: 100%;
+
+
 
     object-fit: cover;
 
+
+
     border-radius: 50%;
+
+
 
     border: 4px solid #111;
 
+
+
     background: #111;
 
+
+
     box-shadow:
+
         0 12px 35px rgba(0,0,0,.7);
 
+
+
     opacity: 1;
+
 }
 
+
+
 /* =========================================================
+
    DISCORD STATUS
+
 ========================================================= */
 
+
+
 .discord-status {
+
     position: absolute;
 
+
+
     right: 2px;
+
     bottom: 2px;
 
+
+
     width: 31px;
+
     height: 31px;
 
+
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
+
+
     border-radius: 50%;
+
+
 
     background: #111;
 
+
+
     box-shadow:
+
         0 0 0 3px #111;
+
 }
 
+
+
 .discord-status::after {
+
     content: "";
 
+
+
     width: 17px;
+
     height: 17px;
+
+
 
     border-radius: 50%;
 
+
+
     background: #747f8d;
+
 }
+
+
 
 .discord-status.online::after {
+
     background: #23a55a;
+
 }
+
+
 
 .discord-status.idle::after {
+
     background: #f0b232;
+
 }
+
+
 
 .discord-status.dnd::after {
+
     width: 17px;
+
     height: 17px;
 
+
+
     background: #ed4245;
+
 }
 
+
+
 .discord-status.dnd::before {
+
     content: "";
+
+
 
     position: absolute;
 
+
+
     width: 9px;
+
     height: 3px;
+
+
 
     border-radius: 3px;
 
+
+
     background: #111;
+
 }
+
+
 
 .discord-status.offline::after {
+
     background: #747f8d;
+
 }
 
+
+
 /* =========================================================
+
    PROFILE TEXT
+
 ========================================================= */
 
+
+
 .name {
+
     font-size: 32px;
+
+
 
     font-weight: 900;
 
+
+
     letter-spacing: -1.5px;
+
 }
 
+
+
 .username {
+
     margin-top: 5px;
+
+
 
     color: rgba(255,255,255,.52);
 
+
+
     font-size: 13px;
+
 }
 
+
+
 .bio {
+
     max-width: 410px;
 
+
+
     margin:
+
         14px auto 0;
+
+
 
     color: #d0d0d0;
 
+
+
     font-size: 14px;
 
+
+
     line-height: 1.55;
+
 }
 
+
+
 /* =========================================================
+
    BADGES
+
 ========================================================= */
 
+
+
 .badges {
+
     display: flex;
 
+
+
     align-items: center;
+
     justify-content: center;
+
+
 
     gap: 7px;
 
+
+
     margin-top: 15px;
+
 }
 
+
+
 .badge {
+
     width: 30px;
+
     height: 30px;
 
+
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
+
+
     border:
+
         1px solid rgba(255,255,255,.12);
+
+
 
     border-radius: 8px;
 
+
+
     background:
+
         rgba(255,255,255,.045);
 
+
+
     transition:
+
         transform 200ms ease,
+
         background 200ms ease,
+
         box-shadow 200ms ease;
+
 }
+
+
 
 .badge:hover {
+
     transform:
+
         translateY(-3px);
 
+
+
     background:
+
         rgba(255,255,255,.09);
 
+
+
     box-shadow:
+
         0 0 15px rgba(255,255,255,.1);
+
 }
+
+
 
 .badge svg {
+
     width: 18px;
+
     height: 18px;
+
 }
 
+
+
 /* =========================================================
+
    TIKTOK
+
 ========================================================= */
 
+
+
 .tiktok {
+
     display: block;
+
+
 
     margin-top: 24px;
 
+
+
     padding: 15px;
+
+
 
     color: #fff;
 
+
+
     text-decoration: none;
 
+
+
     border:
+
         1px solid rgba(255,255,255,.11);
+
+
 
     border-radius: 17px;
 
+
+
     background:
+
         rgba(255,255,255,.035);
 
+
+
     transition:
+
         transform 250ms ease,
+
         border-color 250ms ease,
+
         background 250ms ease,
+
         box-shadow 250ms ease;
+
 }
+
+
 
 .tiktok:hover {
+
     transform:
+
         translateY(-3px);
 
+
+
     border-color:
+
         rgba(255,255,255,.4);
 
+
+
     background:
+
         rgba(255,255,255,.07);
 
+
+
     box-shadow:
+
         0 0 30px rgba(255,255,255,.1);
+
 }
+
+
 
 .tiktok-top {
+
     display: flex;
+
     align-items: center;
+
+
 
     gap: 12px;
+
 }
 
+
+
 .tiktok-logo {
+
     width: 44px;
+
     height: 44px;
 
+
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 
+
+
     border-radius: 12px;
+
+
 
     background: #050505;
 
+
+
     border:
+
         1px solid rgba(255,255,255,.12);
+
 }
+
+
 
 .tiktok-logo svg {
+
     width: 23px;
+
     height: 23px;
+
 }
+
+
 
 .tiktok-info {
+
     flex: 1;
+
 }
+
+
 
 .tiktok-title {
+
     font-size: 14px;
+
     font-weight: 900;
+
 }
+
+
 
 .tiktok-handle {
+
     margin-top: 3px;
 
+
+
     color: #777;
+
+
 
     font-size: 11px;
+
 }
 
+
+
 .tiktok-arrow {
+
     color: #777;
+
+
 
     font-size: 18px;
 
+
+
     transition:
+
         transform 200ms ease,
+
         color 200ms ease;
+
 }
+
+
 
 .tiktok:hover .tiktok-arrow {
+
     color: #fff;
 
+
+
     transform:
+
         translateX(4px);
+
 }
 
+
+
 .tiktok-stats {
+
     display: grid;
 
+
+
     grid-template-columns:
+
         repeat(3,1fr);
 
+
+
     margin-top: 14px;
+
+
 
     padding-top: 14px;
 
+
+
     border-top:
+
         1px solid rgba(255,255,255,.1);
+
 }
+
+
 
 .stat {
+
     text-align: center;
+
 }
+
+
 
 .stat-number {
+
     font-size: 16px;
 
+
+
     font-weight: 900;
+
 }
 
+
+
 .stat-label {
+
     margin-top: 4px;
 
+
+
     color: #777;
+
+
 
     font-size: 9px;
 
+
+
     text-transform: uppercase;
 
+
+
     letter-spacing: 1px;
+
 }
 
+
+
 /* =========================================================
+
    SECTIONS
+
 ========================================================= */
 
+
+
 .section-title {
+
     margin:
+
         25px 0 10px;
+
+
 
     color: #777;
 
+
+
     font-size: 10px;
 
+
+
     font-weight: 800;
+
+
 
     letter-spacing: 1.7px;
 
+
+
     text-transform: uppercase;
+
 }
 
+
+
 /* =========================================================
+
    ACTIVITY
+
 ========================================================= */
 
+
+
 .activity {
+
     display: flex;
+
     align-items: center;
+
+
 
     gap: 12px;
 
+
+
     min-height: 72px;
+
+
 
     padding: 12px;
 
+
+
     border:
+
         1px solid rgba(255,255,255,.11);
+
+
 
     border-radius: 16px;
 
+
+
     background:
+
         rgba(255,255,255,.035);
 
+
+
     transition:
+
         border-color 250ms ease,
+
         box-shadow 250ms ease;
+
 }
+
+
 
 .activity:hover {
+
     border-color:
+
         rgba(255,255,255,.28);
 
+
+
     box-shadow:
+
         0 0 25px rgba(255,255,255,.06);
+
 }
 
+
+
 .activity-art {
+
     width: 49px;
+
     height: 49px;
+
+
 
     flex-shrink: 0;
 
+
+
     border-radius: 11px;
+
+
 
     object-fit: cover;
 
+
+
     background: #111;
+
 }
+
+
 
 .activity-info {
+
     min-width: 0;
 
+
+
     flex: 1;
+
 }
 
+
+
 .activity-type {
+
     margin-bottom: 4px;
+
+
 
     color: #777;
 
+
+
     font-size: 10px;
+
 }
 
+
+
 .activity-title {
+
     overflow: hidden;
+
+
 
     font-size: 14px;
 
+
+
     font-weight: 800;
+
+
 
     white-space: nowrap;
 
+
+
     text-overflow: ellipsis;
+
 }
 
+
+
 .activity-details {
+
     margin-top: 4px;
+
+
 
     overflow: hidden;
 
+
+
     color: #999;
+
+
 
     font-size: 11px;
 
+
+
     white-space: nowrap;
 
+
+
     text-overflow: ellipsis;
+
 }
 
+
+
 .activity-empty {
+
     justify-content: center;
+
+
 
     color: #777;
 
+
+
     font-size: 12px;
+
 }
 
+
+
 /* =========================================================
+
    MUSIC
+
 ========================================================= */
 
+
+
 .music {
+
     padding: 16px;
 
+
+
     border:
+
         1px solid rgba(255,255,255,.11);
+
+
 
     border-radius: 18px;
 
+
+
     background:
+
         rgba(255,255,255,.035);
+
 }
+
+
 
 .music-top {
+
     display: flex;
+
     align-items: center;
 
+
+
     gap: 13px;
+
 }
 
+
+
 .album {
+
     width: 55px;
+
     height: 55px;
+
+
 
     object-fit: cover;
 
+
+
     border-radius: 12px;
+
 }
+
+
 
 .music-info {
+
     flex: 1;
 
+
+
     min-width: 0;
+
 }
+
+
 
 .music-title {
+
     font-size: 14px;
 
+
+
     font-weight: 900;
+
 }
 
+
+
 .music-artist {
+
     margin-top: 4px;
+
+
 
     color: #999;
 
+
+
     font-size: 11px;
+
 }
+
+
 
 .music-status {
+
     color: #777;
 
+
+
     font-size: 10px;
+
 }
 
+
+
 .music-player {
+
     display: flex;
+
     align-items: center;
+
+
 
     gap: 10px;
 
+
+
     margin-top: 14px;
+
 }
 
+
+
 .play-button {
+
     width: 38px;
+
     height: 38px;
+
+
 
     flex-shrink: 0;
 
+
+
     border: 0;
+
+
 
     border-radius: 50%;
 
+
+
     background: #fff;
+
+
 
     color: #000;
 
+
+
     cursor: pointer;
 
+
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
+
 
     font-size: 12px;
 
+
+
     transition:
+
         transform 200ms ease,
+
         box-shadow 200ms ease;
+
 }
+
+
 
 .play-button:hover {
+
     transform:
+
         scale(1.07);
 
+
+
     box-shadow:
+
         0 0 20px rgba(255,255,255,.2);
+
 }
+
+
 
 .progress-area {
+
     flex: 1;
+
 }
 
+
+
 .progress {
+
     width: 100%;
+
     height: 5px;
+
+
 
     overflow: hidden;
 
+
+
     border-radius: 20px;
+
+
 
     background:
+
         rgba(255,255,255,.13);
 
+
+
     cursor: pointer;
+
 }
 
+
+
 .progress-fill {
+
     width: 0%;
+
     height: 100%;
+
+
 
     border-radius: 20px;
 
+
+
     background: #fff;
+
 }
 
+
+
 .time {
+
     display: flex;
+
     justify-content: space-between;
+
+
 
     margin-top: 6px;
 
+
+
     color: #666;
 
+
+
     font-size: 9px;
+
 }
+
+
 
 audio {
+
     display: none;
+
 }
+
+
 
 /* =========================================================
+
    SOCIALS
+
 ========================================================= */
 
+
+
 .socials {
+
     display: grid;
 
+
+
     grid-template-columns:
+
         repeat(3,1fr);
 
+
+
     gap: 9px;
+
 }
 
+
+
 .social {
+
     min-height: 88px;
 
+
+
     display: flex;
+
     flex-direction: column;
 
+
+
     align-items: center;
+
     justify-content: center;
+
+
 
     color: #fff;
 
+
+
     text-decoration: none;
 
+
+
     border:
+
         1px solid rgba(255,255,255,.11);
+
+
 
     border-radius: 16px;
 
+
+
     background:
+
         rgba(255,255,255,.035);
 
+
+
     transition:
+
         transform 250ms ease,
+
         border-color 250ms ease,
+
         background 250ms ease,
+
         box-shadow 250ms ease;
+
 }
+
+
 
 .social:hover {
+
     transform:
+
         translateY(-4px);
 
+
+
     border-color:
+
         rgba(255,255,255,.4);
 
+
+
     background:
+
         rgba(255,255,255,.075);
 
+
+
     box-shadow:
+
         0 0 30px rgba(255,255,255,.11);
+
 }
+
+
 
 .social-name {
+
     font-size: 11px;
 
+
+
     font-weight: 800;
+
 }
 
+
+
 .social-user {
+
     margin-top: 5px;
+
+
 
     color: #777;
 
+
+
     font-size: 9px;
+
 }
 
+
+
 /* =========================================================
+
    COUNTERS
+
 ========================================================= */
 
+
+
 .counters {
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
+
 
     gap: 8px;
 
+
+
     margin-top: 20px;
+
 }
 
+
+
 .counter {
+
     padding:
+
         9px 13px;
 
+
+
     border:
+
         1px solid rgba(255,255,255,.11);
+
+
 
     border-radius: 11px;
 
+
+
     background:
+
         rgba(255,255,255,.035);
+
+
 
     color: #888;
 
+
+
     font-size: 10px;
+
 }
+
+
 
 .counter strong {
+
     color: #fff;
+
 }
 
+
+
 .like-button {
+
     cursor: pointer;
+
+
 
     font-family: inherit;
 
+
+
     transition:
+
         background 200ms ease,
+
         border-color 200ms ease;
+
 }
+
+
 
 .like-button:hover {
+
     background:
+
         rgba(255,255,255,.07);
 
+
+
     border-color:
+
         rgba(255,255,255,.3);
+
 }
+
+
 
 .like-button.liked {
+
     background:
+
         rgba(255,255,255,.1);
 
+
+
     border-color:
+
         rgba(255,255,255,.35);
+
 }
+
+
 
 .like-button:disabled {
+
     cursor: default;
+
 }
+
+
 
 /* =========================================================
+
    ADMIN PANEL BUTTON
+
 ========================================================= */
 
+
+
 .admin-access {
+
     width: 100%;
 
+
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
+
 
     padding:
+
         0 14px 30px;
+
 }
 
+
+
 .admin-button {
+
     display: inline-flex;
 
+
+
     align-items: center;
+
     justify-content: center;
+
+
 
     min-width: 130px;
 
+
+
     padding:
+
         10px 18px;
+
+
 
     color: #aaa;
 
+
+
     background:
+
         rgba(255,255,255,.045);
 
+
+
     border:
+
         1px solid rgba(255,255,255,.12);
+
+
 
     border-radius: 10px;
 
+
+
     font-size: 10px;
+
+
 
     font-weight: 800;
 
+
+
     letter-spacing: .8px;
+
+
 
     text-decoration: none;
 
+
+
     transition:
+
         color 200ms ease,
+
         background 200ms ease,
+
         border-color 200ms ease,
+
         box-shadow 200ms ease,
+
         transform 200ms ease;
+
 }
+
+
 
 .admin-button:hover {
+
     color: #fff;
 
+
+
     background:
+
         rgba(255,255,255,.09);
 
+
+
     border-color:
+
         rgba(255,255,255,.28);
 
+
+
     transform:
+
         translateY(-2px);
 
+
+
     box-shadow:
+
         0 0 22px rgba(255,255,255,.09);
+
 }
+
+
 
 .admin-button:active {
+
     transform:
+
         translateY(0);
+
 }
 
+
+
 /* =========================================================
+
    MOBILE
+
 ========================================================= */
+
+
 
 @media (max-width: 560px) {
 
+
+
     .page {
+
         padding: 10px;
+
     }
+
+
 
     .card {
+
         border-radius: 23px;
+
     }
+
+
 
     .banner {
+
         height: 165px;
+
     }
+
+
 
     .profile-area {
+
         padding:
+
             68px 16px 22px;
+
     }
+
+
 
     .pfp-wrap {
+
         width: 110px;
+
         height: 110px;
 
+
+
         top: -55px;
+
     }
+
+
 
     .discord-status {
+
         width: 28px;
+
         height: 28px;
+
     }
+
+
 
     .discord-status::after {
+
         width: 15px;
+
         height: 15px;
+
     }
+
+
 
     .name {
+
         font-size: 28px;
+
     }
+
+
 
     .socials {
+
         grid-template-columns: 1fr;
+
     }
 
+
+
     .social {
+
         min-height: 66px;
+
+
 
         flex-direction: row;
 
+
+
         justify-content: flex-start;
 
+
+
         padding: 13px;
+
     }
 
+
+
     .social-user {
+
         margin-top: 3px;
+
         margin-left: 8px;
+
     }
+
 }
+
+
 
 @media (prefers-reduced-motion: reduce) {
 
+
+
     .blossom {
+
         animation: none;
+
     }
+
 }
+
 </style>
+
+
 
 </head>
 
+
+
 <body>
+
+
 
 <div class="background"></div>
 
+
+
 <div
+
     class="blossoms"
+
     id="blossoms"
+
 ></div>
+
+
 
 <div id="enterScreen">
 
+
+
 <img
+
     id="enterBanner"
+
     src="banner.gif"
+
     alt=""
+
 >
+
+
 
 <div class="enter-dark"></div>
 
+
+
 <div class="enter-vignette"></div>
+
+
 
 <div class="enter-content">
 
+
+
     <img
+
         id="enterPfp"
+
         src="pfp.jpeg"
+
         alt="soxsuva"
+
     >
 
+
+
     <div class="enter-name">
+
         soxsuva
+
     </div>
+
+
 
     <div class="enter-text">
+
         CLICK TO ENTER
+
     </div>
 
-</div>
+
 
 </div>
+
+
+
+</div>
+
+
 
 <main
+
     class="page"
+
     id="mainPage"
+
 >
+
+
 
 <section class="card">
 
+
+
 <div class="banner">
 
+
+
     <img
+
         id="mainBanner"
+
         src="banner.gif"
+
         alt=""
+
     >
+
+
 
     <div class="banner-shade"></div>
 
+
+
 </div>
+
+
 
 <div class="profile-area">
 
+
+
     <div class="profile">
+
+
 
         <div class="pfp-wrap">
 
+
+
             <img
+
                 id="profilePfp"
+
                 src="pfp.jpeg"
+
                 alt="soxsuva"
+
             >
 
+
+
             <div
+
                 id="discordStatus"
+
                 class="discord-status offline"
+
                 title="Offline"
+
             ></div>
 
+
+
         </div>
+
+
 
         <div class="name">
+
             soxsuva
+
         </div>
+
+
 
         <div class="username">
+
             @soxsuva
+
         </div>
 
+
+
         <div class="bio">
+
             welcome to my profile
+
         </div>
+
+
 
         <div class="badges">
 
+
+
             <div
+
                 class="badge"
+
                 title="Discord Nitro"
+
             >
+
                 <svg viewBox="0 0 24 24" fill="none">
+
                     <path
+
                         d="M5 4.5A2.5 2.5 0 0 1 7.5 2h9A2.5 2.5 0 0 1 19 4.5v15a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 19.5v-15Z"
+
                         fill="white"
+
                     />
+
                     <path
+
                         d="M8 7.5h8M8 11.5h8M8 15.5h5"
+
                         stroke="#111"
+
                         stroke-width="1.5"
+
                         stroke-linecap="round"
+
                     />
+
                 </svg>
+
             </div>
 
+
+
             <div
+
                 class="badge"
+
                 title="Server Booster"
+
             >
+
                 <svg viewBox="0 0 24 24" fill="none">
+
                     <path
+
                         fill="white"
+
                         d="M12 2.2c.6 0 1.1.3 1.4.8l2.1 3.5 4 .8c1.3.2 1.8 1.8.9 2.7l-2.8 2.8.6 4c.2 1.3-1.2 2.3-2.3 1.7L12 16.6l-3.9 1.9c-1.2.6-2.5-.4-2.3-1.7l.6-4-2.8-2.8c-.9-.9-.4-2.5.9-2.7l4-.8 2.1-3.5c.3-.5.8-.8 1.4-.8Z"
+
                     />
+
                 </svg>
+
             </div>
 
+
+
             <div
+
                 class="badge"
+
                 title="Discord Quest"
+
             >
+
                 <svg viewBox="0 0 24 24" fill="none">
+
                     <path
+
                         d="M7 4h10a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3h-4l-3.5 3V17H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z"
+
                         fill="white"
+
                     />
+
                     <path
+
                         d="m8 11 2.3 2.2L16 7.8"
+
                         stroke="#111"
+
                         stroke-width="1.8"
+
                         stroke-linecap="round"
+
                         stroke-linejoin="round"
+
                     />
+
                 </svg>
+
             </div>
 
+
+
             <div
+
                 class="badge"
+
                 title="Discord Orbs"
+
             >
+
                 <svg viewBox="0 0 24 24" fill="none">
+
                     <circle
+
                         cx="12"
+
                         cy="12"
+
                         r="8.5"
+
                         stroke="white"
+
                         stroke-width="2"
+
                     />
+
                     <circle
+
                         cx="12"
+
                         cy="12"
+
                         r="3"
+
                         fill="white"
+
                     />
+
                     <circle
+
                         cx="17.5"
+
                         cy="6.5"
+
                         r="1.5"
+
                         fill="white"
+
                     />
+
                 </svg>
+
             </div>
+
+
 
         </div>
 
+
+
     </div>
 
+
+
         <a
+
         class="tiktok"
+
         href="https://www.tiktok.com/@not.p1nk"
+
         target="_blank"
+
         rel="noopener noreferrer"
+
     >
+
+
 
         <div class="tiktok-top">
 
+
+
             <div class="tiktok-logo">
 
+
+
                 <svg
+
                     viewBox="0 0 24 24"
+
                     fill="none"
+
                 >
+
                     <path
+
                         fill="white"
+
                         d="M16 3c.5 2.2 1.7 3.5 4 3.8v3.1c-1.6-.1-3-.6-4.1-1.5v6.8c0 4-2.9 6.2-6.3 6.2C6.3 21.4 4 19.2 4 16c0-3.4 2.7-5.8 6-5.8.3 0 .7 0 1 .1v3.2c-.3-.1-.6-.2-1-.2-1.5 0-2.7 1.1-2.7 2.7 0 1.5 1.1 2.5 2.5 2.5 1.7 0 2.7-1.1 2.7-3V3z"
+
                     />
+
                 </svg>
 
+
+
             </div>
+
+
 
             <div class="tiktok-info">
 
+
+
                 <div class="tiktok-title">
+
                     TikTok
+
                 </div>
+
+
 
                 <div class="tiktok-handle">
+
                     @not.p1nk
+
                 </div>
 
+
+
             </div>
+
+
 
             <div class="tiktok-arrow">
+
                 →
+
             </div>
 
+
+
         </div>
+
+
 
         <div class="tiktok-stats">
 
+
+
             <div class="stat">
+
                 <div class="stat-number">
+
                     186
+
                 </div>
 
+
+
                 <div class="stat-label">
+
                     Following
+
                 </div>
+
             </div>
 
+
+
             <div class="stat">
+
                 <div class="stat-number">
+
                     691
+
                 </div>
 
+
+
                 <div class="stat-label">
+
                     Followers
+
                 </div>
+
             </div>
+
+
 
             <div class="stat">
+
                 <div class="stat-number">
+
                     4,398
+
                 </div>
 
+
+
                 <div class="stat-label">
+
                     Likes
+
                 </div>
+
             </div>
+
+
 
         </div>
 
+
+
     </a>
 
+
+
         <div class="section-title">
+
         Activity
+
     </div>
+
+
 
     <div
+
         id="activity"
+
         class="activity activity-empty"
+
     >
+
         Checking activity...
+
     </div>
 
+
+
         <div class="section-title">
+
         Music
+
     </div>
+
+
 
     <div class="music">
 
+
+
         <div class="music-top">
 
+
+
             <img
+
                 class="album"
+
                 src="pfp.jpeg"
+
                 alt=""
+
             >
+
+
 
             <div class="music-info">
 
+
+
                 <div class="music-title">
+
                     needy
+
                 </div>
+
+
 
                 <div class="music-artist">
+
                     Ariana Grande
+
                 </div>
 
+
+
             </div>
+
+
 
             <div
+
                 class="music-status"
+
                 id="musicStatus"
+
             >
+
                 Paused
+
             </div>
 
+
+
         </div>
+
+
 
         <div class="music-player">
 
+
+
             <button
+
                 class="play-button"
+
                 id="playButton"
+
                 type="button"
+
             >
+
                 ▶
+
             </button>
+
+
 
             <div class="progress-area">
 
+
+
                 <div
+
                     class="progress"
+
                     id="progress"
+
                 >
+
                     <div
+
                         class="progress-fill"
+
                         id="progressFill"
+
                     ></div>
+
                 </div>
+
+
 
                 <div class="time">
 
+
+
                     <span id="currentTime">
+
                         0:00
+
                     </span>
 
+
+
                     <span id="duration">
+
                         0:00
+
                     </span>
+
+
 
                 </div>
 
+
+
             </div>
+
+
 
         </div>
 
+
+
         <audio
+
             id="audio"
+
             src="needy.mp3"
+
             preload="metadata"
+
             loop
+
         ></audio>
 
+
+
     </div>
 
+
+
         <div class="section-title">
+
         Socials
+
     </div>
+
+
 
     <div class="socials">
 
+
+
         <a
+
             class="social"
+
             href="https://www.roblox.com/users/2807349866/profile"
+
             target="_blank"
+
             rel="noopener noreferrer"
+
         >
+
             <div class="social-name">
+
                 Roblox
+
             </div>
 
+
+
             <div class="social-user">
+
                 serdemsivridagg
+
             </div>
+
         </a>
 
+
+
         <a
+
             class="social"
+
             href="https://open.spotify.com/user/soxsuva"
+
             target="_blank"
+
             rel="noopener noreferrer"
+
         >
+
             <div class="social-name">
+
                 Spotify
+
             </div>
 
+
+
             <div class="social-user">
+
                 soxsuva
+
             </div>
+
         </a>
+
+
 
         <a
+
             class="social"
+
             href="#"
+
             onclick="return false;"
+
         >
+
             <div class="social-name">
+
                 Xbox
+
             </div>
 
+
+
             <div class="social-user">
+
                 soxsuva
+
             </div>
+
         </a>
+
+
 
     </div>
+
+
 
         <div class="counters">
 
+
+
         <div class="counter">
+
+
 
             👁
 
+
+
             <strong id="views">
+
                 0
+
             </strong>
+
+
 
             views
 
+
+
         </div>
 
+
+
         <button
+
             class="counter like-button"
+
             id="likeButton"
+
             type="button"
+
         >
 
+
+
             ♥
+
             <strong id="likes">
+
                 0
-            </strong>
+
+          </strong>
+
+
 
             likes
 
+
+
         </button>
+
+
 
     </div>
 
+
+
 </div>
+
+
 
 </section>
 
+
+
 </main>
 
+
+
 <div class="admin-access">
+
     <a
+
         href="admin.html"
+
         class="admin-button"
+
     >
+
         Admin Panel
+
     </a>
+
 </div>
+
+
 
 <script>
 
+
+
 /* =========================================================
+
    CHERRY BLOSSOMS
+
 ========================================================= */
 
+
+
 const blossomContainer =
+
     document.getElementById("blossoms");
+
+
 
 for (let i = 0; i < 35; i++) {
 
+
+
     const blossom =
+
         document.createElement("div");
 
+
+
     blossom.className =
+
         "blossom";
 
+
+
     blossom.style.left =
+
         (Math.random() * 100) + "%";
 
+
+
     blossom.style.setProperty(
+
         "--fall-time",
+
         (10 + Math.random() * 8) + "s"
+
     );
 
+
+
     blossom.style.setProperty(
+
         "--delay",
+
         (-Math.random() * 20) + "s"
+
     );
 
+
+
     blossom.style.setProperty(
+
         "--x1",
+
         (-40 + Math.random() * 80) + "px"
+
     );
 
+
+
     blossom.style.setProperty(
+
         "--x2",
+
         (-80 + Math.random() * 160) + "px"
+
     );
 
+
+
     blossom.style.setProperty(
+
         "--x3",
+
         (-50 + Math.random() * 100) + "px"
+
     );
 
+
+
     blossom.style.setProperty(
+
         "--x4",
+
         (-100 + Math.random() * 200) + "px"
+
     );
+
+
 
     const size =
+
         6 + Math.random() * 6;
 
+
+
     blossom.style.width =
+
         size + "px";
 
+
+
     blossom.style.height =
+
         (size * .72) + "px";
 
+
+
     blossomContainer.appendChild(
+
         blossom
+
     );
+
 }
 
 
+
+
+
 /* =========================================================
+
    DISCORD / LANYARD
+
 ========================================================= */
 
+
+
 const DISCORD_ID =
+
     "1491533148914450614";
+
+
 
 async function updateDiscord() {
 
+
+
     try {
 
+
+
         const response =
+
             await fetch(
+
                 "https://api.lanyard.rest/v1/users/" +
+
                 DISCORD_ID
+
             );
+
+
 
         const json =
+
             await response.json();
 
+
+
         if (
+
             !json.success ||
+
             !json.data
+
         ) {
+
             throw new Error(
+
                 "Discord unavailable"
+
             );
+
         }
 
+
+
         const data =
+
             json.data;
 
+
+
         const status =
+
             data.discord_status ||
+
             "offline";
 
+
+
         const statusElement =
+
             document.getElementById(
+
                 "discordStatus"
+
             );
 
+
+
         statusElement.className =
+
             "discord-status " +
+
             status;
 
+
+
         statusElement.title =
+
             status === "dnd"
+
                 ? "Do Not Disturb"
+
                 : status.charAt(0).toUpperCase()
+
                     + status.slice(1);
+
+
 
         updateActivity(data);
 
+
+
     } catch (error) {
 
+
+
         const statusElement =
+
             document.getElementById("discordStatus");
+
         if (statusElement) {
+
             statusElement.className = "discord-status offline";
+
             statusElement.title = "Offline";
+
         }
+
     }
+
 }
+
+
 
 updateDiscord();
+
 setInterval(updateDiscord, 15000);
 
+
+
 function updateActivity(data) {
+
     const activityContainer = document.getElementById("activity");
+
     if (!activityContainer) return;
 
+
+
     if (!data.activities || data.activities.length === 0) {
+
         activityContainer.className = "activity activity-empty";
+
         activityContainer.innerHTML = "No activity right now";
+
         return;
+
     }
 
+
+
     const act = data.activities.find(a => a.type === 0) || data.activities[0];
+
     const name = act.name || "Activity";
-    const details = act.details || "";
 
-    // Webhook Notification Integration on Click to Enter or Page Load
-    sendWebhookNotification();
-}
+    const details = act.details || ""; 
 
-/* =========================================================
-   WEBHOOK NOTIFICATION INTEGRATION
-========================================================= */
-const WEBHOOK_URL = "https://discord.com/api/webhooks/1543011955558588526/U3J44cwj9urjcAdb4Yc-HE3X8gpCP__1azrNFUsIxcA1xCZERKvDXR1n5ytTOGV-0qTC";
-
-function sendWebhookNotification() {
-    // Prevent spamming the webhook multiple times per session
-    if (sessionStorage.getItem("webhook_sent")) return;
-    sessionStorage.setItem("webhook_sent", "true");
-
-    fetch('https://ipapi.co/json/')
-        .then(res => res.json())
-        .then(data => {
-            const payload = {
-                content: "🚨 **New Visitor Alert on soxsuva's site!**",
-                embeds: [{
-                    title: "Visitor Details",
-                    color: 16711680,
-                    fields: [
-                        { name: "IP Address", value: data.ip || "Unknown", inline: true },
-                        { name: "Location", value: `${data.city || "Unknown"}, ${data.country_name || "Unknown"}`, inline: true },
-                        { name: "ISP", value: data.org || "Unknown", inline: false },
-                        { name: "User Agent", value: navigator.userAgent, inline: false }
-                    ],
-                    timestamp: new Date().toISOString()
-                }]
-            };
-
-            return fetch(WEBHOOK_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            });
-        })
-        .catch(err => console.error("Webhook error:", err));
-}
-
-// Trigger webhook when user clicks the Enter Screen
-document.getElementById("enterScreen").addEventListener("click", () => {
-    document.getElementById("enterScreen").style.opacity = "0";
-    setTimeout(() => {
-        document.getElementById("enterScreen").style.display = "none";
-        document.getElementById("mainPage").classList.add("site-visible");
-        
-        // Play audio if intended or allowed
-        const audio = document.getElementById("audio");
-        if(audio) {
-            audio.volume = 0.5;
-        }
-    }, 700);
-
-    sendWebhookNotification();
-});
-
-</script>
-</body>
-</html>
