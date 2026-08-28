@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -137,15 +136,15 @@ body {
     /*
         IMPORTANT:
         Transparent instead of black so the main page
-        is already underneath the transition.
-        This prevents the black flash on mobile.
+        is already underneath the enter animation.
+        This removes the black flash.
     */
     background: transparent;
 
     opacity: 1;
 
     transition:
-        opacity 700ms cubic-bezier(.16,1,.3,1);
+        opacity 850ms cubic-bezier(.16,1,.3,1);
 }
 
 #enterBanner {
@@ -162,8 +161,8 @@ body {
     transform: scale(1.01);
 
     transition:
-        transform 1000ms cubic-bezier(.16,1,.3,1),
-        filter 1000ms ease;
+        transform 1200ms cubic-bezier(.16,1,.3,1),
+        filter 1200ms ease;
 }
 
 .enter-dark {
@@ -178,7 +177,7 @@ body {
         );
 
     transition:
-        opacity 800ms ease;
+        opacity 850ms ease;
 }
 
 .enter-vignette {
@@ -193,7 +192,7 @@ body {
         );
 
     transition:
-        opacity 800ms ease;
+        opacity 850ms ease;
 }
 
 .enter-content {
@@ -207,8 +206,8 @@ body {
     text-align: center;
 
     transition:
-        opacity 350ms ease,
-        transform 700ms cubic-bezier(.16,1,.3,1);
+        opacity 400ms ease,
+        transform 900ms cubic-bezier(.16,1,.3,1);
 }
 
 #enterPfp {
@@ -236,12 +235,17 @@ body {
 @keyframes pfpPulseAnimation {
     0%, 100% {
         transform: scale(1);
-        box-shadow: 0 0 35px rgba(255,255,255,.24), 0 0 100px rgba(255,255,255,.08);
+        box-shadow:
+            0 0 35px rgba(255,255,255,.24),
+            0 0 100px rgba(255,255,255,.08);
         border-color: rgba(255,255,255,.95);
     }
+
     50% {
         transform: scale(1.06);
-        box-shadow: 0 0 50px rgba(255,255,255,.5), 0 0 130px rgba(255,255,255,.2);
+        box-shadow:
+            0 0 50px rgba(255,255,255,.5),
+            0 0 130px rgba(255,255,255,.2);
         border-color: rgba(255,255,255,1);
     }
 }
@@ -260,8 +264,8 @@ body {
         0 0 30px rgba(255,255,255,.2);
 
     transition:
-        opacity 350ms ease,
-        transform 500ms cubic-bezier(.16,1,.3,1);
+        opacity 400ms ease,
+        transform 700ms cubic-bezier(.16,1,.3,1);
 }
 
 .enter-text {
@@ -281,7 +285,7 @@ body {
 
     transition:
         opacity 300ms ease,
-        transform 400ms ease;
+        transform 500ms ease;
 }
 
 @keyframes enterPulse {
@@ -313,21 +317,20 @@ body {
 
     pointer-events: none;
 
-    will-change:
-        left,
-        top,
-        width,
-        height,
-        transform;
+    will-change: transform, opacity;
+
+    transform-origin: center center;
+
+    /*
+        Only animate transform.
+        This is much smoother than animating
+        left/top/width/height separately.
+    */
 
     transition:
-        left 950ms cubic-bezier(.16,1,.3,1),
-        top 950ms cubic-bezier(.16,1,.3,1),
-        width 950ms cubic-bezier(.16,1,.3,1),
-        height 950ms cubic-bezier(.16,1,.3,1),
-        border-radius 950ms cubic-bezier(.16,1,.3,1),
-        border-width 950ms cubic-bezier(.16,1,.3,1),
-        box-shadow 950ms cubic-bezier(.16,1,.3,1);
+        transform 1050ms cubic-bezier(.16,1,.3,1),
+        box-shadow 1050ms cubic-bezier(.16,1,.3,1),
+        border-radius 1050ms cubic-bezier(.16,1,.3,1);
 }
 
 /* =========================================================
@@ -344,19 +347,21 @@ body {
     padding: 30px 14px;
 
     /*
-        IMPORTANT:
-        The page is now ALWAYS rendered underneath
-        the enter screen.
-
-        This prevents the black screen that appeared
-        between the enter animation and the main site.
+        The site is now rendered underneath the
+        enter screen from the beginning.
+        This prevents the black flash.
     */
 
     opacity: 1;
+
     visibility: visible;
 
     transition:
         opacity 650ms cubic-bezier(.16,1,.3,1);
+}
+
+.page.site-hidden {
+    opacity: 0;
 }
 
 /* =========================================================
@@ -1240,43 +1245,9 @@ audio {
 ></div>
 
 <!-- =========================================================
-     CLICK TO ENTER
-========================================================= -->
-
-<div id="enterScreen">
-
-    <img
-        id="enterBanner"
-        src="banner.gif"
-        alt=""
-    >
-
-    <div class="enter-dark"></div>
-
-    <div class="enter-vignette"></div>
-
-    <div class="enter-content">
-
-        <img
-            id="enterPfp"
-            src="pfp.jpeg"
-            alt="soxsuva"
-        >
-
-        <div class="enter-name">
-            soxsuva
-        </div>
-
-        <div class="enter-text">
-            CLICK TO ENTER
-        </div>
-
-    </div>
-
-</div>
-
-<!-- =========================================================
      MAIN SITE
+     It exists underneath the enter screen so there is
+     no black flash during the transition.
 ========================================================= -->
 
 <main
@@ -1680,6 +1651,42 @@ audio {
 </section>
 
 </main>
+
+<!-- =========================================================
+     CLICK TO ENTER
+========================================================= -->
+
+<div id="enterScreen">
+
+    <img
+        id="enterBanner"
+        src="banner.gif"
+        alt=""
+    >
+
+    <div class="enter-dark"></div>
+
+    <div class="enter-vignette"></div>
+
+    <div class="enter-content">
+
+        <img
+            id="enterPfp"
+            src="pfp.jpeg"
+            alt="soxsuva"
+        >
+
+        <div class="enter-name">
+            soxsuva
+        </div>
+
+        <div class="enter-text">
+            CLICK TO ENTER
+        </div>
+
+    </div>
+
+</div>
 
 <script>
 
@@ -2173,15 +2180,13 @@ progress.addEventListener(
 ========================================================= */
 
 /*
-    The old version stored views and likes in localStorage.
-    That caused every phone/computer/browser to have its
-    own separate numbers.
+    Shared live view counter.
 
-    The site now starts with the intended values:
-        3 views
-        1 like
+    Every click on CLICK TO ENTER sends a request to
+    the online counter, so different phones/computers
+    see the same number.
 
-    Old localStorage values are deliberately ignored.
+    The current starting display is 3 views and 1 like.
 */
 
 const viewsEl =
@@ -2202,11 +2207,6 @@ viewsEl.textContent =
 likesEl.textContent =
     currentLikes;
 
-/*
-    The like state is still remembered locally so a person
-    cannot repeatedly like from the same browser.
-*/
-
 if (
     localStorage.getItem("site_liked") === "true"
 ) {
@@ -2218,13 +2218,20 @@ likeButton.addEventListener(
     () => {
 
         if (
-            localStorage.getItem("site_liked") !== "true"
+            localStorage.getItem(
+                "site_liked"
+            ) !== "true"
         ) {
 
             currentLikes++;
 
             likesEl.textContent =
                 currentLikes;
+
+            localStorage.setItem(
+                "site_likes",
+                currentLikes
+            );
 
             localStorage.setItem(
                 "site_liked",
@@ -2237,6 +2244,50 @@ likeButton.addEventListener(
         }
     }
 );
+
+
+/* =========================================================
+   LIVE VIEW COUNTER
+========================================================= */
+
+async function addLiveView() {
+
+    try {
+
+        const response =
+            await fetch(
+                "https://api.counterapi.dev/v1/soxsuva/views/up"
+            );
+
+        const data =
+            await response.json();
+
+        if (
+            data &&
+            typeof data.count === "number"
+        ) {
+
+            currentViews =
+                data.count;
+
+            viewsEl.textContent =
+                currentViews;
+        }
+
+    } catch (error) {
+
+        /*
+            If the live counter service is temporarily
+            unavailable, still increase the displayed
+            number so the visitor sees their view.
+        */
+
+        currentViews++;
+
+        viewsEl.textContent =
+            currentViews;
+    }
+}
 
 
 /* =========================================================
@@ -2253,21 +2304,23 @@ let entered = false;
 
 enterScreen.addEventListener(
     "click",
-    () => {
+    async () => {
 
         if (entered) return;
 
         entered = true;
 
         /*
-            The view count is intentionally NOT incremented
-            anymore because the displayed starting value is
-            the actual value you want: 3.
+            Count this visit globally.
         */
+        addLiveView();
 
+        /*
+            Start music immediately from the click.
+        */
         try {
 
-            audio.play();
+            await audio.play();
 
             playButton.textContent =
                 "❚❚";
@@ -2277,22 +2330,25 @@ enterScreen.addEventListener(
 
         } catch (e) {}
 
+
         const enterPfp =
-            document.getElementById(
-                "enterPfp"
-            );
+            document.getElementById("enterPfp");
 
         const profilePfp =
-            document.getElementById(
-                "profilePfp"
-            );
+            document.getElementById("profilePfp");
 
+        /*
+            Get exact starting and ending rectangles.
+        */
         const enterRect =
             enterPfp.getBoundingClientRect();
 
         const profileRect =
             profilePfp.getBoundingClientRect();
 
+        /*
+            Create the flying PFP.
+        */
         const flyer =
             document.createElement("img");
 
@@ -2314,43 +2370,120 @@ enterScreen.addEventListener(
         flyer.style.height =
             enterRect.height + "px";
 
+        flyer.style.border =
+            "3px solid rgba(255,255,255,.95)";
+
+        flyer.style.boxShadow =
+            "0 0 45px rgba(255,255,255,.38), 0 0 110px rgba(255,255,255,.16)";
+
         document.body.appendChild(
             flyer
         );
 
         /*
-            Fade the enter screen away while the real page
-            is already underneath it.
+            Hide the original enter PFP so only the
+            flying copy is visible.
         */
-
-        enterScreen.style.opacity =
+        enterPfp.style.opacity =
             "0";
 
         /*
-            Start the PFP flight immediately.
+            Fade out the enter content.
+        */
+        const enterContent =
+            document.querySelector(
+                ".enter-content"
+            );
+
+        enterContent.style.opacity =
+            "0";
+
+        enterContent.style.transform =
+            "translateY(-18px) scale(.94)";
+
+        /*
+            Smoothly zoom the enter banner while fading.
+        */
+        enterBanner.style.transform =
+            "scale(1.08)";
+
+        enterBanner.style.filter =
+            "brightness(.38)";
+
+        /*
+            Calculate the movement using the CENTER
+            of each PFP.
+
+            Because only transform changes during the
+            animation, it stays extremely smooth.
         */
 
+        const startCenterX =
+            enterRect.left +
+            enterRect.width / 2;
+
+        const startCenterY =
+            enterRect.top +
+            enterRect.height / 2;
+
+        const targetCenterX =
+            profileRect.left +
+            profileRect.width / 2;
+
+        const targetCenterY =
+            profileRect.top +
+            profileRect.height / 2;
+
+        const moveX =
+            targetCenterX -
+            startCenterX;
+
+        const moveY =
+            targetCenterY -
+            startCenterY;
+
+        const scale =
+            profileRect.width /
+            enterRect.width;
+
+        /*
+            Give the flyer its final target position
+            and size through ONE transform.
+
+            Slight overshoot makes the landing feel
+            more natural.
+        */
         requestAnimationFrame(() => {
 
             requestAnimationFrame(() => {
 
-                flyer.style.left =
-                    profileRect.left + "px";
+                flyer.style.transform =
+                    `translate3d(${moveX}px, ${moveY}px, 0) scale(${scale})`;
 
-                flyer.style.top =
-                    profileRect.top + "px";
+                flyer.style.border =
+                    "4px solid #111";
 
-                flyer.style.width =
-                    profileRect.width + "px";
+                flyer.style.boxShadow =
+                    "0 12px 35px rgba(0,0,0,.7)";
 
-                flyer.style.height =
-                    profileRect.height + "px";
             });
         });
 
         /*
-            Remove the overlay after the animation.
-            No hidden-page delay means no black frame.
+            Fade the entire enter layer away.
+            The main site is already underneath it,
+            so there is no black screen.
+        */
+
+        setTimeout(() => {
+
+            enterScreen.style.opacity =
+                "0";
+
+        }, 120);
+
+        /*
+            Finish after the PFP reaches the profile.
         */
 
         setTimeout(() => {
@@ -2359,7 +2492,14 @@ enterScreen.addEventListener(
 
             enterScreen.remove();
 
-        }, 970);
+            /*
+                Make absolutely sure the real PFP is
+                visible once the flying copy disappears.
+            */
+            profilePfp.style.opacity =
+                "1";
+
+        }, 1100);
     }
 );
 
@@ -2379,4 +2519,3 @@ setInterval(
 
 </body>
 </html>
-```
