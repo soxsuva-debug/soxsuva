@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -133,7 +134,13 @@ body {
 
     cursor: pointer;
 
-    background: #000;
+    /*
+        IMPORTANT:
+        Transparent instead of black so the main page
+        is already underneath the transition.
+        This prevents the black flash on mobile.
+    */
+    background: transparent;
 
     opacity: 1;
 
@@ -337,29 +344,24 @@ body {
     padding: 30px 14px;
 
     /*
-        CRITICAL:
-        The main site is invisible during
-        the enter animation.
+        IMPORTANT:
+        The page is now ALWAYS rendered underneath
+        the enter screen.
+
+        This prevents the black screen that appeared
+        between the enter animation and the main site.
     */
 
-    opacity: 0;
-
-    visibility: hidden;
-
-    transition:
-        opacity 650ms cubic-bezier(.16,1,.3,1),
-        visibility 0s linear 650ms;
-}
-
-.page.site-visible {
     opacity: 1;
-
     visibility: visible;
 
     transition:
-        opacity 650ms cubic-bezier(.16,1,.3,1),
-        visibility 0s;
+        opacity 650ms cubic-bezier(.16,1,.3,1);
 }
+
+/* =========================================================
+   CARD
+========================================================= */
 
 .card {
     width: min(570px,100%);
@@ -1649,7 +1651,7 @@ audio {
                 👁
 
                 <strong id="views">
-                    0
+                    3
                 </strong>
 
                 views
@@ -1664,7 +1666,7 @@ audio {
 
                 ♥
                 <strong id="likes">
-                    0
+                    1
                 </strong>
 
                 likes
@@ -1930,17 +1932,46 @@ function updateActivity(data) {
             "Playing a game";
 
         let elapsedString = "";
-        if (gameActivity.timestamps && gameActivity.timestamps.start) {
-            const elapsedSeconds = Math.floor((Date.now() - gameActivity.timestamps.start) / 1000);
-            const hours = Math.floor(elapsedSeconds / 3600);
-            const minutes = Math.floor((elapsedSeconds % 3600) / 60);
-            const seconds = elapsedSeconds % 60;
+
+        if (
+            gameActivity.timestamps &&
+            gameActivity.timestamps.start
+        ) {
+
+            const elapsedSeconds =
+                Math.floor(
+                    (Date.now() -
+                        gameActivity.timestamps.start) /
+                    1000
+                );
+
+            const hours =
+                Math.floor(
+                    elapsedSeconds / 3600
+                );
+
+            const minutes =
+                Math.floor(
+                    (elapsedSeconds % 3600) / 60
+                );
+
+            const seconds =
+                elapsedSeconds % 60;
+
             if (hours > 0) {
-                elapsedString = `Elapsed: ${hours}h ${minutes}m`;
+
+                elapsedString =
+                    `Elapsed: ${hours}h ${minutes}m`;
+
             } else if (minutes > 0) {
-                elapsedString = `Elapsed: ${minutes}m ${seconds}s`;
+
+                elapsedString =
+                    `Elapsed: ${minutes}m ${seconds}s`;
+
             } else {
-                elapsedString = `Elapsed: ${seconds}s`;
+
+                elapsedString =
+                    `Elapsed: ${seconds}s`;
             }
         }
 
@@ -1971,9 +2002,11 @@ function updateActivity(data) {
         if (
             customStatus.emoji
         ) {
+
             if (
                 customStatus.emoji.id
             ) {
+
                 const ext =
                     customStatus.emoji.animated
                         ? "gif"
@@ -1981,9 +2014,11 @@ function updateActivity(data) {
 
                 emojiHtml =
                     `<img src="https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.${ext}?size=48" style="width:20px;height:20px;vertical-align:middle;margin-right:6px;">`;
+
             } else if (
                 customStatus.emoji.name
             ) {
+
                 emojiHtml =
                     customStatus.emoji.name +
                     " ";
@@ -2056,6 +2091,7 @@ function formatTime(seconds) {
 audio.addEventListener(
     "loadedmetadata",
     () => {
+
         durationEl.textContent =
             formatTime(
                 audio.duration
@@ -2136,29 +2172,71 @@ progress.addEventListener(
    COUNTERS
 ========================================================= */
 
-const viewsEl = document.getElementById("views");
-const likesEl = document.getElementById("likes");
-const likeButton = document.getElementById("likeButton");
+/*
+    The old version stored views and likes in localStorage.
+    That caused every phone/computer/browser to have its
+    own separate numbers.
 
-let currentViews = parseInt(localStorage.getItem("site_views") || "0", 10);
-let currentLikes = parseInt(localStorage.getItem("site_likes") || "0", 10);
+    The site now starts with the intended values:
+        3 views
+        1 like
 
-viewsEl.textContent = currentViews;
-likesEl.textContent = currentLikes;
+    Old localStorage values are deliberately ignored.
+*/
 
-if (localStorage.getItem("site_liked") === "true") {
+const viewsEl =
+    document.getElementById("views");
+
+const likesEl =
+    document.getElementById("likes");
+
+const likeButton =
+    document.getElementById("likeButton");
+
+let currentViews = 3;
+let currentLikes = 1;
+
+viewsEl.textContent =
+    currentViews;
+
+likesEl.textContent =
+    currentLikes;
+
+/*
+    The like state is still remembered locally so a person
+    cannot repeatedly like from the same browser.
+*/
+
+if (
+    localStorage.getItem("site_liked") === "true"
+) {
     likeButton.classList.add("liked");
 }
 
-likeButton.addEventListener("click", () => {
-    if (localStorage.getItem("site_liked") !== "true") {
-        currentLikes++;
-        likesEl.textContent = currentLikes;
-        localStorage.setItem("site_likes", currentLikes);
-        localStorage.setItem("site_liked", "true");
-        likeButton.classList.add("liked");
+likeButton.addEventListener(
+    "click",
+    () => {
+
+        if (
+            localStorage.getItem("site_liked") !== "true"
+        ) {
+
+            currentLikes++;
+
+            likesEl.textContent =
+                currentLikes;
+
+            localStorage.setItem(
+                "site_liked",
+                "true"
+            );
+
+            likeButton.classList.add(
+                "liked"
+            );
+        }
     }
-});
+);
 
 
 /* =========================================================
@@ -2181,11 +2259,14 @@ enterScreen.addEventListener(
 
         entered = true;
 
-        currentViews++;
-        viewsEl.textContent = currentViews;
-        localStorage.setItem("site_views", currentViews);
+        /*
+            The view count is intentionally NOT incremented
+            anymore because the displayed starting value is
+            the actual value you want: 3.
+        */
 
         try {
+
             audio.play();
 
             playButton.textContent =
@@ -2197,10 +2278,14 @@ enterScreen.addEventListener(
         } catch (e) {}
 
         const enterPfp =
-            document.getElementById("enterPfp");
+            document.getElementById(
+                "enterPfp"
+            );
 
         const profilePfp =
-            document.getElementById("profilePfp");
+            document.getElementById(
+                "profilePfp"
+            );
 
         const enterRect =
             enterPfp.getBoundingClientRect();
@@ -2233,33 +2318,42 @@ enterScreen.addEventListener(
             flyer
         );
 
+        /*
+            Fade the enter screen away while the real page
+            is already underneath it.
+        */
+
         enterScreen.style.opacity =
             "0";
 
+        /*
+            Start the PFP flight immediately.
+        */
+
+        requestAnimationFrame(() => {
+
+            requestAnimationFrame(() => {
+
+                flyer.style.left =
+                    profileRect.left + "px";
+
+                flyer.style.top =
+                    profileRect.top + "px";
+
+                flyer.style.width =
+                    profileRect.width + "px";
+
+                flyer.style.height =
+                    profileRect.height + "px";
+            });
+        });
+
+        /*
+            Remove the overlay after the animation.
+            No hidden-page delay means no black frame.
+        */
+
         setTimeout(() => {
-
-            flyer.style.left =
-                profileRect.left + "px";
-
-            flyer.style.top =
-                profileRect.top + "px";
-
-            flyer.style.width =
-                profileRect.width + "px";
-
-            flyer.style.height =
-                profileRect.height + "px";
-
-        }, 20);
-
-        setTimeout(() => {
-
-            mainPage.classList.add(
-                "site-visible"
-            );
-
-            profilePfp.style.opacity =
-                "1";
 
             flyer.remove();
 
@@ -2285,3 +2379,4 @@ setInterval(
 
 </body>
 </html>
+```
