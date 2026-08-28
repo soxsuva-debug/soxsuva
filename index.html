@@ -1688,7 +1688,7 @@ audio {
 const blossomContainer =
     document.getElementById("blossoms");
 
-for (let i = 0; i < 24; i++) {
+for (let i = 0; i < 35; i++) {
 
     const blossom =
         document.createElement("div");
@@ -1701,36 +1701,36 @@ for (let i = 0; i < 24; i++) {
 
     blossom.style.setProperty(
         "--fall-time",
-        (12 + Math.random() * 9) + "s"
+        (10 + Math.random() * 8) + "s"
     );
 
     blossom.style.setProperty(
         "--delay",
-        (-Math.random() * 15) + "s"
+        (-Math.random() * 20) + "s"
     );
 
     blossom.style.setProperty(
         "--x1",
-        (-30 + Math.random() * 60) + "px"
-    );
-
-    blossom.style.setProperty(
-        "--x2",
-        (-60 + Math.random() * 120) + "px"
-    );
-
-    blossom.style.setProperty(
-        "--x3",
         (-40 + Math.random() * 80) + "px"
     );
 
     blossom.style.setProperty(
-        "--x4",
+        "--x2",
         (-80 + Math.random() * 160) + "px"
     );
 
+    blossom.style.setProperty(
+        "--x3",
+        (-50 + Math.random() * 100) + "px"
+    );
+
+    blossom.style.setProperty(
+        "--x4",
+        (-100 + Math.random() * 200) + "px"
+    );
+
     const size =
-        5 + Math.random() * 5;
+        6 + Math.random() * 6;
 
     blossom.style.width =
         size + "px";
@@ -1929,15 +1929,30 @@ function updateActivity(data) {
             gameActivity.name ||
             "Playing a game";
 
+        let elapsedString = "";
+        if (gameActivity.timestamps && gameActivity.timestamps.start) {
+            const elapsedSeconds = Math.floor((Date.now() - gameActivity.timestamps.start) / 1000);
+            const hours = Math.floor(elapsedSeconds / 3600);
+            const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+            const seconds = elapsedSeconds % 60;
+            if (hours > 0) {
+                elapsedString = `Elapsed: ${hours}h ${minutes}m`;
+            } else if (minutes > 0) {
+                elapsedString = `Elapsed: ${minutes}m ${seconds}s`;
+            } else {
+                elapsedString = `Elapsed: ${seconds}s`;
+            }
+        }
+
         const details =
             gameActivity.details ||
             gameActivity.state ||
-            "";
+            elapsedString;
 
         activity.innerHTML = `
             <img class="activity-art" src="${assetUrl}" alt="">
             <div class="activity-info">
-                <div class="activity-type">Playing a game</div>
+                <div class="activity-type">playing on xbox:</div>
                 <div class="activity-title">${name}</div>
                 <div class="activity-details">${details}</div>
             </div>
@@ -2125,8 +2140,8 @@ const viewsEl = document.getElementById("views");
 const likesEl = document.getElementById("likes");
 const likeButton = document.getElementById("likeButton");
 
-let currentViews = parseInt(localStorage.getItem("site_views") || "1248", 10);
-let currentLikes = parseInt(localStorage.getItem("site_likes") || "342", 10);
+let currentViews = parseInt(localStorage.getItem("site_views") || "0", 10);
+let currentLikes = parseInt(localStorage.getItem("site_likes") || "0", 10);
 
 viewsEl.textContent = currentViews;
 likesEl.textContent = currentLikes;
