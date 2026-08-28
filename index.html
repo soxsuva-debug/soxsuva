@@ -1,5 +1,5 @@
-```html
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -84,6 +84,7 @@ body {
 }
 
 @keyframes blossomFall {
+
     0% {
         transform:
             translate3d(0,-30px,0)
@@ -130,6 +131,7 @@ body {
     justify-content: center;
 
     overflow: hidden;
+
     cursor: pointer;
 
     background: #000;
@@ -137,7 +139,7 @@ body {
     opacity: 1;
 
     transition:
-        opacity 900ms cubic-bezier(.16,1,.3,1);
+        opacity 1100ms cubic-bezier(.16,1,.3,1);
 }
 
 #enterBanner {
@@ -154,8 +156,8 @@ body {
     transform: scale(1.01);
 
     transition:
-        transform 1200ms cubic-bezier(.16,1,.3,1),
-        filter 1200ms ease;
+        transform 1400ms cubic-bezier(.16,1,.3,1),
+        filter 1400ms ease;
 }
 
 .enter-dark {
@@ -170,7 +172,7 @@ body {
         );
 
     transition:
-        opacity 1000ms ease;
+        opacity 1100ms ease;
 }
 
 .enter-vignette {
@@ -185,7 +187,7 @@ body {
         );
 
     transition:
-        opacity 1000ms ease;
+        opacity 1100ms ease;
 }
 
 .enter-content {
@@ -213,7 +215,7 @@ body {
 
     border-radius: 50%;
 
-    /* No white outer circle */
+    border: none;
 
     box-shadow:
         0 0 35px rgba(255,255,255,.24),
@@ -222,7 +224,7 @@ body {
     animation: pfpPulseAnimation 3s ease-in-out infinite;
 
     transition:
-        opacity 250ms ease;
+        opacity 300ms ease;
 }
 
 @keyframes pfpPulseAnimation {
@@ -256,7 +258,7 @@ body {
 
     transition:
         opacity 500ms ease,
-        transform 900ms cubic-bezier(.16,1,.3,1);
+        transform 800ms cubic-bezier(.16,1,.3,1);
 }
 
 .enter-text {
@@ -276,10 +278,11 @@ body {
 
     transition:
         opacity 400ms ease,
-        transform 700ms ease;
+        transform 500ms ease;
 }
 
 @keyframes enterPulse {
+
     0%,
     100% {
         opacity: .4;
@@ -315,14 +318,12 @@ body {
         transform;
 
     transition:
-        left 1100ms cubic-bezier(.16,1,.3,1),
-        top 1100ms cubic-bezier(.16,1,.3,1),
-        width 1100ms cubic-bezier(.16,1,.3,1),
-        height 1100ms cubic-bezier(.16,1,.3,1),
-        border-radius 1100ms cubic-bezier(.16,1,.3,1),
-        box-shadow 1100ms cubic-bezier(.16,1,.3,1);
-
-    transform: translateZ(0);
+        left 1150ms cubic-bezier(.16,1,.3,1),
+        top 1150ms cubic-bezier(.16,1,.3,1),
+        width 1150ms cubic-bezier(.16,1,.3,1),
+        height 1150ms cubic-bezier(.16,1,.3,1),
+        border-radius 1150ms cubic-bezier(.16,1,.3,1),
+        box-shadow 1150ms cubic-bezier(.16,1,.3,1);
 }
 
 /* =========================================================
@@ -339,19 +340,21 @@ body {
     padding: 30px 14px;
 
     opacity: 0;
+
     visibility: hidden;
 
     transition:
-        opacity 750ms cubic-bezier(.16,1,.3,1),
-        visibility 0s linear 750ms;
+        opacity 850ms cubic-bezier(.16,1,.3,1),
+        visibility 0s linear 850ms;
 }
 
 .page.site-visible {
     opacity: 1;
+
     visibility: visible;
 
     transition:
-        opacity 750ms cubic-bezier(.16,1,.3,1),
+        opacity 850ms cubic-bezier(.16,1,.3,1),
         visibility 0s;
 }
 
@@ -467,11 +470,11 @@ body {
 .discord-status {
     position: absolute;
 
-    right: 5px;
-    bottom: 5px;
+    right: 2px;
+    bottom: 2px;
 
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
 
     display: flex;
     align-items: center;
@@ -485,12 +488,27 @@ body {
         0 0 0 2px #111;
 
     opacity: 0;
+}
 
+.discord-status.loaded {
     animation:
         statusFadeIn
         1800ms
-        cubic-bezier(.16,1,.3,1)
+        ease
+        1000ms
         forwards;
+}
+
+@keyframes statusFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(.92);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .discord-status::after {
@@ -502,15 +520,6 @@ body {
     border-radius: 50%;
 
     background: #747f8d;
-
-    opacity: 0;
-
-    animation:
-        statusBlink
-        2600ms
-        ease-in-out
-        1800ms
-        infinite;
 }
 
 .discord-status.online::after {
@@ -539,56 +548,10 @@ body {
     border-radius: 3px;
 
     background: #111;
-
-    opacity: 0;
-
-    animation:
-        statusDetailFade
-        1800ms
-        ease
-        forwards;
 }
 
 .discord-status.offline::after {
     background: #747f8d;
-}
-
-@keyframes statusFadeIn {
-    0% {
-        opacity: 0;
-        transform: scale(.88);
-    }
-
-    60% {
-        opacity: .45;
-        transform: scale(.97);
-    }
-
-    100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@keyframes statusBlink {
-    0%,
-    100% {
-        opacity: .55;
-    }
-
-    50% {
-        opacity: 1;
-    }
-}
-
-@keyframes statusDetailFade {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
 }
 
 /* =========================================================
@@ -597,7 +560,9 @@ body {
 
 .name {
     font-size: 32px;
+
     font-weight: 900;
+
     letter-spacing: -1.5px;
 }
 
@@ -801,6 +766,7 @@ body {
 
 .stat-number {
     font-size: 16px;
+
     font-weight: 900;
 }
 
@@ -885,6 +851,7 @@ body {
 
 .activity-info {
     min-width: 0;
+
     flex: 1;
 }
 
@@ -964,11 +931,13 @@ body {
 
 .music-info {
     flex: 1;
+
     min-width: 0;
 }
 
 .music-title {
     font-size: 14px;
+
     font-weight: 900;
 }
 
@@ -982,6 +951,7 @@ body {
 
 .music-status {
     color: #777;
+
     font-size: 10px;
 }
 
@@ -1128,6 +1098,7 @@ audio {
 
 .social-name {
     font-size: 11px;
+
     font-weight: 800;
 }
 
@@ -1235,11 +1206,8 @@ audio {
     }
 
     .discord-status {
-        width: 24px;
-        height: 24px;
-
-        right: 3px;
-        bottom: 3px;
+        width: 22px;
+        height: 22px;
     }
 
     .discord-status::after {
@@ -1276,15 +1244,9 @@ audio {
     .blossom {
         animation: none;
     }
-
-    .discord-status,
-    .discord-status::after,
-    .discord-status::before {
-        animation: none;
-        opacity: 1;
-    }
 }
 </style>
+
 </head>
 
 <body>
@@ -1302,33 +1264,35 @@ audio {
 
 <div id="enterScreen">
 
+```
+<img
+    id="enterBanner"
+    src="banner.gif"
+    alt=""
+>
+
+<div class="enter-dark"></div>
+
+<div class="enter-vignette"></div>
+
+<div class="enter-content">
+
     <img
-        id="enterBanner"
-        src="banner.gif"
-        alt=""
+        id="enterPfp"
+        src="pfp.jpeg"
+        alt="soxsuva"
     >
 
-    <div class="enter-dark"></div>
-
-    <div class="enter-vignette"></div>
-
-    <div class="enter-content">
-
-        <img
-            id="enterPfp"
-            src="pfp.jpeg"
-            alt="soxsuva"
-        >
-
-        <div class="enter-name">
-            soxsuva
-        </div>
-
-        <div class="enter-text">
-            CLICK TO ENTER
-        </div>
-
+    <div class="enter-name">
+        soxsuva
     </div>
+
+    <div class="enter-text">
+        CLICK TO ENTER
+    </div>
+
+</div>
+```
 
 </div>
 
@@ -1343,343 +1307,398 @@ audio {
 
 <section class="card">
 
-    <div class="banner">
+```
+<div class="banner">
 
-        <img
-            id="mainBanner"
-            src="banner.gif"
-            alt=""
-        >
+    <img
+        id="mainBanner"
+        src="banner.gif"
+        alt=""
+    >
 
-        <div class="banner-shade"></div>
+    <div class="banner-shade"></div>
+
+</div>
+
+<div class="profile-area">
+
+    <div class="profile">
+
+        <div class="pfp-wrap">
+
+            <img
+                id="profilePfp"
+                src="pfp.jpeg"
+                alt="soxsuva"
+            >
+
+            <div
+                id="discordStatus"
+                class="discord-status offline"
+                title="Offline"
+            ></div>
+
+        </div>
+
+        <div class="name">
+            soxsuva
+        </div>
+
+        <div class="username">
+            @soxsuva
+        </div>
+
+        <div class="bio">
+            welcome to my profile
+        </div>
+
+        <div class="badges">
+
+            <div
+                class="badge"
+                title="Discord Nitro"
+            >
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path
+                        d="M5 4.5A2.5 2.5 0 0 1 7.5 2h9A2.5 2.5 0 0 1 19 4.5v15a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 19.5v-15Z"
+                        fill="white"
+                    />
+                    <path
+                        d="M8 7.5h8M8 11.5h8M8 15.5h5"
+                        stroke="#111"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                    />
+                </svg>
+            </div>
+
+            <div
+                class="badge"
+                title="Server Booster"
+            >
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path
+                        fill="white"
+                        d="M12 2.2c.6 0 1.1.3 1.4.8l2.1 3.5 4 .8c1.3.2 1.8 1.8.9 2.7l-2.8 2.8.6 4c.2 1.3-1.2 2.3-2.3 1.7L12 16.6l-3.9 1.9c-1.2.6-2.5-.4-2.3-1.7l.6-4-2.8-2.8c-.9-.9-.4-2.5.9-2.7l4-.8 2.1-3.5c.3-.5.8-.8 1.4-.8Z"
+                    />
+                </svg>
+            </div>
+
+            <div
+                class="badge"
+                title="Discord Quest"
+            >
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path
+                        d="M7 4h10a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3h-4l-3.5 3V17H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z"
+                        fill="white"
+                    />
+                    <path
+                        d="m8 11 2.3 2.2L16 7.8"
+                        stroke="#111"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
+            </div>
+
+            <div
+                class="badge"
+                title="Discord Orbs"
+            >
+                <svg viewBox="0 0 24 24" fill="none">
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="8.5"
+                        stroke="white"
+                        stroke-width="2"
+                    />
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="3"
+                        fill="white"
+                    />
+                    <circle
+                        cx="17.5"
+                        cy="6.5"
+                        r="1.5"
+                        fill="white"
+                    />
+                </svg>
+            </div>
+
+        </div>
 
     </div>
 
-    <div class="profile-area">
+    <!-- TIKTOK -->
 
-        <div class="profile">
+    <a
+        class="tiktok"
+        href="https://www.tiktok.com/@not.p1nk"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
 
-            <div class="pfp-wrap">
+        <div class="tiktok-top">
 
-                <img
-                    id="profilePfp"
-                    src="pfp.jpeg"
-                    alt="soxsuva"
+            <div class="tiktok-logo">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
                 >
+                    <path
+                        fill="white"
+                        d="M16 3c.5 2.2 1.7 3.5 4 3.8v3.1c-1.6-.1-3-.6-4.1-1.5v6.8c0 4-2.9 6.2-6.3 6.2C6.3 21.4 4 19.2 4 16c0-3.4 2.7-5.8 6-5.8.3 0 .7 0 1 .1v3.2c-.3-.1-.6-.2-1-.2-1.5 0-2.7 1.1-2.7 2.7 0 1.5 1.1 2.5 2.5 2.5 1.7 0 2.7-1.1 2.7-3V3z"
+                    />
+                </svg>
+
+            </div>
+
+            <div class="tiktok-info">
+
+                <div class="tiktok-title">
+                    TikTok
+                </div>
+
+                <div class="tiktok-handle">
+                    @not.p1nk
+                </div>
+
+            </div>
+
+            <div class="tiktok-arrow">
+                →
+            </div>
+
+        </div>
+
+        <div class="tiktok-stats">
+
+            <div class="stat">
+                <div class="stat-number">
+                    186
+                </div>
+
+                <div class="stat-label">
+                    Following
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-number">
+                    691
+                </div>
+
+                <div class="stat-label">
+                    Followers
+                </div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-number">
+                    4,398
+                </div>
+
+                <div class="stat-label">
+                    Likes
+                </div>
+            </div>
+
+        </div>
+
+    </a>
+
+    <!-- ACTIVITY -->
+
+    <div class="section-title">
+        Activity
+    </div>
+
+    <div
+        id="activity"
+        class="activity activity-empty"
+    >
+        Checking activity...
+    </div>
+
+    <!-- MUSIC -->
+
+    <div class="section-title">
+        Music
+    </div>
+
+    <div class="music">
+
+        <div class="music-top">
+
+            <img
+                class="album"
+                src="pfp.jpeg"
+                alt=""
+            >
+
+            <div class="music-info">
+
+                <div class="music-title">
+                    needy
+                </div>
+
+                <div class="music-artist">
+                    Ariana Grande
+                </div>
+
+            </div>
+
+            <div
+                class="music-status"
+                id="musicStatus"
+            >
+                Paused
+            </div>
+
+        </div>
+
+        <div class="music-player">
+
+            <button
+                class="play-button"
+                id="playButton"
+                type="button"
+            >
+                ▶
+            </button>
+
+            <div class="progress-area">
 
                 <div
-                    id="discordStatus"
-                    class="discord-status offline"
-                    title="Offline"
-                ></div>
-
-            </div>
-
-            <div class="name">
-                soxsuva
-            </div>
-
-            <div class="username">
-                @soxsuva
-            </div>
-
-            <div class="bio">
-                welcome to my profile
-            </div>
-
-            <div class="badges">
-
-                <div class="badge" title="Discord Nitro">
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <path
-                            d="M5 4.5A2.5 2.5 0 0 1 7.5 2h9A2.5 2.5 0 0 1 19 4.5v15a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 5 19.5v-15Z"
-                            fill="white"
-                        />
-                        <path
-                            d="M8 7.5h8M8 11.5h8M8 15.5h5"
-                            stroke="#111"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                        />
-                    </svg>
+                    class="progress"
+                    id="progress"
+                >
+                    <div
+                        class="progress-fill"
+                        id="progressFill"
+                    ></div>
                 </div>
 
-                <div class="badge" title="Server Booster">
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <path
-                            fill="white"
-                            d="M12 2.2c.6 0 1.1.3 1.4.8l2.1 3.5 4 .8c1.3.2 1.8 1.8.9 2.7l-2.8 2.8.6 4c.2 1.3-1.2 2.3-2.3 1.7L12 16.6l-3.9 1.9c-1.2.6-2.5-.4-2.3-1.7l.6-4-2.8-2.8c-.9-.9-.4-2.5.9-2.7l4-.8 2.1-3.5c.3-.5.8-.8 1.4-.8Z"
-                        />
-                    </svg>
-                </div>
+                <div class="time">
 
-                <div class="badge" title="Discord Quest">
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <path
-                            d="M7 4h10a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3h-4l-3.5 3V17H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3Z"
-                            fill="white"
-                        />
-                        <path
-                            d="m8 11 2.3 2.2L16 7.8"
-                            stroke="#111"
-                            stroke-width="1.8"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                    </svg>
-                </div>
+                    <span id="currentTime">
+                        0:00
+                    </span>
 
-                <div class="badge" title="Discord Orbs">
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <circle
-                            cx="12"
-                            cy="12"
-                            r="8.5"
-                            stroke="white"
-                            stroke-width="2"
-                        />
-                        <circle
-                            cx="12"
-                            cy="12"
-                            r="3"
-                            fill="white"
-                        />
-                        <circle
-                            cx="17.5"
-                            cy="6.5"
-                            r="1.5"
-                            fill="white"
-                        />
-                    </svg>
+                    <span id="duration">
+                        0:00
+                    </span>
+
                 </div>
 
             </div>
 
         </div>
 
+        <audio
+            id="audio"
+            src="needy.mp3"
+            preload="metadata"
+            loop
+        ></audio>
+
+    </div>
+
+    <!-- SOCIALS -->
+
+    <div class="section-title">
+        Socials
+    </div>
+
+    <div class="socials">
+
         <a
-            class="tiktok"
-            href="https://www.tiktok.com/@not.p1nk"
+            class="social"
+            href="https://www.roblox.com/users/2807349866/profile"
             target="_blank"
             rel="noopener noreferrer"
         >
-
-            <div class="tiktok-top">
-
-                <div class="tiktok-logo">
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <path
-                            fill="white"
-                            d="M16 3c.5 2.2 1.7 3.5 4 3.8v3.1c-1.6-.1-3-.6-4.1-1.5v6.8c0 4-2.9 6.2-6.3 6.2C6.3 21.4 4 19.2 4 16c0-3.4 2.7-5.8 6-5.8.3 0 .7 0 1 .1v3.2c-.3-.1-.6-.2-1-.2-1.5 0-2.7 1.1-2.7 2.7 0 1.5 1.1 2.5 2.5 2.5 1.7 0 2.7-1.1 2.7-3V3z"
-                        />
-                    </svg>
-                </div>
-
-                <div class="tiktok-info">
-
-                    <div class="tiktok-title">
-                        TikTok
-                    </div>
-
-                    <div class="tiktok-handle">
-                        @not.p1nk
-                    </div>
-
-                </div>
-
-                <div class="tiktok-arrow">
-                    →
-                </div>
-
+            <div class="social-name">
+                Roblox
             </div>
 
-            <div class="tiktok-stats">
-
-                <div class="stat">
-                    <div class="stat-number">186</div>
-                    <div class="stat-label">Following</div>
-                </div>
-
-                <div class="stat">
-                    <div class="stat-number">691</div>
-                    <div class="stat-label">Followers</div>
-                </div>
-
-                <div class="stat">
-                    <div class="stat-number">4,398</div>
-                    <div class="stat-label">Likes</div>
-                </div>
-
+            <div class="social-user">
+                serdemsivridagg
             </div>
-
         </a>
 
-        <div class="section-title">
-            Activity
-        </div>
-
-        <div
-            id="activity"
-            class="activity activity-empty"
+        <a
+            class="social"
+            href="https://open.spotify.com/user/soxsuva"
+            target="_blank"
+            rel="noopener noreferrer"
         >
-            Checking activity...
-        </div>
-
-        <div class="section-title">
-            Music
-        </div>
-
-        <div class="music">
-
-            <div class="music-top">
-
-                <img
-                    class="album"
-                    src="pfp.jpeg"
-                    alt=""
-                >
-
-                <div class="music-info">
-
-                    <div class="music-title">
-                        needy
-                    </div>
-
-                    <div class="music-artist">
-                        Ariana Grande
-                    </div>
-
-                </div>
-
-                <div
-                    class="music-status"
-                    id="musicStatus"
-                >
-                    Paused
-                </div>
-
+            <div class="social-name">
+                Spotify
             </div>
 
-            <div class="music-player">
+            <div class="social-user">
+                soxsuva
+            </div>
+        </a>
 
-                <button
-                    class="play-button"
-                    id="playButton"
-                    type="button"
-                >
-                    ▶
-                </button>
-
-                <div class="progress-area">
-
-                    <div
-                        class="progress"
-                        id="progress"
-                    >
-                        <div
-                            class="progress-fill"
-                            id="progressFill"
-                        ></div>
-                    </div>
-
-                    <div class="time">
-
-                        <span id="currentTime">
-                            0:00
-                        </span>
-
-                        <span id="duration">
-                            0:00
-                        </span>
-
-                    </div>
-
-                </div>
-
+        <a
+            class="social"
+            href="#"
+            onclick="return false;"
+        >
+            <div class="social-name">
+                Xbox
             </div>
 
-            <audio
-                id="audio"
-                src="needy.mp3"
-                preload="metadata"
-                loop
-            ></audio>
-
-        </div>
-
-        <div class="section-title">
-            Socials
-        </div>
-
-        <div class="socials">
-
-            <a
-                class="social"
-                href="https://www.roblox.com/users/2807349866/profile"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                <div class="social-name">
-                    Roblox
-                </div>
-
-                <div class="social-user">
-                    serdemsivridagg
-                </div>
-            </a>
-
-            <a
-                class="social"
-                href="https://open.spotify.com/user/soxsuva"
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                <div class="social-name">
-                    Spotify
-                </div>
-
-                <div class="social-user">
-                    soxsuva
-                </div>
-            </a>
-
-            <a
-                class="social"
-                href="#"
-                onclick="return false;"
-            >
-                <div class="social-name">
-                    Xbox
-                </div>
-
-                <div class="social-user">
-                    soxsuva
-                </div>
-            </a>
-
-        </div>
-
-        <div class="counters">
-
-            <div class="counter">
-                👁
-                <strong id="views">0</strong>
-                views
+            <div class="social-user">
+                soxsuva
             </div>
-
-            <button
-                class="counter like-button"
-                id="likeButton"
-                type="button"
-            >
-                ♥
-                <strong id="likes">0</strong>
-                likes
-            </button>
-
-        </div>
+        </a>
 
     </div>
+
+    <!-- COUNTERS -->
+
+    <div class="counters">
+
+        <div class="counter">
+
+            👁
+
+            <strong id="views">
+                0
+            </strong>
+
+            views
+
+        </div>
+
+        <button
+            class="counter like-button"
+            id="likeButton"
+            type="button"
+        >
+
+            ♥
+            <strong id="likes">
+                0
+            </strong>
+
+            likes
+
+        </button>
+
+    </div>
+
+</div>
+```
 
 </section>
 
@@ -1791,30 +1810,10 @@ async function updateDiscord() {
                 "discordStatus"
             );
 
-        /*
-         * Restart the fade animation whenever
-         * Discord status changes.
-         */
-        const previousStatus =
-            statusElement.dataset.status;
-
         statusElement.className =
             "discord-status " +
-            status;
-
-        if (previousStatus !== status) {
-
-            statusElement.dataset.status =
-                status;
-
-            statusElement.style.animation =
-                "none";
-
-            statusElement.offsetHeight;
-
-            statusElement.style.animation =
-                "statusFadeIn 1800ms cubic-bezier(.16,1,.3,1) forwards";
-        }
+            status +
+            " loaded";
 
         statusElement.title =
             status === "dnd"
@@ -1832,7 +1831,7 @@ async function updateDiscord() {
             );
 
         statusElement.className =
-            "discord-status offline";
+            "discord-status offline loaded";
 
         statusElement.title =
             "Offline";
@@ -1917,34 +1916,32 @@ function updateActivity(data) {
             gameActivity.assets &&
             gameActivity.assets.large_image
         ) {
-
             const imgId =
                 gameActivity.assets.large_image;
 
             if (
-                imgId.startsWith("spotify:")
+                imgId.startsWith(
+                    "spotify:"
+                )
             ) {
-
                 assetUrl =
                     "https://i.scdn.co/image/" +
                     imgId.replace(
                         "spotify:",
                         ""
                     );
-
             } else if (
-                imgId.startsWith("mp:external/")
+                imgId.startsWith(
+                    "mp:external/"
+                )
             ) {
-
                 assetUrl =
                     "https://media.discordapp.net/external/" +
                     imgId.replace(
                         "mp:external/",
                         ""
                     );
-
             } else {
-
                 assetUrl =
                     "https://cdn.discordapp.com/app-assets/" +
                     gameActivity.application_id +
@@ -1964,11 +1961,10 @@ function updateActivity(data) {
             gameActivity.timestamps &&
             gameActivity.timestamps.start
         ) {
-
             const elapsedSeconds =
                 Math.floor(
                     (Date.now() -
-                    gameActivity.timestamps.start) /
+                        gameActivity.timestamps.start) /
                     1000
                 );
 
@@ -2026,9 +2022,13 @@ function updateActivity(data) {
 
         let emojiHtml = "";
 
-        if (customStatus.emoji) {
+        if (
+            customStatus.emoji
+        ) {
 
-            if (customStatus.emoji.id) {
+            if (
+                customStatus.emoji.id
+            ) {
 
                 const ext =
                     customStatus.emoji.animated
@@ -2051,9 +2051,7 @@ function updateActivity(data) {
         activity.innerHTML = `
             <div style="flex:1;min-width:0;">
                 <div class="activity-type">Custom Status</div>
-                <div class="activity-title" style="font-weight:normal;">
-                    ${emojiHtml}${customStatus.state}
-                </div>
+                <div class="activity-title" style="font-weight:normal;">${emojiHtml}${customStatus.state}</div>
             </div>
         `;
 
@@ -2316,15 +2314,6 @@ enterScreen.addEventListener(
         const enterRect =
             enterPfp.getBoundingClientRect();
 
-        /*
-         * Show the main page BEFORE calculating
-         * the destination so the PFP has its
-         * real final position.
-         */
-        mainPage.classList.add(
-            "site-visible"
-        );
-
         const profileRect =
             profilePfp.getBoundingClientRect();
 
@@ -2349,25 +2338,26 @@ enterScreen.addEventListener(
         flyer.style.height =
             enterRect.height + "px";
 
+        flyer.style.transform =
+            "translate3d(0,0,0)";
+
         document.body.appendChild(
             flyer
         );
 
-        /*
-         * Force browser to register the
-         * starting position before moving it.
-         */
-        flyer.getBoundingClientRect();
-
-        /*
-         * Fade the enter screen without ever
-         * exposing a black frame.
-         */
         enterScreen.style.opacity =
             "0";
 
-        enterScreen.style.pointerEvents =
-            "none";
+        const enterContent =
+            document.querySelector(
+                ".enter-content"
+            );
+
+        enterContent.style.opacity =
+            "0";
+
+        enterContent.style.transform =
+            "translate3d(0,-15px,0) scale(.97)";
 
         requestAnimationFrame(() => {
 
@@ -2386,18 +2376,27 @@ enterScreen.addEventListener(
                     profileRect.height + "px";
 
             });
+
         });
 
         setTimeout(() => {
 
+            mainPage.classList.add(
+                "site-visible"
+            );
+
             profilePfp.style.opacity =
                 "1";
+
+        }, 600);
+
+        setTimeout(() => {
 
             flyer.remove();
 
             enterScreen.remove();
 
-        }, 1150);
+        }, 1200);
     }
 );
 
@@ -2417,4 +2416,3 @@ setInterval(
 
 </body>
 </html>
-```
