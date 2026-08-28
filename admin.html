@@ -1,1 +1,1057 @@
+<!DOCTYPE html>
 
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>soxsuva • Admin</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at top, #171717 0%, #050505 45%, #000 100%);
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 40px 16px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* LOGIN */
+
+.login-screen {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-card,
+.admin-card {
+    width: min(560px, 100%);
+    background: rgba(12,12,16,.86);
+    border: 1px solid rgba(255,255,255,.11);
+    border-radius: 24px;
+    padding: 30px;
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.7),
+        inset 0 1px rgba(255,255,255,.04);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+}
+
+.login-card {
+    text-align: center;
+}
+
+.logo {
+    width: 76px;
+    height: 76px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.15);
+    margin-bottom: 18px;
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.subtitle {
+    margin-top: 8px;
+    color: #858585;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+input {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px 16px;
+
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 12px;
+
+    outline: none;
+
+    background: rgba(255,255,255,.045);
+    color: white;
+
+    font-size: 14px;
+
+    transition:
+        border-color .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+input:focus {
+    border-color: rgba(255,255,255,.4);
+    background: rgba(255,255,255,.07);
+    box-shadow: 0 0 20px rgba(255,255,255,.05);
+}
+
+button {
+    width: 100%;
+    margin-top: 12px;
+    padding: 14px 16px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: white;
+    color: black;
+
+    font-size: 13px;
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s ease,
+        opacity .2s ease,
+        box-shadow .2s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    opacity: .9;
+    box-shadow: 0 10px 30px rgba(255,255,255,.08);
+}
+
+button.secondary {
+    background: rgba(255,255,255,.07);
+    color: white;
+    border: 1px solid rgba(255,255,255,.1);
+}
+
+.error {
+    min-height: 18px;
+    margin-top: 12px;
+    color: #ed4245;
+    font-size: 12px;
+}
+
+/* ADMIN */
+
+.admin-wrapper {
+    max-width: 900px;
+    margin: auto;
+}
+
+.admin-card {
+    margin-bottom: 25px;
+}
+
+.admin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.admin-header h1 {
+    font-size: 26px;
+}
+
+.logout {
+    width: auto;
+    margin: 0;
+    padding: 10px 15px;
+    font-size: 12px;
+}
+
+.section {
+    padding: 22px 0;
+    border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.section:first-of-type {
+    border-top: 0;
+}
+
+.section-title {
+    font-size: 15px;
+    font-weight: 900;
+    margin-bottom: 5px;
+}
+
+.section-description {
+    color: #777;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+label {
+    display: block;
+    margin-bottom: 7px;
+
+    color: #888;
+
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+.webhook-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+}
+
+.webhook-row input {
+    margin-top: 0;
+}
+
+.webhook-row button {
+    width: auto;
+    margin-top: 0;
+    min-width: 115px;
+}
+
+.switch-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+
+    padding: 15px;
+
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 14px;
+
+    background: rgba(255,255,255,.025);
+}
+
+.switch-text strong {
+    display: block;
+    font-size: 13px;
+}
+
+.switch-text span {
+    display: block;
+    margin-top: 4px;
+    color: #777;
+    font-size: 11px;
+}
+
+/* SWITCH */
+
+.switch {
+    position: relative;
+    width: 48px;
+    height: 27px;
+    flex-shrink: 0;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    inset: 0;
+
+    background: #333;
+    border-radius: 30px;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+.slider:before {
+    content: "";
+
+    position: absolute;
+
+    width: 21px;
+    height: 21px;
+
+    left: 3px;
+    top: 3px;
+
+    border-radius: 50%;
+    background: white;
+
+    transition: .2s ease;
+}
+
+.switch input:checked + .slider {
+    background: #23a55a;
+}
+
+.switch input:checked + .slider:before {
+    transform: translateX(21px);
+}
+
+/* STATUS */
+
+.status {
+    min-height: 18px;
+    margin-top: 13px;
+
+    text-align: center;
+
+    font-size: 12px;
+}
+
+.success {
+    color: #23a55a;
+}
+
+.failure {
+    color: #ed4245;
+}
+
+.info {
+    color: #aaa;
+}
+
+/* TEST */
+
+.test-button {
+    margin-top: 15px;
+}
+
+/* ENTER SETTINGS */
+
+.enter-preview {
+    padding: 18px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+.preview-title {
+    font-weight: 900;
+    font-size: 13px;
+}
+
+.preview-text {
+    margin-top: 5px;
+    color: #777;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+/* FOOTER */
+
+.footer {
+    text-align: center;
+    color: #555;
+    font-size: 11px;
+    padding: 10px 0 25px;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 18px 12px;
+    }
+
+    .login-screen {
+        min-height: calc(100vh - 36px);
+    }
+
+    .login-card,
+    .admin-card {
+        padding: 22px;
+        border-radius: 20px;
+    }
+
+    .webhook-row {
+        grid-template-columns: 1fr;
+    }
+
+    .webhook-row button {
+        width: 100%;
+    }
+
+    .admin-header {
+        align-items: flex-start;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- =========================
+     LOGIN
+========================= -->
+
+<div id="loginScreen" class="login-screen">
+
+```
+<div class="login-card">
+
+    <img
+        src="pfp.jpeg"
+        class="logo"
+        alt="soxsuva"
+    >
+
+    <h1>Admin Panel</h1>
+
+    <p class="subtitle">
+        Private controls for the soxsuva website.
+    </p>
+
+    <input
+        id="passwordInput"
+        type="password"
+        placeholder="Enter admin password"
+        autocomplete="off"
+    >
+
+    <button id="loginButton">
+        Enter Admin Panel
+    </button>
+
+    <div id="loginError" class="error"></div>
+
+</div>
+```
+
+</div>
+
+<!-- =========================
+     ADMIN PANEL
+========================= -->
+
+<div id="adminPanel" class="admin-wrapper hidden">
+
+```
+<div class="admin-card">
+
+    <div class="admin-header">
+
+        <div>
+            <h1>soxsuva Admin</h1>
+
+            <p class="subtitle">
+                Website controls & visitor notifications
+            </p>
+        </div>
+
+        <button
+            id="logoutButton"
+            class="secondary logout"
+        >
+            Logout
+        </button>
+
+    </div>
+
+
+    <!-- SITE ENTER NOTIFIER -->
+
+    <div class="section">
+
+        <div class="section-title">
+            🔔 Site Enter Notifier
+        </div>
+
+        <div class="section-description">
+            Sends a Discord notification when somebody enters
+            your website.
+        </div>
+
+        <label for="webhookInput">
+            Discord Webhook
+        </label>
+
+        <div class="webhook-row">
+
+            <input
+                id="webhookInput"
+                type="password"
+                placeholder="Paste your new Discord webhook"
+                autocomplete="off"
+            >
+
+            <button id="saveWebhook">
+                Save
+            </button>
+
+        </div>
+
+
+        <div class="switch-row" style="margin-top:15px;">
+
+            <div class="switch-text">
+
+                <strong>
+                    Visitor Notifications
+                </strong>
+
+                <span>
+                    Send an alert whenever someone enters the site.
+                </span>
+
+            </div>
+
+            <label class="switch">
+
+                <input
+                    type="checkbox"
+                    id="notificationsToggle"
+                >
+
+                <span class="slider"></span>
+
+            </label>
+
+        </div>
+
+
+        <button
+            id="testWebhook"
+            class="secondary test-button"
+        >
+            Send Test Notification
+        </button>
+
+        <div
+            id="webhookStatus"
+            class="status"
+        ></div>
+
+    </div>
+
+
+    <!-- SITE ENTER INFORMATION -->
+
+    <div class="section">
+
+        <div class="section-title">
+            🚪 Site Enter Event
+        </div>
+
+        <div class="section-description">
+            This is the event your main website should trigger
+            after a visitor clicks "Click to Enter".
+        </div>
+
+        <div class="enter-preview">
+
+            <div class="preview-title">
+                Visitor enters soxsuva
+            </div>
+
+            <div class="preview-text">
+                Discord receives a purple embed containing the
+                site-enter event and timestamp.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- SETTINGS -->
+
+    <div class="section">
+
+        <div class="section-title">
+            ⚙️ Admin Settings
+        </div>
+
+        <div class="section-description">
+            Your notifier settings are saved in this browser.
+        </div>
+
+        <button
+            id="clearSettings"
+            class="secondary"
+        >
+            Reset Notifier Settings
+        </button>
+
+    </div>
+
+</div>
+
+<div class="footer">
+    soxsuva • private administration
+</div>
+```
+
+</div>
+
+<script>
+/*
+    ==========================================
+    SOXSUVA ADMIN PANEL
+    ==========================================
+*/
+
+/*
+    IMPORTANT:
+
+    This password is only client-side protection.
+    It is NOT a secure backend authentication system.
+
+    For a truly private admin system, authentication
+    should eventually be moved to a server/backend.
+*/
+
+const ADMIN_PASSWORD = "Bullhorn79!";
+
+
+const loginScreen =
+    document.getElementById("loginScreen");
+
+const adminPanel =
+    document.getElementById("adminPanel");
+
+const passwordInput =
+    document.getElementById("passwordInput");
+
+const loginButton =
+    document.getElementById("loginButton");
+
+const loginError =
+    document.getElementById("loginError");
+
+const logoutButton =
+    document.getElementById("logoutButton");
+
+const webhookInput =
+    document.getElementById("webhookInput");
+
+const saveWebhook =
+    document.getElementById("saveWebhook");
+
+const testWebhook =
+    document.getElementById("testWebhook");
+
+const notificationsToggle =
+    document.getElementById("notificationsToggle");
+
+const webhookStatus =
+    document.getElementById("webhookStatus");
+
+const clearSettings =
+    document.getElementById("clearSettings");
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function showAdmin() {
+
+    loginScreen.classList.add("hidden");
+    adminPanel.classList.remove("hidden");
+
+    loadSettings();
+}
+
+function showLogin() {
+
+    adminPanel.classList.add("hidden");
+    loginScreen.classList.remove("hidden");
+
+    passwordInput.value = "";
+}
+
+function login() {
+
+    if (passwordInput.value === ADMIN_PASSWORD) {
+
+        sessionStorage.setItem(
+            "soxsuva_admin_logged_in",
+            "true"
+        );
+
+        loginError.textContent = "";
+
+        showAdmin();
+
+    } else {
+
+        loginError.textContent =
+            "Incorrect admin password.";
+
+        passwordInput.value = "";
+        passwordInput.focus();
+    }
+}
+
+loginButton.addEventListener(
+    "click",
+    login
+);
+
+passwordInput.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (event.key === "Enter") {
+            login();
+        }
+
+    }
+);
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+logoutButton.addEventListener(
+    "click",
+    function() {
+
+        sessionStorage.removeItem(
+            "soxsuva_admin_logged_in"
+        );
+
+        showLogin();
+
+    }
+);
+
+
+/* =========================
+   LOAD SETTINGS
+========================= */
+
+function loadSettings() {
+
+    const savedWebhook =
+        localStorage.getItem(
+            "soxsuva_webhook"
+        );
+
+    const notifications =
+        localStorage.getItem(
+            "soxsuva_notifications"
+        );
+
+    if (savedWebhook) {
+        webhookInput.value = savedWebhook;
+    }
+
+    notificationsToggle.checked =
+        notifications === "true";
+}
+
+
+/* =========================
+   SAVE WEBHOOK
+========================= */
+
+saveWebhook.addEventListener(
+    "click",
+    function() {
+
+        const webhook =
+            webhookInput.value.trim();
+
+        if (!webhook) {
+
+            showStatus(
+                "Please enter a webhook URL.",
+                "failure"
+            );
+
+            return;
+        }
+
+        if (
+            !webhook.startsWith(
+                "https://discord.com/api/webhooks/"
+            )
+        ) {
+
+            showStatus(
+                "That doesn't look like a Discord webhook.",
+                "failure"
+            );
+
+            return;
+        }
+
+        localStorage.setItem(
+            "soxsuva_webhook",
+            webhook
+        );
+
+        showStatus(
+            "Webhook saved successfully.",
+            "success"
+        );
+
+    }
+);
+
+
+/* =========================
+   NOTIFICATIONS TOGGLE
+========================= */
+
+notificationsToggle.addEventListener(
+    "change",
+    function() {
+
+        localStorage.setItem(
+            "soxsuva_notifications",
+            this.checked
+                ? "true"
+                : "false"
+        );
+
+        showStatus(
+            this.checked
+                ? "Visitor notifications enabled."
+                : "Visitor notifications disabled.",
+            "success"
+        );
+
+    }
+);
+
+
+/* =========================
+   SEND DISCORD WEBHOOK
+========================= */
+
+async function sendWebhook(
+    isTest = false
+) {
+
+    const webhook =
+        webhookInput.value.trim();
+
+    if (!webhook) {
+
+        showStatus(
+            "Enter and save a webhook first.",
+            "failure"
+        );
+
+        return false;
+    }
+
+
+    const embed = {
+
+        title: isTest
+            ? "🔮 soxsuva • Admin Test"
+            : "👤 soxsuva • Site Enter",
+
+        description: isTest
+            ? "The site-enter notifier is working correctly."
+            : "Someone just entered the soxsuva website.",
+
+        color: 8388736,
+
+        fields: [
+
+            {
+                name: "⚡ Event",
+                value: isTest
+                    ? "Test notification"
+                    : "Visitor entered the site",
+                inline: true
+            },
+
+            {
+                name: "🕒 Time",
+                value: new Date().toLocaleString(),
+                inline: true
+            }
+
+        ],
+
+        footer: {
+            text: "soxsuva website"
+        },
+
+        timestamp:
+            new Date().toISOString()
+    };
+
+
+    try {
+
+        showStatus(
+            "Sending notification...",
+            "info"
+        );
+
+
+        const response =
+            await fetch(
+                webhook,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        embeds: [embed]
+                    })
+                }
+            );
+
+
+        if (!response.ok) {
+            throw new Error(
+                "Webhook request failed"
+            );
+        }
+
+
+        showStatus(
+            isTest
+                ? "Test notification sent!"
+                : "Site-enter notification sent!",
+            "success"
+        );
+
+        return true;
+
+    } catch (error) {
+
+        console.error(error);
+
+        showStatus(
+            "Could not send notification. Check the webhook.",
+            "failure"
+        );
+
+        return false;
+    }
+}
+
+
+/* =========================
+   TEST BUTTON
+========================= */
+
+testWebhook.addEventListener(
+    "click",
+    function() {
+
+        sendWebhook(true);
+
+    }
+);
+
+
+/* =========================
+   STATUS MESSAGE
+========================= */
+
+function showStatus(
+    message,
+    type
+) {
+
+    webhookStatus.textContent =
+        message;
+
+    webhookStatus.className =
+        "status " + type;
+
+    clearTimeout(
+        window.statusTimer
+    );
+
+    window.statusTimer =
+        setTimeout(
+            function() {
+
+                webhookStatus.textContent =
+                    "";
+
+            },
+            4500
+        );
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+clearSettings.addEventListener(
+    "click",
+    function() {
+
+        const confirmed =
+            confirm(
+                "Reset your webhook and notifier settings?"
+            );
+
+        if (!confirmed) return;
+
+        localStorage.removeItem(
+            "soxsuva_webhook"
+        );
+
+        localStorage.removeItem(
+            "soxsuva_notifications"
+        );
+
+        webhookInput.value = "";
+
+        notificationsToggle.checked =
+            false;
+
+        showStatus(
+            "Notifier settings reset.",
+            "success"
+        );
+
+    }
+);
+
+
+/* =========================
+   CHECK LOGIN
+========================= */
+
+if (
+    sessionStorage.getItem(
+        "soxsuva_admin_logged_in"
+    ) === "true"
+) {
+
+    showAdmin();
+
+}
+</script>
+
+</body>
+</html>
