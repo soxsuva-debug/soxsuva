@@ -1869,7 +1869,7 @@ function updateActivity(data) {
             <div class="activity-info">
                 <div class="activity-type">Listening to Spotify</div>
                 <div class="activity-title">${song}</div>
-                <div class="activity-details">${artist}</div>
+                <div class="activity-details">by ${artist}</div>
             </div>
         `;
 
@@ -1878,18 +1878,19 @@ function updateActivity(data) {
         activity.className =
             "activity";
 
-        const gameName =
-            gameActivity.name;
-
         const details =
             gameActivity.details ||
+            gameActivity.name;
+
+        const state =
             gameActivity.state ||
             "Playing a game";
 
         activity.innerHTML = `
-            <div class="activity-info" style="padding-left: 4px;">
-                <div class="activity-type">Playing ${gameName}</div>
-                <div class="activity-title">${details}</div>
+            <div class="activity-info" style="padding-left: 6px;">
+                <div class="activity-type">Playing a game</div>
+                <div class="activity-title">${gameActivity.name}</div>
+                <div class="activity-details">${details} • ${state}</div>
             </div>
         `;
 
@@ -1903,8 +1904,8 @@ function updateActivity(data) {
             "Custom Status";
 
         activity.innerHTML = `
-            <div class="activity-info" style="padding-left: 4px;">
-                <div class="activity-type">Status</div>
+            <div class="activity-info" style="padding-left: 6px;">
+                <div class="activity-type">Custom Status</div>
                 <div class="activity-title">${text}</div>
             </div>
         `;
@@ -1919,297 +1920,152 @@ function updateActivity(data) {
     }
 }
 
+updateDiscord();
+setInterval(updateDiscord, 15000);
+
 
 /* =========================================================
-   MUSIC PLAYER
+   MUSIC PLAYER & LOGIC
 ========================================================= */
 
-const audio =
-    document.getElementById("audio");
-
-const playButton =
-    document.getElementById("playButton");
-
-const musicStatus =
-    document.getElementById("musicStatus");
-
-const progress =
-    document.getElementById("progress");
-
-const progressFill =
-    document.getElementById("progressFill");
-
-const currentTimeEl =
-    document.getElementById("currentTime");
-
-const durationEl =
-    document.getElementById("duration");
+const audio = document.getElementById("audio");
+const playButton = document.getElementById("playButton");
+const musicStatus = document.getElementById("musicStatus");
+const progress = document.getElementById("progress");
+const progressFill = document.getElementById("progressFill");
+const currentTimeEl = document.getElementById("currentTime");
+const durationEl = document.getElementById("duration");
 
 function formatTime(seconds) {
-
-    const mins =
-        Math.floor(seconds / 60);
-
-    const secs =
-        Math.floor(seconds % 60);
-
-    return mins + ":" + (secs < 10 ? "0" : "") + secs;
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 }
 
 audio.addEventListener("loadedmetadata", () => {
-
-    durationEl.textContent =
-        formatTime(audio.duration);
+    durationEl.textContent = formatTime(audio.duration);
 });
 
 playButton.addEventListener("click", () => {
-
     if (audio.paused) {
-
         audio.play();
-
         playButton.textContent = "❚❚";
-
         musicStatus.textContent = "Playing";
-
     } else {
-
         audio.pause();
-
         playButton.textContent = "▶";
-
         musicStatus.textContent = "Paused";
     }
 });
 
 audio.addEventListener("timeupdate", () => {
-
     if (audio.duration) {
-
-        const percent =
-            (audio.currentTime / audio.duration) * 100;
-
-        progressFill.style.width =
-            percent + "%";
-
-        currentTimeEl.textContent =
-            formatTime(audio.currentTime);
+        const percentage = (audio.currentTime / audio.duration) * 100;
+        progressFill.style.width = percentage + "%";
+        currentTimeEl.textContent = formatTime(audio.currentTime);
     }
 });
 
 progress.addEventListener("click", (e) => {
-
-    const rect =
-        progress.getBoundingClientRect();
-
-    const pos =
-        (e.clientX - rect.left) / rect.width;
-
+    const rect = progress.getBoundingClientRect();
+    const clickPosition = (e.clientX - rect.left) / rect.width;
     if (audio.duration) {
-
-        audio.currentTime =
-            pos * audio.duration;
+        audio.currentTime = clickPosition * audio.duration;
     }
 });
 
 
 /* =========================================================
-   VIEWS & LIKES COUNTER
+   COUNTERS (VIEWS & LIKES)
 ========================================================= */
 
-const NAMESPACE =
-    "soxsuva-site";
+const viewsEl = document.getElementById("views");
+const likesEl = document.getElementById("likes");
+const likeButton = document.getElementById("likeButton");
 
-async function updateViews() {
+let views = parseInt(localStorage.getItem("site_views")) || 120;
+let likes = parseInt(localStorage.getItem("site_likes")) || 45;
+let hasLiked = localStorage.getItem("has_liked") === "true";
 
-    try {
-
-        const res =
-            await fetch(
-                "https://api.countapi.xyz/hit/" +
-                NAMESPACE +
-                "/visits"
-            );
-
-        const data =
-            await res.json();
-
-        document.getElementById("views").textContent =
-            data.value;
-
-    } catch (e) {
-
-        document.getElementById("views").textContent =
-            "1";
-    }
-}
-
-async function getLikes() {
-
-    try {
-
-        const res =
-            await fetch(
-                "https://api.countapi.xyz/get/" +
-                NAMESPACE +
-                "/likes"
-            );
-
-        const data =
-            await res.json();
-
-        document.getElementById("likes").textContent =
-            data.value;
-
-    } catch (e) {
-
-        document.getElementById("likes").textContent =
-            "0";
-    }
-}
-
-const likeButton =
-    document.getElementById("likeButton");
-
-likeButton.addEventListener("click", async () => {
-
-    if (
-        localStorage.getItem("liked_" + NAMESPACE)
-    ) {
-        return;
-    }
-
-    try {
-
-        const res =
-            await fetch(
-                "https://api.countapi.xyz/hit/" +
-                NAMESPACE +
-                "/likes"
-            );
-
-        const data =
-            await res.json();
-
-        document.getElementById("likes").textContent =
-            data.value;
-
-        localStorage.setItem(
-            "liked_" + NAMESPACE,
-            "true"
-        );
-
-        likeButton.classList.add("liked");
-
-        likeButton.disabled = true;
-
-    } catch (e) {}
-});
-
-if (
-    localStorage.getItem("liked_" + NAMESPACE)
-) {
+likesEl.textContent = likes;
+if (hasLiked) {
     likeButton.classList.add("liked");
-
-    likeButton.disabled = true;
 }
+
+likeButton.addEventListener("click", () => {
+    if (!hasLiked) {
+        likes++;
+        hasLiked = true;
+        localStorage.setItem("site_likes", likes);
+        localStorage.setItem("has_liked", "true");
+        likesEl.textContent = likes;
+        likeButton.classList.add("liked");
+    }
+});
 
 
 /* =========================================================
-   CLICK TO ENTER ANIMATION & INTERACTION
+   CLICK TO ENTER HANDLER
 ========================================================= */
 
-const enterScreen =
-    document.getElementById("enterScreen");
-
-const mainPage =
-    document.getElementById("mainPage");
-
-const enterPfp =
-    document.getElementById("enterPfp");
-
-let entered = false;
+const enterScreen = document.getElementById("enterScreen");
+const mainPage = document.getElementById("mainPage");
+const enterPfp = document.getElementById("enterPfp");
+const profilePfp = document.getElementById("profilePfp");
 
 enterScreen.addEventListener("click", () => {
 
-    if (entered) return;
+    // Increment and save views when entering
+    views++;
+    localStorage.setItem("site_views", views);
+    viewsEl.textContent = views;
 
-    entered = true;
+    // Start playing background music automatically upon entry
+    audio.play().then(() => {
+        playButton.textContent = "❚❚";
+        musicStatus.textContent = "Playing";
+    }).catch(err => {
+        console.log("Autoplay blocked or failed:", err);
+    });
 
-    const profilePfp =
-        document.getElementById("profilePfp");
+    const rectEnter = enterPfp.getBoundingClientRect();
+    const rectMain = profilePfp.getBoundingClientRect();
 
-    const startRect =
-        enterPfp.getBoundingClientRect();
-
-    const targetRect =
-        profilePfp.getBoundingClientRect();
-
-    const flyer =
-        document.createElement("img");
-
+    const flyer = document.createElement("img");
     flyer.src = enterPfp.src;
-
     flyer.className = "pfp-flyer";
 
-    flyer.style.left = startRect.left + "px";
-
-    flyer.style.top = startRect.top + "px";
-
-    flyer.style.width = startRect.width + "px";
-
-    flyer.style.height = startRect.height + "px";
-
-    flyer.style.borderRadius = "50%";
-
-    flyer.style.border =
-        "3px solid rgba(255,255,255,.95)";
-
-    flyer.style.boxShadow =
-        "0 0 35px rgba(255,255,255,.24)";
+    flyer.style.left = rectEnter.left + "px";
+    flyer.style.top = rectEnter.top + "px";
+    flyer.style.width = rectEnter.width + "px";
+    flyer.style.height = rectEnter.height + "px";
+    flyer.style.border = "3px solid rgba(255,255,255,.95)";
+    flyer.style.boxShadow = "0 0 35px rgba(255,255,255,.24)";
 
     document.body.appendChild(flyer);
 
-    enterPfp.style.opacity = "0";
-
     enterScreen.style.opacity = "0";
-
     setTimeout(() => {
-
         enterScreen.style.display = "none";
     }, 700);
 
     mainPage.classList.add("site-visible");
 
     requestAnimationFrame(() => {
-
-        flyer.style.left = targetRect.left + "px";
-
-        flyer.style.top = targetRect.top + "px";
-
-        flyer.style.width = targetRect.width + "px";
-
-        flyer.style.height = targetRect.height + "px";
-
-        flyer.style.borderRadius = "50%";
-
-        flyer.style.border = "none";
-
-        flyer.style.boxShadow = "none";
+        requestAnimationFrame(() => {
+            flyer.style.left = rectMain.left + "px";
+            flyer.style.top = rectMain.top + "px";
+            flyer.style.width = rectMain.width + "px";
+            flyer.style.height = rectMain.height + "px";
+            flyer.style.borderRadius = "50%";
+            flyer.style.borderWidth = "0px";
+            flyer.style.boxShadow = "none";
+        });
     });
 
     setTimeout(() => {
-
         flyer.remove();
-    }, 960);
-
-    updateDiscord();
-
-    updateViews();
-
-    getLikes();
-
-    setInterval(updateDiscord, 15000);
+    }, 1000);
 });
 
 </script>
